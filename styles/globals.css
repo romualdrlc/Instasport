@@ -21,9 +21,12 @@ a {
 .titre-page-inscription {
   color:#FBE23B;
 }
+.sous-titre-page-inscription {
+  color:#FBE23B;
+}
 .imageInterest {
   margin-bottom: 1rem;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 .imageCircle {
   border-radius: 20rem;
