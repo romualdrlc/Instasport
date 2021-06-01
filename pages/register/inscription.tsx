@@ -18,7 +18,7 @@ const Inscription: NextPage<void> = () => {
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputEmail1"
+                id="exampleInputEmail"
                 placeholder="UserName"
               />
 
