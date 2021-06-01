@@ -21,7 +21,6 @@ const Inscription: NextPage<void> = () => {
                 id="exampleInputEmail"
                 placeholder="UserName"
               />
-
               <label htmlFor="inputPassword" className="form-label">
                 Password :
               </label>
