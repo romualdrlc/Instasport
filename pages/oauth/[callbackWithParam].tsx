@@ -9,14 +9,15 @@ const AuthCallback: React.FC = (props: any) => {
   const handleSignIn = async () => {
     try {
       const response = props.token;
-      setCookie("user", JSON.stringify(response), {
+      console.log(props);
+      setCookie("user", JSON.stringify(response.replace(/['"]+/g, "")), {
         path: "/",
         maxAge: 3600, // Expires after 1hr
         sameSite: true,
       });
     } catch (err) {
       console.log(err);
-    }
+    
   };
   handleSignIn();
   return (
