@@ -3,11 +3,9 @@ import React from "react";
 //import cookieCutter from "cookie-cutter";
 import { MongoClient } from "mongodb";
 import { useCookies } from "react-cookie";
-import UserProfile from "../../../components/userprofile";
-
+import UserProfile from "../../components/userprofile";
 const AuthCallback: React.FC = (props: any) => {
   const [cookie, setCookie] = useCookies(["user"]);
-
   const handleSignIn = async () => {
     try {
       const response = props.token;
@@ -20,9 +18,7 @@ const AuthCallback: React.FC = (props: any) => {
       console.log(err);
     }
   };
-
   handleSignIn();
-
   return (
     // <Layout>
     // <div className="container">
@@ -42,26 +38,17 @@ const AuthCallback: React.FC = (props: any) => {
     </>
   );
 };
-
 export default AuthCallback;
-
 export const getServerSideProps = async (context) => {
   const accessToken = context.query.code;
   //
   //ex http://localhost:3000/oauth/callback?code=tTbzVbtqsymiibUTL_MGYw%3D%3D&state=
-
   console.log("----------URL------------", context.query.code);
-
   //cookieCutter.set('myGamesCookie', accessToken);
-
   const databaseUrl = process.env.MONGODB_URI;
-
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
-
   const mongoDataBase = await MongoClient.connect(databaseUrl, options);
-
   const dateToIsert = Date();
-
   try {
     mongoDataBase
       .db("instasportDB")
@@ -70,7 +57,6 @@ export const getServerSideProps = async (context) => {
   } catch (e) {
     console.log(e);
   }
-
   return {
     props: { token: accessToken },
   };
