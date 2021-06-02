@@ -1,13 +1,20 @@
 /* @import url("https://fonts.googleapis.com/css?family=Numans"); */
+@font-face {
+  font-family: 'Kollektif';
+  src: local('Kollektif'), url(./fonts/Kollektif.ttf) format('opentype');
+}
 
+@font-face {
+    font-family: 'Kollektif-Bold';
+    font-weight: 900;
+    src: local('Kollektif-Bold'), url(./fonts/Kollektif-Bold.ttf) format('opentype');
+}
 html,
 body {
-
   background-color: #191b1e;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 500%;
-  font-family: "Numans", sans-serif;
+  font-family: "Kollektif";
 }
 
 .container {
@@ -15,8 +22,10 @@ body {
   align-content: center;
 }
 .logo {
-  border-radius: 5rem;
+  border-radius: 1rem;
   margin-bottom: 3rem;
+  width: 17rem;
+  height: 15rem;
 }
 
 .card {
@@ -75,6 +84,7 @@ input:focus {
   color: black;
   background-color: #ffc312;
   width: 100px;
+  
 }
 
 .login_btn:hover {
@@ -82,8 +92,7 @@ input:focus {
   background-color: #fbe23b;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Kollektif";
 
 }
 
@@ -94,14 +103,25 @@ input:focus {
 .links a {
   margin-left: 4px;
 }
-.page-inscription {
+
+#__next{
   background-color: #191B1E;
 }
+/* ////////////////////////////////
+////////////////////////////////
+PARTIII REGISTER
+////////////////////////////////
+//////////////////////////////// */
+.page-inscription {
+  background-color: #191B1E;
+  font-family: "Kollektif";
+}
 .titre-page-inscription {
-  color:#FBE23B;
+  color:white;
+  
 }
 .sous-titre-page-inscription {
-  color:#FBE23B;
+  color:white;
 }
 .imageInterest {
   margin-bottom: 1rem;
@@ -112,12 +132,18 @@ input:focus {
 }
 button.Boutton {
   width: 10rem;
-  margin-top:5rem;
+  margin-top:2rem;
   background-color:#FBE23B;
 }
+
 .form-label {
   margin-top: 2rem;
+  margin-left: 9rem;
   color:#FBE23B;
+}
+input.form-control{
+  width: 25rem;
+  margin-left: 9rem;
 }
 .titre-interests {
   margin-top: 2rem;
