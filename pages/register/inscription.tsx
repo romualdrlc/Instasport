@@ -7,11 +7,13 @@ const Inscription: NextPage<void> = () => {
     <div className="page-inscription">
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
-      <p className="sous-titre-page-inscription text-center">Welcome [user.name], please fill in this informations.</p>
+      <p className="sous-titre-page-inscription text-center">
+        Welcome [user.name], please fill in this informations.
+      </p>
       <div className="container">
         <form>
           <div className="row">
-            <div className="col-6">
+            <div className="colIncription col-6">
               <label htmlFor="exampleInputUserName" className="form-label">
                 UserName :
               </label>
@@ -189,7 +191,7 @@ const Inscription: NextPage<void> = () => {
             </div>
             <div className="text-center">
               <button type="submit" className="Boutton btn">
-                create
+                Create
               </button>
             </div>
           </div>

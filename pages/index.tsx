@@ -16,7 +16,6 @@ import OAuth2Client, {
 const SignInWithFewLines: React.FC = (props: any) => {
   return (
     // <Layout>
-
     <>
       <Head>
         <link
@@ -25,6 +24,7 @@ const SignInWithFewLines: React.FC = (props: any) => {
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossOrigin="anonymous"
         />
+        <link rel="shortcut icon" href="/logo.png" type="images/x-icon" />
         <link
           rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
@@ -35,7 +35,7 @@ const SignInWithFewLines: React.FC = (props: any) => {
 
       <div className="container">
         <div className="text-center">
-          <img className="logo" src="logo.png" width="150" height="150" />
+          <img className="logo" src="logocarre.png" />
         </div>
         <div className="d-flex justify-content-center h-100">
           <div className="card">
