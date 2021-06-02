@@ -109,7 +109,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     clientSecret: process.env.CONNECT_CLIENT_SECRET,
     redirectURI: process.env.CONNECT_REDIRECT_URI,
     audience: "wdb2g1",
-    scopes: ["openid", "email"],
+    scopes: ["openid", "email", "phone"],
   };
 
   const otClient = new OAuth2Client(oauthClientConstructorProps);
