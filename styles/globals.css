@@ -155,3 +155,10 @@ nav {
   margin-right: 2rem;
   margin-left: 2rem;
 }
+.checkBox {
+  background-color: #fbe23b;
+}
+
+.checkBox2 {
+  background-color: green;
+}

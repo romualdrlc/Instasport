@@ -1,5 +1,4 @@
 import { MongoClient } from "mongodb";
-import { resourceLimits } from "worker_threads";
 const initDB = async () => {
   const databaseUrl = process.env.MONGODB_URI;
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -11,7 +10,7 @@ const insertUser = async (token: string, date: Date, email: any) => {
   try {
     (await initDB())
       .db("instasportDB")
-      .collection("cookies")
+      .collection("user")
       .insertOne({
         cookie: { token: token, expdate: date },
         email: email,
@@ -25,7 +24,7 @@ const updateToken = async (newToken: string, date: Date, email: any) => {
   try {
     (await initDB())
       .db("instasportDB")
-      .collection("cookies")
+      .collection("user")
       .updateOne(
         {
           email: email,
@@ -41,7 +40,7 @@ const isEmailFound = async (email: any) => {
   let result;
 
   try {
-    result = (await initDB()).db("instasportDB").collection("cookies").findOne({
+    result = (await initDB()).db("instasportDB").collection("user").findOne({
       email: email,
     });
   } catch (e) {
@@ -54,7 +53,7 @@ const isEmailFound = async (email: any) => {
 const getEmailByCookie = async (cookie: any) => {
   let result;
   try {
-    result = (await initDB()).db("instasportDB").collection("cookies").findOne({
+    result = (await initDB()).db("instasportDB").collection("user").findOne({
       "cookie.token": cookie,
     });
   } catch (e) {
@@ -63,4 +62,31 @@ const getEmailByCookie = async (cookie: any) => {
   return (await result).email;
 };
 
-export { insertUser, updateToken, isEmailFound, getEmailByCookie };
+const createNewUser = async (
+  currentUsersEmail: string,
+  userName: string,
+  active: boolean[],
+  birthdate: string
+) => {
+  try {
+    (await initDB())
+      .db("instasportDB")
+      .collection("user")
+      .updateOne(
+        {
+          email: currentUsersEmail,
+        },
+        { $set: { userName: userName, Groups: active, Birthdate: birthdate } }
+      );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export {
+  insertUser,
+  updateToken,
+  isEmailFound,
+  getEmailByCookie,
+  createNewUser,
+};
