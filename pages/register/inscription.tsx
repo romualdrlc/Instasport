@@ -1,5 +1,5 @@
 import { NextPage, GetServerSideProps } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getDatabase } from "../../util/mongodb";
@@ -7,8 +7,13 @@ import {
   getEmailByCookie,
 } from "../../utils/initDatabase";
 import cookies from "next-cookies";
+import {createNewUser} from "../../utils/initDatabase"
+
 
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
+  
+  const [userName, setUserName] = useState("");
+  const [birthdate, setBirthdate] = useState("");
   const [active, setActive] = useState([
     false,
     false,
@@ -22,12 +27,19 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
   ]);
 
 
+
+useEffect(() => {
+      console.log(birthdate);
+
+}, [userName, birthdate])
+ 
+
   return (
     <div className="page-inscription">
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
       <p className="sous-titre-page-inscription text-center">
-        Welcome {user[0].UserName}, please fill in this informations.
+        Welcome {userName}, please fill in this informations.
       </p>
       <div className="container">
         <div>
@@ -41,6 +53,10 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="UserName"
+                value={userName}
+                onChange={(event) => {
+                  setUserName(event.target.value);
+                }}
               />
               <label htmlFor="exampleInputUserName" className="form-label">
                 Email :
@@ -50,7 +66,7 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="Email"
-                value={currentUsersEmail}
+                defaultValue={currentUsersEmail}
               />
               <label htmlFor="exampleInputBirthDate" className="form-label">
                 Birthdate
@@ -61,6 +77,11 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
                 id="exampleInputBirthDate"
                 aria-describedby="emailHelp"
                 placeholder="BirthDate"
+                value={birthdate}
+                onChange={(event) => {
+                  setBirthdate(event.target.value);
+                }}
+                
               />
             </div>
             <div className="col-6">
@@ -99,7 +120,11 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
                   return (<div key={"tata" + index}>{value}</div>);
                 })}
               </div>
-              <button type="submit" className="Boutton btn " disabled>
+              <button type="submit" className="Boutton btn" 
+              //disabled 
+              //onClick={() => createNewUser(currentUsersEmail,userName,active,birthdate)}
+              //onClick={() => createNewUser("toto@toto.fr","Toto",[],"12/02/2020")}
+              >
                 Create
               </button>
             </div>

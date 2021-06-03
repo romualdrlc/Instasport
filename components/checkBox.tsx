@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 const CheckBox: React.FC<any> = ({ id, active, setActive }) => {
+
+  const [buttonSelected, setButtonSelected] = useState(active[id]);
   // const changementBox = (id) => {
   //   const result = active
   //   result[id] = true
@@ -11,12 +13,13 @@ const CheckBox: React.FC<any> = ({ id, active, setActive }) => {
   return (
     <>
       <button
-        className="checkBox"
+        className= {buttonSelected ? "checkBox" : "checkBox2"}
         onClick={() => {
           const result = active
           console.log(result[id])
           result[id] = !result[id]
           setActive(result);
+          setButtonSelected(!buttonSelected);
           console.table(active)
         }}
       >
