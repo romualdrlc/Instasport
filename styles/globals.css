@@ -1,23 +1,21 @@
 /* @import url("https://fonts.googleapis.com/css?family=Numans"); */
 @font-face {
-  font-family: 'Kollektif';
-  src: local('Kollektif'), url(./fonts/Kollektif.ttf) format('opentype');
+  font-family: "Kollektif";
+  src: local("Kollektif"), url(./fonts/Kollektif.ttf) format("opentype");
 }
-
 @font-face {
-    font-family: 'Kollektif-Bold';
-    font-weight: 900;
-    src: local('Kollektif-Bold'), url(./fonts/Kollektif-Bold.ttf) format('opentype');
+  font-family: "Kollektif-Bold";
+  font-weight: 900;
+  src: local("Kollektif-Bold"),
+    url(./fonts/Kollektif-Bold.ttf) format("opentype");
 }
 html,
 body {
   background-color: #191b1e;
-  color:white;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Kollektif";
 }
-
 .container {
   height: 100%;
   align-content: center;
@@ -28,7 +26,6 @@ body {
   width: 17rem;
   height: 15rem;
 }
-
 .card {
   height: 370px;
   margin-top: auto;
@@ -36,77 +33,64 @@ body {
   width: 400px;
   background-color: rgba(73, 69, 69, 0.438) !important;
 }
-
 .social_icon span {
   font-size: 60px;
   margin-left: 10px;
-  color: #ffc312;
+  color: #fbe23b;
 }
-
 .social_icon span:hover {
   color: white;
   cursor: pointer;
 }
-
 .card-header h3 {
   color: white;
 }
-
 .social_icon {
   position: absolute;
   right: 20px;
   top: -45px;
 }
-
 .input-group-prepend span {
   width: 50px;
-  background-color: #ffc312;
+  background-color: #fbe23b;
   color: black;
   border: 0 !important;
 }
-
 input:focus {
   outline: 0 0 0 0 !important;
   box-shadow: 0 0 0 0 !important;
 }
-
 .remember {
   color: white;
 }
-
 .remember input {
   width: 20px;
   height: 20px;
   margin-left: 15px;
   margin-right: 5px;
 }
-
 .login_btn {
   color: black;
-  background-color: #ffc312;
+  background-color: #fbe23b;
   width: 100px;
-  
 }
-
 .login_btn:hover {
   color: black;
   background-color: #fbe23b;
   padding: 0;
   margin: 0;
   font-family: "Kollektif";
-
 }
-
 .links {
   color: white;
 }
-
 .links a {
   margin-left: 4px;
 }
-
-#__next{
-  background-color: #191B1E;
+#__next {
+  background-color: #191b1e;
+  color: #fbe23b;
+  font-family: "Kollektif";
 }
 /* ////////////////////////////////
 ////////////////////////////////
@@ -114,43 +98,60 @@ PARTIII REGISTER
 ////////////////////////////////
 //////////////////////////////// */
 .page-inscription {
-  background-color: #191B1E;
+  background-color: #191b1e;
   font-family: "Kollektif";
 }
 .titre-page-inscription {
-  color:white;
-  
+  color: white;
 }
 .sous-titre-page-inscription {
-  color:white;
+  color: white;
 }
 .imageInterest {
   margin-bottom: 1rem;
   margin-bottom: 3rem;
 }
 .imageCircle {
-  border-radius: 20rem;
+  border-radius: 0rem;
 }
 button.Boutton {
   width: 10rem;
-  margin-top:2rem;
-  background-color:#FBE23B;
+  margin-top: 2rem;
+  background-color: #fbe23b;
 }
-
 .form-label {
   margin-top: 2rem;
-  margin-left: 9rem;
-  color:#FBE23B;
-}
-input.form-control{
-  width: 25rem;
-  margin-left: 9rem;
+  color: #fbe23b;
 }
 .titre-interests {
   margin-top: 2rem;
   margin-bottom: 3rem;
-  color:#FBE23B;
+  color: #fbe23b;
 }
-.checkBox {
-  border-radius: 15px;
+/* ////////////////////////////////
+////////////////////////////////
+PARTIII NEWSLETTER
+////////////////////////////////
+//////////////////////////////// */
+.itemNavbar.col-3 {
+  text-align: center;
+}
+.itemNavbar.col-6 {
+  text-align: center;
+}
+.photoNav {
+  border-radius: 4rem;
+  margin-top: 1rem;
+}
+.SearchBar {
+  padding-top: 4rem;
+}
+.logoNav {
+  height: 10rem;
+  width: 10rem;
+}
+nav {
+  border-bottom: solid #fbe23b;
+  margin-right: 2rem;
+  margin-left: 2rem;
 }
