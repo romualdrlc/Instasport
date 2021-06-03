@@ -14,6 +14,7 @@
     "@types/node": "^15.6.1",
     "cookies": "^0.8.0",
     "cors": "^2.8.5",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.9",
     "next": "10.2.3",
     "react": "17.0.2",

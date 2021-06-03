@@ -1,36 +1,38 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
+import initClient from "../../../utils/initClient";
+//import JWT from "jsonwebtoken";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const code = request.query.code as string;
+  const fewClient = initClient();
 
-  const params = new URLSearchParams();
-  params.append("grant_type", "authorization_code");
-  params.append("code", code);
-  params.append("redirect_uri", process.env.CONNECT_REDIRECT_URI || "");
+  // const params = new URLSearchParams();
+  // params.append("grant_type", "authorization_code");
+  // params.append("code", code);
+  // params.append("redirect_uri", process.env.CONNECT_REDIRECT_URI || "");
 
-  const base64Keys = Buffer.from(
-    `${process.env.CONNECT_CLIENT_ID}:${process.env.CONNECT_CLIENT_SECRET}`
-  ).toString("base64");
+  // const base64Keys = Buffer.from(
+  //   `${process.env.CONNECT_CLIENT_ID}:${process.env.CONNECT_CLIENT_SECRET}`
+  // ).toString("base64");
 
-  const res = await fetch(
-    "https://fewlines.connect.prod.fewlines.tech/oauth/token",
-    {
-      method: "POST",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${base64Keys}`,
-      },
-      body: params,
-    }
-  );
+  const tokens = await fewClient.getTokensFromAuthorizationCode(code);
 
-  const { access_token } = await res.json();
-  console.log("token", access_token);
+  console.log("token $$$$$$$$$$$$$$$$$$$$$$", tokens.access_token);
+
+  var JWT = require("jsonwebtoken");
+
+  const cliInfo = await fewClient.getUserInfo(tokens.access_token);
+
+  console.log("info cli $$$$$$$$$$$$$$$$$$$$$$", cliInfo);
+
+  const decoded = await fewClient.verifyJWT(tokens.access_token, "RS256");
+
+  console.log("decoded $$$$$$$$$$$$$$$$$$$$$$", decoded);
 
   response.setHeader(
     "Set-Cookie",
-    `fewlines=${access_token}; Max-Age=3600000; Path=/`
+    `fewlines=${tokens}; Max-Age=3600000; Path=/`
   );
   const databaseUrl = process.env.MONGODB_URI;
   const options = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -48,6 +50,9 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   response.redirect("/register/inscription");
 };
 
+function JWT(JWT: any, arg1: string) {
+  throw new Error("Function not implemented.");
+}
 // export default async (request: NextApiRequest, response: NextApiResponse) => {
 //   // console.log("******************", response);
 //   const databaseUrl = process.env.MONGODB_URI;

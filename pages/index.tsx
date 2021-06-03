@@ -1,18 +1,11 @@
-//recupt access token de FL
-//l'inserer dans header cookie
-//afficher (griser le bon lien) sur toutes les pages
 
-//import Layout from "../components/layout";
 import React from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Layout from "../components/Layout";
+import initClient from "../utils/initClient";
 
-//require('dotenv').config();
 
-import OAuth2Client, {
-  OAuth2ClientConstructor,
-} from "@fewlines/connect-client";
 
 const SignInWithFewLines: React.FC = (props: any) => {
   return (
@@ -87,19 +80,8 @@ const SignInWithFewLines: React.FC = (props: any) => {
 export default SignInWithFewLines;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const oauthClientConstructorProps: OAuth2ClientConstructor = {
-    openIDConfigurationURL:
-      "https://fewlines.connect.prod.fewlines.tech/.well-known/openid-configuration",
-    clientID: process.env.CONNECT_CLIENT_ID,
-    clientSecret: process.env.CONNECT_CLIENT_SECRET,
-    redirectURI: process.env.CONNECT_REDIRECT_URI,
-    audience: "wdb2g1",
-    scopes: ["openid", "email", "phone"],
-  };
 
-  const otClient = new OAuth2Client(oauthClientConstructorProps);
-
-  const urlToSignIn = await otClient.getAuthorizationURL();
+  const urlToSignIn = await initClient().getAuthorizationURL();
 
   return {
     props: {
