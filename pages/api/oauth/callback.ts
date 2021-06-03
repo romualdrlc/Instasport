@@ -5,6 +5,7 @@ import initClient from "../../../utils/initClient";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const code = request.query.code as string;
+  const fewClient = initClient();
 
   // const params = new URLSearchParams();
   // params.append("grant_type", "authorization_code");
@@ -15,13 +16,17 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   //   `${process.env.CONNECT_CLIENT_ID}:${process.env.CONNECT_CLIENT_SECRET}`
   // ).toString("base64");
 
-  const tokens = await initClient().getTokensFromAuthorizationCode(code);
+  const tokens = await fewClient.getTokensFromAuthorizationCode(code);
 
   console.log("token $$$$$$$$$$$$$$$$$$$$$$", tokens.access_token);
 
   var JWT = require("jsonwebtoken");
 
-  const decoded = await initClient().verifyJWT(tokens.access_token, "RS256");
+  const cliInfo = await fewClient.getUserInfo(tokens.access_token);
+
+  console.log("info cli $$$$$$$$$$$$$$$$$$$$$$", cliInfo);
+
+  const decoded = await fewClient.verifyJWT(tokens.access_token, "RS256");
 
   console.log("decoded $$$$$$$$$$$$$$$$$$$$$$", decoded);
 

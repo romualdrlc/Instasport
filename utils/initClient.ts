@@ -9,7 +9,7 @@ const initClient = () => {
     clientID: process.env.CONNECT_CLIENT_ID,
     clientSecret: process.env.CONNECT_CLIENT_SECRET,
     redirectURI: process.env.CONNECT_REDIRECT_URI,
-    audience: "wdb2g1",
+    audience: "sparta-batch4-instasport",
     scopes: ["openid", "email", "phone"],
   };
 
