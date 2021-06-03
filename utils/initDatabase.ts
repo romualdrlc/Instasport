@@ -51,4 +51,16 @@ const isEmailFound = async (email: any) => {
   return (await result) != null;
 };
 
-export { insertUser, updateToken, isEmailFound };
+const getEmailByCookie = async (cookie: any) => {
+  let result;
+  try {
+    result = (await initDB()).db("instasportDB").collection("cookies").findOne({
+      "cookie.token": cookie,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  return (await result).email;
+};
+
+export { insertUser, updateToken, isEmailFound, getEmailByCookie };
