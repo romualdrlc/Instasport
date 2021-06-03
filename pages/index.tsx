@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 
   const otClient = new OAuth2Client(oauthClientConstructorProps);
-  console.log("BBBBBBBBBBBBBBB", otClient);
+
   const urlToSignIn = await otClient.getAuthorizationURL();
 
   return {
