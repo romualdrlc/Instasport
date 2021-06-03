@@ -5,8 +5,8 @@ import {
   insertUser,
   isEmailFound,
   updateToken,
+  getEmailByCookie,
 } from "../../../utils/initDatabase";
-import { Console } from "console";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const code = request.query.code as string;
@@ -14,21 +14,15 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   const tokens = await fewClient.getTokensFromAuthorizationCode(code);
 
-  console.log("token $$$$$$$$$$$$$$$$$$$$$$", tokens.access_token);
-
   var JWT = require("jsonwebtoken");
 
   const cliInfo = await fewClient.getUserInfo(tokens.access_token);
 
-  console.log("info cli $$$$$$$$$$$$$$$$$$$$$$", cliInfo);
-
   const decoded: any = await fewClient.verifyJWT(tokens.access_token, "RS256");
-
-  console.log("decoded $$$$$$$$$$$$$$$$$$$$$$", decoded.exp);
 
   response.setHeader(
     "Set-Cookie",
-    `fewlines=${tokens.access_token}; Max-Age=3600000; Path=/`
+    `fewlines=${tokens.refresh_token}; Max-Age=3600000; Path=/`
   );
   // const databaseUrl = process.env.MONGODB_URI;
   // const options = { useNewUrlParser: true, useUnifiedTopology: true };
@@ -46,11 +40,12 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
   //   console.log(e);
   // }
 
-  insertUser(code, decoded.exp, cliInfo.email);
+  insertUser(tokens.refresh_token, decoded.exp, cliInfo.email);
 
   updateToken("toto", new Date(), "lebeaugose72@gmail.com");
   const toto = await isEmailFound("lebeaugose72@gmail.com");
   console.log(toto);
+  console.log(await getEmailByCookie(tokens.refresh_token));
 
   if (toto) {
     console.log("email trouver");
