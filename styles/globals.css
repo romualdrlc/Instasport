@@ -12,6 +12,7 @@
 html,
 body {
   background-color: #191b1e;
+  color:white;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Kollektif";
@@ -149,4 +150,7 @@ input.form-control{
   margin-top: 2rem;
   margin-bottom: 3rem;
   color:#FBE23B;
+}
+.checkBox {
+  border-radius: 15px;
 }
