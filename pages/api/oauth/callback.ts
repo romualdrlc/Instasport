@@ -1,20 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
 import initClient from "../../../utils/initClient";
-//import JWT from "jsonwebtoken";
+import {
+  insertUser,
+  isEmailFound,
+  updateToken,
+} from "../../../utils/initDatabase";
+import { Console } from "console";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const code = request.query.code as string;
   const fewClient = initClient();
-
-  // const params = new URLSearchParams();
-  // params.append("grant_type", "authorization_code");
-  // params.append("code", code);
-  // params.append("redirect_uri", process.env.CONNECT_REDIRECT_URI || "");
-
-  // const base64Keys = Buffer.from(
-  //   `${process.env.CONNECT_CLIENT_ID}:${process.env.CONNECT_CLIENT_SECRET}`
-  // ).toString("base64");
 
   const tokens = await fewClient.getTokensFromAuthorizationCode(code);
 
@@ -26,59 +22,44 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   console.log("info cli $$$$$$$$$$$$$$$$$$$$$$", cliInfo);
 
-  const decoded = await fewClient.verifyJWT(tokens.access_token, "RS256");
+  const decoded: any = await fewClient.verifyJWT(tokens.access_token, "RS256");
 
-  console.log("decoded $$$$$$$$$$$$$$$$$$$$$$", decoded);
+  console.log("decoded $$$$$$$$$$$$$$$$$$$$$$", decoded.exp);
 
   response.setHeader(
     "Set-Cookie",
-    `fewlines=${tokens}; Max-Age=3600000; Path=/`
+    `fewlines=${tokens.access_token}; Max-Age=3600000; Path=/`
   );
-  const databaseUrl = process.env.MONGODB_URI;
-  const options = { useNewUrlParser: true, useUnifiedTopology: true };
-  const mongoDataBase = await MongoClient.connect(databaseUrl, options);
-  const dateToIsert = Date();
-  try {
-    mongoDataBase
-      .db("instasportDB")
-      .collection("cookies")
-      .insertOne({ access_token: request.query.code, date: dateToIsert });
-  } catch (e) {
-    console.log(e);
-  }
+  // const databaseUrl = process.env.MONGODB_URI;
+  // const options = { useNewUrlParser: true, useUnifiedTopology: true };
+  // const mongoDataBase = await MongoClient.connect(databaseUrl, options);
+  // const dateToIsert = Date();
+  // try {
+  //   mongoDataBase
+  //     .db("instasportDB")
+  //     .collection("cookies")
+  //     .insertOne({
+  //       cookie: { token: code, expdate: decoded.exp },
+  //       email: cliInfo.email,
+  //     });
+  // } catch (e) {
+  //   console.log(e);
+  // }
 
+  insertUser(code, decoded.exp, cliInfo.email);
+
+  updateToken("toto", new Date(), "lebeaugose72@gmail.com");
+  const toto = await isEmailFound("lebeaugose72@gmail.com");
+  console.log(toto);
+
+  if (toto) {
+    console.log("email trouver");
+  } else {
+    console.log("pas trouver");
+  }
   response.redirect("/register/inscription");
 };
 
 function JWT(JWT: any, arg1: string) {
   throw new Error("Function not implemented.");
 }
-// export default async (request: NextApiRequest, response: NextApiResponse) => {
-//   // console.log("******************", response);
-//   const databaseUrl = process.env.MONGODB_URI;
-//   const options = { useNewUrlParser: true, useUnifiedTopology: true };
-//   const mongoDataBase = await MongoClient.connect(databaseUrl, options);
-//   const dateToIsert = Date();
-//   try {
-//     mongoDataBase
-//       .db("instasportDB")
-//       .collection("cookies")
-//       .insertOne({ access_token: request.query.code, date: dateToIsert });
-//   } catch (e) {
-//     console.log(e);
-//   }
-//   await runMiddleware(request, response, cors);
-//   console.log("*******££¨%MLKK3", response);
-//   // Calling our pure function using the `res` object, it will add the `set-cookie` header
-//   setCookie(response, "Next.js", "api-middleware!");
-//   // Return the `set-cookie` header so we can display it in the browser and show that it works!
-//   // response.end(response.getHeader("Set-Cookie"));
-//   response.getHeader("Set-Cookie");
-//   response.redirect(`/usersnews`);
-// };
-// export const getServerSideProps = async (context) => {
-//   // console.log("$$$$$$$$$$$", context);
-//   return {
-//     props: { context: context },
-//   };
-// };
