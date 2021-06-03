@@ -99,7 +99,7 @@ const Inscription: NextPage<{ data; user }> = ({ data, user }) => {
             <div className="text-center">
               <div>
                 {active.map((value, index) => {
-                  return (<div key={"tata" + index}>{value}</div>);
+                  return <div key={"tata" + index}>{value}</div>;
                 })}
               </div>
               <button type="submit" className="Boutton btn " disabled>
