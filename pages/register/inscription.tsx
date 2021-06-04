@@ -57,6 +57,7 @@ useEffect(() => {
                 placeholder="UserName"
                 value={userName}
                 onChange={(event) => {
+                  console.log(event.target.value);
                   setUserName(event.target.value);
                 }}
               />
