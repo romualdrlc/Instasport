@@ -7,13 +7,14 @@ import {
   getEmailByCookie,
 } from "../../utils/initDatabase";
 import cookies from "next-cookies";
-import {createNewUser} from "../../utils/initDatabase"
+import { count } from "console";
 
 
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
   
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
+  const [atLeastThreeCategSelected, setAtLeastThreeCategSelected] = useState(false);
   const [active, setActive] = useState([
     false,
     false,
@@ -25,13 +26,14 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
     false,
     false,
   ]);
+ 
 
 
 
 useEffect(() => {
       console.log(birthdate);
 
-}, [userName, birthdate])
+}, [userName, birthdate, active])
  
 
   return (
@@ -107,6 +109,8 @@ useEffect(() => {
                           id={index}
                           active={active}
                           setActive={setActive}
+                          atLeastThreeCategoriesSelected={atLeastThreeCategSelected}
+                          setAtLeastThreeCategoriesSelected={setAtLeastThreeCategSelected}
                         />
                       </div>
                     );
@@ -121,9 +125,8 @@ useEffect(() => {
                 })}
               </div>
               <button type="submit" className="Boutton btn" 
-              //disabled 
-              //onClick={() => createNewUser(currentUsersEmail,userName,active,birthdate)}
-              //onClick={() => createNewUser("toto@toto.fr","Toto",[],"12/02/2020")}
+             disabled={atLeastThreeCategSelected}
+              //disabled={true}
               >
                 Create
               </button>
