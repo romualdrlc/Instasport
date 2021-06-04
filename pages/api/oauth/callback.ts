@@ -28,14 +28,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   updateToken("toto", new Date(), cliInfo.email);
   const toto = await isEmailFound(cliInfo.email);
-  console.log(toto);
-  console.log(await getEmailByCookie(tokens.refresh_token));
 
-  if (toto) {
-    console.log("email trouver");
-  } else {
-    console.log("pas trouver");
-  }
   response.redirect("/register/inscription");
 };
 

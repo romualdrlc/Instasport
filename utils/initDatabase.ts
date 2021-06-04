@@ -10,16 +10,34 @@ const initDB = async () => {
 /////// insertUser ///////
 //////////////////////////
 const insertUser = async (token: string, date: Date, email: any) => {
+  let searchResult;
   try {
-    (await initDB())
+    searchResult = (await initDB())
       .db("instasportDB")
       .collection("user")
-      .insertOne({
-        cookie: { token: token, expdate: date },
+      .findOne({
         email: email,
       });
   } catch (e) {
     console.log(e);
+  }
+
+  //console.log((await searchResult) ? "found" : "not found");
+
+  if (await searchResult) {
+    updateToken(token, date, email);
+  } else {
+    try {
+      (await initDB())
+        .db("instasportDB")
+        .collection("user")
+        .insertOne({
+          cookie: { token: token, expdate: date },
+          email: email,
+        });
+    } catch (e) {
+      console.log(e);
+    }
   }
 };
 
@@ -71,14 +89,13 @@ const getEmailByCookie = async (cookie: any) => {
   } catch (e) {
     console.log(e);
   }
-  return (await result).email;
+  return (await result) ? (await result).email : "";
 };
 
 ///////////////////////////
 ///// CreateNewUser //////
 //////////////////////////
 const createNewUser = async (data: any) => {
-  console.log("ligne 77" + data.email);
   try {
     const result = (await initDB())
       .db("instasportDB")
