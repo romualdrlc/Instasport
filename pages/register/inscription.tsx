@@ -42,7 +42,7 @@ const registerform = async () => {
     active: active,
     birthdate: birthdate,
   };
-  await fetch("http://localhost:3000/api/registerform", {
+  await fetch("/api/registerform", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -54,7 +54,7 @@ const registerform = async () => {
       if (res.message === "ERROR") {
         setErrorMessage("Erreur d'inscription veuillez recommencer")
       } else {
-        router.push("/usersnews")
+        router.push("/home")
       }
     })
 };
