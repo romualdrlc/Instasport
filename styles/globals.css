@@ -11,7 +11,7 @@
 }
 html,
 body {
-  background-color: #191b1e;
+  background-color: #191B1E;
   background-size: cover;
   background-repeat: no-repeat;
   font-family: "Kollektif";
@@ -36,7 +36,7 @@ body {
 .social_icon span {
   font-size: 60px;
   margin-left: 10px;
-  color: #fbe23b;
+  color: #FBE23B;
 }
 .social_icon span:hover {
   color: white;
@@ -52,7 +52,7 @@ body {
 }
 .input-group-prepend span {
   width: 50px;
-  background-color: #fbe23b;
+  background-color: #FBE23B;
   color: black;
   border: 0 !important;
 }
@@ -71,12 +71,12 @@ input:focus {
 }
 .login_btn {
   color: black;
-  background-color: #fbe23b;
+  background-color: #FBE23B;
   width: 100px;
 }
 .login_btn:hover {
   color: black;
-  background-color: #fbe23b;
+  background-color: #FBE23B;
   padding: 0;
   margin: 0;
   font-family: "Kollektif";
@@ -88,9 +88,10 @@ input:focus {
   margin-left: 4px;
 }
 #__next {
-  background-color: #191b1e;
-  color: #fbe23b;
+  background-color: #191B1E;
+  color: white;
   font-family: "Kollektif";
+  height: 100%;
 }
 /* ////////////////////////////////
 ////////////////////////////////
@@ -128,9 +129,16 @@ button.Boutton {
   margin-bottom: 3rem;
   color: #fbe23b;
 }
+.checkBox {
+  background-color: aquamarine;
+}
+.checkBox2 {
+  color:  green;
+  }
+
 /* ////////////////////////////////
 ////////////////////////////////
-PARTIII NEWSLETTER
+PARTIII Usernews
 ////////////////////////////////
 //////////////////////////////// */
 .itemNavbar.col-3 {
@@ -143,22 +151,280 @@ PARTIII NEWSLETTER
   border-radius: 4rem;
   margin-top: 1rem;
 }
-.SearchBar {
-  padding-top: 4rem;
-}
-.logoNav {
-  height: 10rem;
-  width: 10rem;
-}
-nav {
+/* nav {
   border-bottom: solid #fbe23b;
   margin-right: 2rem;
   margin-left: 2rem;
-}
+} */
 .checkBoxActive {
   background-color: #fbe23b;
-}
+  border-radius: 10rem;
 
+
+}
 .checkBoxInactive {
   background-color: white;
+  border-radius: 10rem;
+
+}
+.Nav {
+  width: auto;
+  border-bottom: 1px solid white;
+  }
+ 
+  .SearchBar {
+  margin-top: 4rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  }
+  .logoNav {
+    height: 12rem;
+    width: 12rem;
+  }
+  .BodyNews.col-3{
+    text-align: center;
+    border-right: 1px solid white
+  }
+  .BodyNews.col-5{
+    text-align: center;
+    border-right: 1px solid white
+  }
+  .BodyNews.col-4{
+    text-align: center;
+  }
+  .SuggestionProfil{
+    border-radius: 2rem;
+  }
+  .DivSugg{
+  margin-bottom: 2rem;
+  }
+.navbar-nav {
+  width: 100%
+}
+@media(min-width:568px) {
+  .end {
+      margin-left: auto
+  }
+}
+@media(max-width:768px) {
+  #post {
+      width: 100%
+  }
+}
+#clicked {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  text-align: center;
+  width: 100%;
+  background-color: #ecb21f;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: black;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 13px
+}
+#profile {
+  background-color: unset
+}
+#post {
+  margin: 10px;
+  padding: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: center;
+  background-color: #ecb21f;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: black;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 13px;
+  width: 50%
+}
+body {
+  background-color: black
+}
+#nav-items li a,
+#profile {
+  text-decoration: none;
+  color: rgb(224, 219, 219);
+  background-color: black
+}
+.comments {
+  margin-top: 5%;
+  margin-left: 20px
+}
+.darker {
+  border: 1px solid #ecb21f;
+  background-color: black;
+  float: right;
+  border-radius: 5px;
+  padding-left: 40px;
+  padding-right: 30px;
+  padding-top: 10px
+}
+.comment {
+  border: 1px solid rgba(16, 46, 46, 1);
+  background-color: rgba(16, 46, 46, 0.973);
+  float: left;
+  border-radius: 5px;
+  padding-left: 40px;
+  padding-right: 30px;
+  padding-top: 10px
+}
+.comment h4,
+.comment span,
+.darker h4,
+.darker span {
+  display: inline
+}
+.comment p,
+.comment span,
+.darker p,
+.darker span {
+  color: rgb(184, 183, 183)
+}
+h1,
+h4 {
+  color: white;
+  font-weight: bold
+}
+label {
+  color: rgb(212, 208, 208)
+}
+#align-form {
+  margin-top: 20px
+}
+.form-group p a {
+  color: white
+}
+#checkbx {
+  background-color: black
+}
+#darker img {
+  margin-right: 15px;
+  position: static
+}
+.form-group input,
+.form-group textarea {
+  background-color: black;
+  border: 1px solid rgba(16, 46, 46, 1);
+  border-radius: 12px
+}
+form {
+  border: 1px solid rgba(16, 46, 46, 1);
+  background-color: rgba(16, 46, 46, 0.973);
+  border-radius: 5px;
+  padding: 20px
+}
+/* #####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* #####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* parti  login */
+/* #####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* #####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+/* #####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.logo {
+  border-radius: 1rem;
+  width: 17rem;
+  height: 15rem;
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif
+}
+body {
+    height: 100vh;
+}
+.container {
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+.panel-heading {
+    text-align: center;
+    margin-bottom: 10px
+}
+#forgot {
+    min-width: 100px;
+    margin-left: auto;
+    text-decoration: none
+}
+a:hover {
+    text-decoration: none
+}
+.form-inline label {
+    padding-left: 10px;
+    margin: 0;
+    cursor: pointer
+}
+.btn.btn-primary {
+    margin-top: 20px;
+    border-radius: 15px
+}
+.panel {
+    min-height: 380px;
+    box-shadow: 20px 20px 80px rgb(218, 218, 218);
+    border-radius: 12px
+}
+.input-field {
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid #fbe23b;
+    color: #4343ff
+}
+input[type='text'],
+input[type='password'] {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 100%
+}
+.fa-eye-slash.btn {
+    border: none;
+    outline: none;
+    box-shadow: none
+}
+.iconelog {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    position: relative
+}
+a[target='_blank'] {
+    position: relative;
+    transition: all 0.1s ease-in-out
+}
+.bordert {
+    border-top: 1px solid #fbe23b;
+    position: relative
+}
+.bordert:after {
+    content: "or connect with";
+    position: absolute;
+    top: -13px;
+    left: 33%;
+    background-color: #191B1E;
+    padding: 0px 8px
+}
+@media(max-width: 360px) {
+    #forgot {
+        margin-left: 0;
+        padding-top: 10px
+    }
+    body {
+        height: 100%
+    }
+    .container {
+        margin: 30px 0
+    }
+    .bordert:after {
+        left: 25%
+    }
+}
+.panel{
+margin: auto auto;
 }
