@@ -1,7 +1,6 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { getDatabase } from "../../util/mongodb";
 import {
   getEmailByCookie,
@@ -9,13 +8,15 @@ import {
 import cookies from "next-cookies";
 import { useRouter } from 'next/router'
 
-
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
 
   const router = useRouter()
   
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
+  const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
+  const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
+  useState(0);
   const [active, setActive] = useState([
     false,
     false,
@@ -27,12 +28,12 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
     false,
     false,
   ]);
+
   const [errorMessage, setErrorMessage] = useState(null)
-
-useEffect(() => {
-      console.log(birthdate);
-
-}, [userName, birthdate])
+  
+  useEffect(() => {
+console.log(usersEmail);
+}, [userName, birthdate, active, usersEmail])
 
 const registerform = async () => {
   const data = {
@@ -58,7 +59,6 @@ const registerform = async () => {
     })
 };
  
-
   return (
     <div className="page-inscription">
       <br />
@@ -92,7 +92,10 @@ const registerform = async () => {
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="Email"
-                defaultValue={currentUsersEmail}
+                //defaultValue={currentUsersEmail}
+                value={usersEmail}
+                onChange={(event) => {
+                  setUsersEmail(event.target.value);}}
               />
               <label htmlFor="exampleInputBirthDate" className="form-label">
                 Birthdate
@@ -133,6 +136,8 @@ const registerform = async () => {
                           id={index}
                           active={active}
                           setActive={setActive}
+                          counterOfSelectedCategories={counterOfSelectedCategories}
+                          setCounterOfSelectedCategories={setCounterOfSelectedCategories}
                         />
                       </div>
                     );
@@ -148,6 +153,8 @@ const registerform = async () => {
               </div>
               <button type="submit" className="Boutton btn" 
               onClick={() => registerform()}
+             disabled={counterOfSelectedCategories<3 || userName === "" || birthdate === "" || usersEmail === ""}
+              //disabled={true}
               >
                 Create
               </button>
