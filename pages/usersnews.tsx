@@ -30,6 +30,7 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
                     src={user[0].photo}
                     alt=""
                   />
+                  <a href="/">Logout</a>
                 </div>
               </nav>
             </div>
