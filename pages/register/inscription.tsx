@@ -54,7 +54,7 @@ const registerform = async () => {
       if (res.message === "ERROR") {
         setErrorMessage("Erreur d'inscription veuillez recommencer")
       } else {
-        router.push("/news/newsletter")
+        router.push("/home")
       }
     })
 };
