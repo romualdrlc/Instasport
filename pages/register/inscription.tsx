@@ -37,7 +37,7 @@ console.log(usersEmail);
 
 const registerform = async () => {
   const data = {
-    email: currentUsersEmail,
+    email: usersEmail,
     userName: userName,
     active: active,
     birthdate: birthdate,
@@ -52,7 +52,7 @@ const registerform = async () => {
     }).then((res) => res.json())
     .then((res) => {
       if (res.message === "ERROR") {
-        setErrorMessage("Erreur d'inscription veuillez recommencer")
+        setErrorMessage("Erreur d'inscription, veuillez verifier votre adresse mail")
       } else {
         router.push("/home")
       }
