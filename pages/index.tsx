@@ -1,6 +1,5 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import Head from "next/head";
 import Layout from "../components/Layout";
 import initClient from "../utils/initClient";
 

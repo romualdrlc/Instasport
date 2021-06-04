@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient } from "mongodb";
 import initClient from "../../../utils/initClient";
 import {
   insertUser,
@@ -27,9 +26,16 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   insertUser(tokens.refresh_token, decoded.exp, cliInfo.email);
 
-  updateToken("toto", new Date(), "lebeaugose72@gmail.com");
-  const toto = await isEmailFound("lebeaugose72@gmail.com");
+  updateToken("toto", new Date(), cliInfo.email);
+  const toto = await isEmailFound(cliInfo.email);
+  console.log(toto);
+  console.log(await getEmailByCookie(tokens.refresh_token));
 
+  if (toto) {
+    console.log("email trouver");
+  } else {
+    console.log("pas trouver");
+  }
   response.redirect("/register/inscription");
 };
 

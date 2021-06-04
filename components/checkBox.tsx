@@ -8,11 +8,8 @@ const CheckBox: React.FC<any> = ({
   setCounterOfSelectedCategories
 }) => {
   const [buttonSelected, setButtonSelected] = useState(active[id]);
- 
-
 
   useEffect(() => {
-
   }, [buttonSelected]);
   return (
     <>
