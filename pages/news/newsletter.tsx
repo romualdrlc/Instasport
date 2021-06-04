@@ -2,7 +2,6 @@ import { NextPage, GetServerSideProps } from "next";
 import React from "react";
 import { getDatabase } from "../../util/mongodb";
 const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
-  console.log(user);
   return (
     <div>
       <nav>

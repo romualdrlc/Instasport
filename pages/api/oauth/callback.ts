@@ -42,8 +42,8 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
 
   insertUser(tokens.refresh_token, decoded.exp, cliInfo.email);
 
-  updateToken("toto", new Date(), "lebeaugose72@gmail.com");
-  const toto = await isEmailFound("lebeaugose72@gmail.com");
+  updateToken("toto", new Date(), cliInfo.email);
+  const toto = await isEmailFound(cliInfo.email);
   console.log(toto);
   console.log(await getEmailByCookie(tokens.refresh_token));
 

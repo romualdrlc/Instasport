@@ -157,8 +157,10 @@ nav {
 }
 .checkBox {
   background-color: #fbe23b;
+  border-radius: 1rem;
 }
 
 .checkBox2 {
   background-color: green;
+  border-radius: 1rem;
 }

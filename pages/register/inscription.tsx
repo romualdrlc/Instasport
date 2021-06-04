@@ -7,7 +7,6 @@ import {
   getEmailByCookie,
 } from "../../utils/initDatabase";
 import cookies from "next-cookies";
-import {createNewUser} from "../../utils/initDatabase"
 
 
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
@@ -32,6 +31,23 @@ useEffect(() => {
       console.log(birthdate);
 
 }, [userName, birthdate])
+
+const registerform = async () => {
+  const data = {
+    email: currentUsersEmail,
+    userName: userName,
+    active: active,
+    birthdate: birthdate,
+  };
+  await fetch("http://localhost:3000/api/registerform", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    })
+};
  
 
   return (
@@ -121,10 +137,12 @@ useEffect(() => {
                 })}
               </div>
               <button type="submit" className="Boutton btn" 
-              //disabled 
-              //onClick={() => createNewUser(currentUsersEmail,userName,active,birthdate)}
+              // disabled 
+              // onClick={() => createNewUser(currentUsersEmail,userName,active,birthdate)}
               //onClick={() => createNewUser("toto@toto.fr","Toto",[],"12/02/2020")}
+              onClick={() => registerform()}
               >
+                {/* {console.log(currentUsersEmail,userName,birthdate)} */}
                 Create
               </button>
             </div>
