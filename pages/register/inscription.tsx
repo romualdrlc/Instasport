@@ -1,7 +1,7 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 import { getDatabase } from "../../util/mongodb";
 import {
   getEmailByCookie,
