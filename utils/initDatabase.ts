@@ -6,6 +6,9 @@ const initDB = async () => {
   return mongoDataBase;
 };
 
+///////////////////////////
+/////// insertUser ///////
+//////////////////////////
 const insertUser = async (token: string, date: Date, email: any) => {
   try {
     (await initDB())
@@ -20,6 +23,9 @@ const insertUser = async (token: string, date: Date, email: any) => {
   }
 };
 
+///////////////////////////
+////// updateToken ///////
+//////////////////////////
 const updateToken = async (newToken: string, date: Date, email: any) => {
   try {
     (await initDB())
@@ -36,6 +42,9 @@ const updateToken = async (newToken: string, date: Date, email: any) => {
   }
 };
 
+///////////////////////////
+////// isEmailFound //////
+//////////////////////////
 const isEmailFound = async (email: any) => {
   let result;
 
@@ -50,6 +59,9 @@ const isEmailFound = async (email: any) => {
   return (await result) != null;
 };
 
+///////////////////////////
+//// getEmailByCookie ////
+//////////////////////////
 const getEmailByCookie = async (cookie: any) => {
   let result;
   try {
@@ -62,6 +74,9 @@ const getEmailByCookie = async (cookie: any) => {
   return (await result).email;
 };
 
+///////////////////////////
+///// CreateNewUser //////
+//////////////////////////
 const createNewUser = async (data: any) => {
   console.log("ligne 77" + data.email);
   try {
@@ -86,6 +101,9 @@ const createNewUser = async (data: any) => {
   }
 };
 
+///////////////////////////
+//////// Export //////////
+//////////////////////////
 export {
   insertUser,
   updateToken,
