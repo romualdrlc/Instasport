@@ -4,6 +4,10 @@ import Layout from "../components/Layout";
 import initClient from "../utils/initClient";
 
 const SignInWithFewLines: React.FC = (props: any) => {
+
+  ///////////////////////////
+  ////// Affichage /////////
+  //////////////////////////
   return (
     <Layout>
       <>
@@ -26,6 +30,9 @@ const SignInWithFewLines: React.FC = (props: any) => {
 
 export default SignInWithFewLines;
 
+/////////////////////////
+/// serverSideProps ////
+////////////////////////
 export const getServerSideProps: GetServerSideProps = async () => {
   const urlToSignIn = await initClient().getAuthorizationURL();
 

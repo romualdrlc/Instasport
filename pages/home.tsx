@@ -3,6 +3,10 @@ import React from "react";
 import { getDatabase } from "../util/mongodb";
 
 const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
+
+  ///////////////////////////
+  ////// Affichage /////////
+  //////////////////////////
   return (
     <div>
       <div className="BodyNews">
@@ -162,6 +166,10 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
   );
 };
 export default newsletter;
+
+/////////////////////////
+/// serverSideProps ////
+////////////////////////
 export const getServerSideProps: GetServerSideProps = async () => {
   const mongodb = await getDatabase();
   const categoSport = await mongodb.db().collection("posts").find().toArray();
