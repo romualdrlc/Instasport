@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import Checkbox from "../../components/checkBox";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getDatabase } from "../../util/mongodb";
-import {
-  getEmailByCookie,
-} from "../../utils/initDatabase";
+import { getEmailByCookie } from "../../utils/initDatabase";
 import cookies from "next-cookies";
 
-const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
+const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
+  data,
+  user,
+  currentUsersEmail,
+}) => {
   const [active, setActive] = useState([
     false,
     false,
@@ -20,7 +22,6 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
     false,
     false,
   ]);
-
 
   return (
     <div className="page-inscription">
@@ -117,11 +118,9 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
 };
 export default Inscription;
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const c = cookies(context).fewlines;
 
-
-const c = cookies(context).fewlines;
-
-  const currentUsersEmail=await getEmailByCookie(c);
+  const currentUsersEmail = await getEmailByCookie(c);
 
   const mongodb = await getDatabase();
   const categoSport = await mongodb.db().collection("group").find().toArray();
@@ -140,7 +139,7 @@ const c = cookies(context).fewlines;
     props: {
       data: fin,
       user: fin2,
-      currentUsersEmail: currentUsersEmail
+      currentUsersEmail: currentUsersEmail,
     },
   };
 };
