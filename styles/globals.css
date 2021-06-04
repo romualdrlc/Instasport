@@ -157,7 +157,10 @@ nav {
 }
 .checkBoxActive {
   background-color: #fbe23b;
+  border-radius: 1rem;
 }
+
+
 
 .checkBoxInactive {
   background-color: white;

@@ -6,8 +6,11 @@ import {
   getEmailByCookie,
 } from "../../utils/initDatabase";
 import cookies from "next-cookies";
+import { useRouter } from 'next/router'
 
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
+
+  const router = useRouter()
   
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
@@ -25,13 +28,36 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
     false,
     false,
   ]);
- 
 
-
-
-useEffect(() => {
+  const [errorMessage, setErrorMessage] = useState(null)
+  
+  useEffect(() => {
 console.log(usersEmail);
 }, [userName, birthdate, active, usersEmail])
+
+const registerform = async () => {
+  const data = {
+    email: currentUsersEmail,
+    userName: userName,
+    active: active,
+    birthdate: birthdate,
+  };
+  await fetch("http://localhost:3000/api/registerform", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+    }).then((res) => res.json())
+    .then((res) => {
+      if (res.message === "ERROR") {
+        setErrorMessage("Erreur d'inscription veuillez recommencer")
+      } else {
+        router.push("/usersnews")
+      }
+    })
+};
  
   return (
     <div className="page-inscription">
@@ -40,6 +66,7 @@ console.log(usersEmail);
       <p className="sous-titre-page-inscription text-center">
         Welcome {userName}, please fill in this informations.
       </p>
+      {errorMessage ? <p>{errorMessage}</p> : <></>}
       <div className="container">
         <div>
           <div className="row">
@@ -125,6 +152,7 @@ console.log(usersEmail);
                 })}
               </div>
               <button type="submit" className="Boutton btn" 
+              onClick={() => registerform()}
              disabled={counterOfSelectedCategories<3 || userName === "" || birthdate === "" || usersEmail === ""}
               //disabled={true}
               >
