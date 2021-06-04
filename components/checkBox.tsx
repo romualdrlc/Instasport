@@ -4,8 +4,6 @@ const CheckBox: React.FC<any> = ({
   id,
   active,
   setActive,
-  atLeastThreeCategoriesSelected,
-  setAtLeastThreeCategoriesSelected,
   counterOfSelectedCategories,
   setCounterOfSelectedCategories
 }) => {
@@ -15,7 +13,7 @@ const CheckBox: React.FC<any> = ({
 
   useEffect(() => {
 
-  }, [buttonSelected, atLeastThreeCategoriesSelected]);
+  }, [buttonSelected]);
   return (
     <>
       <button

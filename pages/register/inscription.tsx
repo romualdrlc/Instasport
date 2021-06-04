@@ -1,7 +1,6 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
-//import "bootstrap/dist/css/bootstrap.min.css";
 import { getDatabase } from "../../util/mongodb";
 import {
   getEmailByCookie,
@@ -12,7 +11,7 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
   
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  const [atLeastThreeCategSelected, setAtLeastThreeCategSelected] = useState(false);
+  const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
   const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
   useState(0);
   const [active, setActive] = useState([
@@ -31,8 +30,8 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
 
 
 useEffect(() => {
-
-}, [userName, birthdate, active])
+console.log(usersEmail);
+}, [userName, birthdate, active, usersEmail])
  
   return (
     <div className="page-inscription">
@@ -66,7 +65,10 @@ useEffect(() => {
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="Email"
-                defaultValue={currentUsersEmail}
+                //defaultValue={currentUsersEmail}
+                value={usersEmail}
+                onChange={(event) => {
+                  setUsersEmail(event.target.value);}}
               />
               <label htmlFor="exampleInputBirthDate" className="form-label">
                 Birthdate
@@ -107,8 +109,6 @@ useEffect(() => {
                           id={index}
                           active={active}
                           setActive={setActive}
-                          atLeastThreeCategoriesSelected={atLeastThreeCategSelected}
-                          setAtLeastThreeCategoriesSelected={setAtLeastThreeCategSelected}
                           counterOfSelectedCategories={counterOfSelectedCategories}
                           setCounterOfSelectedCategories={setCounterOfSelectedCategories}
                         />
@@ -125,7 +125,7 @@ useEffect(() => {
                 })}
               </div>
               <button type="submit" className="Boutton btn" 
-             disabled={counterOfSelectedCategories<3}
+             disabled={counterOfSelectedCategories<3 || userName === "" || birthdate === "" || usersEmail === ""}
               //disabled={true}
               >
                 Create
