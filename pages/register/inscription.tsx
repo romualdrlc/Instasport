@@ -7,9 +7,12 @@ import {
   getEmailByCookie,
 } from "../../utils/initDatabase";
 import cookies from "next-cookies";
+import { useRouter } from 'next/router'
 
 
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
+
+  const router = useRouter()
   
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
@@ -24,6 +27,7 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
     false,
     false,
   ]);
+  const [errorMessage, setErrorMessage] = useState(null)
 
 
 
@@ -46,6 +50,13 @@ const registerform = async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
+    }).then((res) => res.json())
+    .then((res) => {
+      if (res.message === "ERROR") {
+        setErrorMessage("Erreur d'inscription veuillez recommencer")
+      } else {
+        router.push("/usersnews")
+      }
     })
 };
  
@@ -57,6 +68,7 @@ const registerform = async () => {
       <p className="sous-titre-page-inscription text-center">
         Welcome {userName}, please fill in this informations.
       </p>
+      {errorMessage ? <p>{errorMessage}</p> : <></>}
       <div className="container">
         <div>
           <div className="row">
@@ -137,12 +149,8 @@ const registerform = async () => {
                 })}
               </div>
               <button type="submit" className="Boutton btn" 
-              // disabled 
-              // onClick={() => createNewUser(currentUsersEmail,userName,active,birthdate)}
-              //onClick={() => createNewUser("toto@toto.fr","Toto",[],"12/02/2020")}
               onClick={() => registerform()}
               >
-                {/* {console.log(currentUsersEmail,userName,birthdate)} */}
                 Create
               </button>
             </div>

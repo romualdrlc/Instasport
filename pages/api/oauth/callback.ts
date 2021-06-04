@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient } from "mongodb";
 import initClient from "../../../utils/initClient";
 import {
   insertUser,
@@ -24,21 +23,6 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     "Set-Cookie",
     `fewlines=${tokens.refresh_token}; Max-Age=3600000; Path=/`
   );
-  // const databaseUrl = process.env.MONGODB_URI;
-  // const options = { useNewUrlParser: true, useUnifiedTopology: true };
-  // const mongoDataBase = await MongoClient.connect(databaseUrl, options);
-  // const dateToIsert = Date();
-  // try {
-  //   mongoDataBase
-  //     .db("instasportDB")
-  //     .collection("cookies")
-  //     .insertOne({
-  //       cookie: { token: code, expdate: decoded.exp },
-  //       email: cliInfo.email,
-  //     });
-  // } catch (e) {
-  //   console.log(e);
-  // }
 
   insertUser(tokens.refresh_token, decoded.exp, cliInfo.email);
 

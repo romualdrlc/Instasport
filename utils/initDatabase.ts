@@ -62,29 +62,25 @@ const getEmailByCookie = async (cookie: any) => {
   return (await result).email;
 };
 
-const createNewUser = async (
-  // currentUsersEmail: string,
-  // userName: string,
-  // active: boolean[],
-  // birthdate: string
-  data: any
-) => {
-  // type data2 = {currentUsersEmail: string,
-  // userName: string,
-  // active: boolean[],
-  // birthdate: string
-  // }
-  console.log("ligne 77" + data.email)
+const createNewUser = async (data: any) => {
+  console.log("ligne 77" + data.email);
   try {
-    (await initDB())
+    const result = (await initDB())
       .db("instasportDB")
       .collection("user")
       .updateOne(
         {
           email: data.email,
         },
-        { $set: { userName: data.userName, Groups: data.active, Birthdate: data.birthdate } }
-      )
+        {
+          $set: {
+            userName: data.userName,
+            Groups: data.active,
+            Birthdate: data.birthdate,
+          },
+        }
+      );
+    return result;
   } catch (e) {
     console.log(e);
   }
