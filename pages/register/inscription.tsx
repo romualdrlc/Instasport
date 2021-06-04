@@ -29,8 +29,6 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
   ]);
   const [errorMessage, setErrorMessage] = useState(null)
 
-
-
 useEffect(() => {
       console.log(birthdate);
 
