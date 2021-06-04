@@ -7,14 +7,14 @@ import {
   getEmailByCookie,
 } from "../../utils/initDatabase";
 import cookies from "next-cookies";
-import { count } from "console";
-
 
 const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, currentUsersEmail }) => {
   
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [atLeastThreeCategSelected, setAtLeastThreeCategSelected] = useState(false);
+  const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
+  useState(0);
   const [active, setActive] = useState([
     false,
     false,
@@ -31,11 +31,9 @@ const Inscription: NextPage<{ data; user, currentUsersEmail }> = ({ data, user, 
 
 
 useEffect(() => {
-      console.log(birthdate);
 
 }, [userName, birthdate, active])
  
-
   return (
     <div className="page-inscription">
       <br />
@@ -57,7 +55,6 @@ useEffect(() => {
                 placeholder="UserName"
                 value={userName}
                 onChange={(event) => {
-                  console.log(event.target.value);
                   setUserName(event.target.value);
                 }}
               />
@@ -112,6 +109,8 @@ useEffect(() => {
                           setActive={setActive}
                           atLeastThreeCategoriesSelected={atLeastThreeCategSelected}
                           setAtLeastThreeCategoriesSelected={setAtLeastThreeCategSelected}
+                          counterOfSelectedCategories={counterOfSelectedCategories}
+                          setCounterOfSelectedCategories={setCounterOfSelectedCategories}
                         />
                       </div>
                     );
@@ -126,7 +125,7 @@ useEffect(() => {
                 })}
               </div>
               <button type="submit" className="Boutton btn" 
-             disabled={atLeastThreeCategSelected}
+             disabled={counterOfSelectedCategories<3}
               //disabled={true}
               >
                 Create

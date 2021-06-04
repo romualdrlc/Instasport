@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from "react";
 
-const CheckBox: React.FC<any> = ({ id, active, setActive, atLeastThreeCategoriesSelected, setAtLeastThreeCategoriesSelected }) => {
-
+const CheckBox: React.FC<any> = ({
+  id,
+  active,
+  setActive,
+  atLeastThreeCategoriesSelected,
+  setAtLeastThreeCategoriesSelected,
+  counterOfSelectedCategories,
+  setCounterOfSelectedCategories
+}) => {
   const [buttonSelected, setButtonSelected] = useState(active[id]);
-  //const [atLeastThreeCategoriesSelected, setAtLeastThreeCategoriesSelected] = useState(false);
-  // const changementBox = (id) => {
-  //   const result = active
-  //   result[id] = true
-  //   setActive(result);
-  //   console.table(active)
-  // };
-  useEffect(() => {
-    console.log("tati");
-    let counterOfSelectedCategories=0;
-    active.forEach((isCategorySelected) => isCategorySelected ? counterOfSelectedCategories=counterOfSelectedCategories+1 : null)
-    console.log("------------counterOfSelectedCategories------------",counterOfSelectedCategories );
-    setAtLeastThreeCategoriesSelected(counterOfSelectedCategories > 2); // & birthdate != ""
-    console.log("------------atLeastThreeCategoriesSelected--------------------",atLeastThreeCategoriesSelected);
-    
+ 
 
-}, [buttonSelected]);
+
+  useEffect(() => {
+
+  }, [buttonSelected, atLeastThreeCategoriesSelected]);
   return (
     <>
       <button
-        className= {buttonSelected ? "checkBoxActive" : "checkBoxInactive"}
+        className={buttonSelected ? "checkBoxActive" : "checkBoxInactive"}
         onClick={() => {
-          const result = active
-          console.log("******************",result[id])
-          result[id] = !result[id]
+          const result = active;
+          result[id] = !result[id];
+          result[id]
+            ? setCounterOfSelectedCategories(counterOfSelectedCategories + 1)
+            : setCounterOfSelectedCategories(counterOfSelectedCategories - 1);
           setActive(result);
           setButtonSelected(!buttonSelected);
-          console.table(active)
         }}
       >
         ok
