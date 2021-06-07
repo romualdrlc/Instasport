@@ -23,8 +23,7 @@ const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
   //////////////////////////
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  //const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
-  const [usersEmail, setUsersEmail] = useState("");
+  const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
   const [errorMessage, setErrorMessage] = useState(null);
   const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
     useState(0);
@@ -113,7 +112,6 @@ const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="Email"
-                //value={currentUsersEmail}
                 value={usersEmail}
                 onChange={(event) => {
                   setUsersEmail(event.target.value);
@@ -217,23 +215,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     currentUsersEmailFromDB = (await getUserByCookie(c)).email;
   }
 
-  // const mongodb = await getDatabase();
-  // const sportCategories = await mongodb.db().collection("group").find().toArray();
-  //const UserData = await mongodb.db().collection("user").find().toArray();
-
   const sportCategories = await getSportCategories();
 
   const categoriesImgArrayFromDB = await sportCategories.map((category) => {
     return category.Cover;
   });
-  //const result2 = await UserData.map((value) => value);
-  const categoriesImgArrayParsed = await JSON.stringify(
-    categoriesImgArrayFromDB
-  );
-  //const fin2 = await JSON.parse(JSON.stringify(result2));
+
   return {
     props: {
-      categoriesImgArray: categoriesImgArrayParsed,
+      categoriesImgArray: categoriesImgArrayFromDB,
       currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
     },
   };
