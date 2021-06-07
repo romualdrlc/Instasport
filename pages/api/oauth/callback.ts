@@ -1,11 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import initClient from "../../../utils/initClient";
-import {
-  insertUser,
-  isEmailFound,
-  updateToken,
-  getEmailByCookie,
-} from "../../../utils/initDatabase";
+import { insertUser } from "../../../utils/initDatabase";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const code = request.query.code as string;
@@ -24,10 +19,12 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     `fewlines=${tokens.refresh_token}; Max-Age=3600000; Path=/`
   );
 
-  insertUser(tokens.refresh_token, decoded.exp, cliInfo.email);
+  await insertUser(tokens.refresh_token, decoded.exp, cliInfo.email);
 
-  updateToken("toto", new Date(), cliInfo.email);
-  const toto = await isEmailFound(cliInfo.email);
+  response.setHeader(
+    "Set-Cookie",
+    `fewlines=${tokens.refresh_token}; Max-Age=3600000; Path=/`
+  );
 
   response.redirect("/register/inscription");
 };
