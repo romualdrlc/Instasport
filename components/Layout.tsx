@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import Navbar from "./Navbar";
 
 let children: React.ReactNode;
 const Layout: React.FC = ({ children }) => {
@@ -20,6 +21,7 @@ const Layout: React.FC = ({ children }) => {
           crossOrigin="anonymous"
         />
       </Head>
+      <Navbar />
       <main>{children}</main>
     </>
   );

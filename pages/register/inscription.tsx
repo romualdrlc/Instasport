@@ -1,16 +1,17 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
-import { getDatabase } from "../../util/mongodb";
-import { getEmailByCookie } from "../../utils/initDatabase";
+//import { getDatabase } from "../../utils/mongodb";
+import { getUserByCookie, getSportCategories } from "../../utils/initDatabase";
 import cookies from "next-cookies";
 import { useRouter } from "next/router";
 
-const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
-  data,
-  user,
-  currentUsersEmail,
-}) => {
+// const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
+//   categoriesImgArray,
+//   currentUsersEmail,
+// }) => {
+
+  const Inscription: NextPage = () => {
 
   //useRouter
   const router = useRouter();
@@ -20,7 +21,8 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
   //////////////////////////
   const [userName, setUserName] = useState("");
   const [birthdate, setBirthdate] = useState("");
-  const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
+  //const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
+  const [usersEmail, setUsersEmail] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
     useState(0);
@@ -109,7 +111,7 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="Email"
-                //defaultValue={currentUsersEmail}
+                //value={currentUsersEmail}
                 value={usersEmail}
                 onChange={(event) => {
                   setUsersEmail(event.target.value);
@@ -135,8 +137,8 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                 Interests (minimum 3)
               </h3>
               <div className="container">
-                <div className="row row-cols-3">
-                  {data.map((value, index) => {
+                {/* <div className="row row-cols-3">
+                  {categoriesImgArray.map((imageOfCategory, index) => {
                     return (
                       <div
                         className="imageInterest col text-center"
@@ -144,7 +146,7 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                       >
                         <img
                           className="imageCircle"
-                          src={value.Cover}
+                          src={imageOfCategory}
                           width="70"
                           height="70"
                           alt=""
@@ -163,7 +165,7 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                       </div>
                     );
                   })}
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="text-center">
@@ -206,27 +208,27 @@ export default Inscription;
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const c = cookies(context).fewlines;
+  let currentUsersEmailFromDB="";
+if (c) {
+  currentUsersEmailFromDB = await (await getUserByCookie(c)).emal;
+}
 
-  const currentUsersEmail = await getEmailByCookie(c);
+  // const mongodb = await getDatabase();
+  // const sportCategories = await mongodb.db().collection("group").find().toArray();
+  //const UserData = await mongodb.db().collection("user").find().toArray();
 
-  const mongodb = await getDatabase();
-  const categoSport = await mongodb.db().collection("group").find().toArray();
-  const UserData = await mongodb.db().collection("user").find().toArray();
-  const result = await categoSport.map((value) => {
-    return {
-      id: value.id,
-      userName: value.UserName,
-      Cover: value.Cover,
-    };
+  const sportCategories = await getSportCategories();
+
+  const categoriesImgArrayFromDB = await sportCategories.map((category) => {
+    return category.Cover;
   });
-  const result2 = await UserData.map((value) => value);
-  const fin = await JSON.parse(JSON.stringify(result));
-  const fin2 = await JSON.parse(JSON.stringify(result2));
+  //const result2 = await UserData.map((value) => value);
+  const categoriesImgArrayParsed = await JSON.parse(JSON.stringify(categoriesImgArrayFromDB));
+  //const fin2 = await JSON.parse(JSON.stringify(result2));
   return {
     props: {
-      data: fin,
-      user: fin2,
-      currentUsersEmail: currentUsersEmail,
+      // categoriesImgArray: categoriesImgArrayParsed,
+      // currentUsersEmail: currentUsersEmailFromDB,
     },
   };
 };
