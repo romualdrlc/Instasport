@@ -1,8 +1,35 @@
 import { NextPage, GetServerSideProps } from "next";
 import React from "react";
-import { getDatabase } from "../util/mongodb";
+//import { getDatabase } from "../utils/mongodb";
+import { getDafaultUsers } from "../utils/initDatabase";
 
-const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
+//const newsletter: NextPage<{ dafaultUsers }> = ({dafaultUsers}) => {
+  const Home: NextPage= () => {
+
+    const defaultUsers = async () => {
+      console.log("$$$$$$$$$$");
+      await fetch("/api/defaultUsers"
+      // , {
+      //   method: "GET",
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      // }
+      )
+        .then((res1) => res1.json())
+        .then((res) => {
+          console.log("**************",res)
+          // if (res.message === "ERROR") {
+          //   setErrorMessage(
+          //     "Erreur d'inscription, veuillez verifier votre adresse mail"
+          //   );
+          // } else {
+          //   router.push("/home");
+          // }
+        });
+    };
+
   ///////////////////////////
   ////// Affichage /////////
   //////////////////////////
@@ -11,7 +38,11 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
       <div className="BodyNews">
         <div className="container">
           <div className="row">
-            <div className="Nav">
+          <button
+                type="submit"
+                className="Boutton btn"
+                onClick={() => defaultUsers()}>Try</button>
+            {/* <div className="Nav">
               <nav className="row">
                 <div className="itemNavbar col-3">
                   <img className="logoNav" src="../logocarre.png" />
@@ -36,29 +67,29 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
                   <a href="/api/oauth/logout">Logout</a>
                 </div>
               </nav>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="row">
           <div className="BodyNews col-3">
             <div className="container">
-              {user.map((value) => {
+              {/* {dafaultUsers.map((user) => {
                 return (
                   <div className="DivSugg">
                     <div>
                       <img
-                        key={value.id}
+                        key={user.id}
                         className="SuggestionProfil"
-                        src={value.photo}
+                        src={user.photo}
                         alt=""
                       />
                     </div>
                     <button className="btn btn-secondary">
-                      Add {value.UserName}
+                      Add {user.UserName}
                     </button>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </div>
           <div className="BodyNews col-5"></div>
@@ -164,39 +195,42 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
     </div>
   );
 };
-export default newsletter;
+export default Home;
 
 /////////////////////////
 /// serverSideProps ////
 ////////////////////////
 export const getServerSideProps: GetServerSideProps = async () => {
-  const mongodb = await getDatabase();
-  const categoSport = await mongodb.db().collection("posts").find().toArray();
-  const UserData = await mongodb.db().collection("user").find().toArray();
-  const result = await categoSport.map((value) => {
-    return {
-      id: value.id,
-      userId: value.userId,
-      datePost: value.datePost,
-      photosPost: value.photosPost,
-      textPost: value.textPost,
-      likePost: value.likePost,
-      commentsPost: value.commentsPost,
-    };
-  });
-  const result2 = await UserData.map((value) => {
-    return {
-      id: value.Id,
-      UserName: value.UserName,
-      photo: value.Cover,
-    };
-  });
-  const fin = await JSON.parse(JSON.stringify(result));
-  const fin2 = await JSON.parse(JSON.stringify(result2));
+  // const mongodb = await getDatabase();
+  // //const categoSport = await mongodb.db().collection("posts").find().toArray();
+  // const UserData = await mongodb.db().collection("user").find().toArray();
+  // //const result = await categoSport.map((value) => {
+  // //   return {
+  // //     id: value.id,
+  // //     userId: value.userId,
+  // //     datePost: value.datePost,
+  // //     photosPost: value.photosPost,
+  // //     textPost: value.textPost,
+  // //     likePost: value.likePost,
+  // //     commentsPost: value.commentsPost,
+  // //   };
+  // // });
+  // const result2 = await UserData.map((value) => {
+  //   return {
+  //     id: value.Id,
+  //     UserName: value.UserName,
+  //     photo: value.Cover,
+  //   };
+  // });
+  // //const fin = await JSON.parse(JSON.stringify(result));
+  // const fin2 = await JSON.parse(JSON.stringify(result2));
+
+
+  //const dafaultUsers = await getDafaultUsers();
+
   return {
     props: {
-      data: fin,
-      user: fin2,
+      //dafaultUsers: dafaultUsers
     },
   };
 };

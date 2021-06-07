@@ -1,9 +1,9 @@
 import React from "react";
-import { GetServerSideProps } from "next";
+//import { GetServerSideProps } from "next";
 import Layout from "../components/Layout";
-import initClient from "../utils/initClient";
+//import initClient from "../utils/initClient";
 
-const SignInWithFewLines: React.FC = (props: any) => {
+const SignInWithFewLines: React.FC = () => {
 
   ///////////////////////////
   ////// Affichage /////////
@@ -11,7 +11,8 @@ const SignInWithFewLines: React.FC = (props: any) => {
   return (
     <Layout>
       <>
-        <div className="CardFullLogin text-center">
+      <h1>HELLO</h1>
+        {/* <div className="CardFullLogin text-center">
           <div className="text-center">
             <img className="logo" src="logocarre.png" />
           </div>
@@ -22,7 +23,7 @@ const SignInWithFewLines: React.FC = (props: any) => {
               Fewlines
             </a>
           </button>
-        </div>
+        </div> */}
       </>
     </Layout>
   );
@@ -33,12 +34,12 @@ export default SignInWithFewLines;
 /////////////////////////
 /// serverSideProps ////
 ////////////////////////
-export const getServerSideProps: GetServerSideProps = async () => {
-  const urlToSignIn = await initClient().getAuthorizationURL();
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const urlToSignIn = await initClient().getAuthorizationURL();
 
-  return {
-    props: {
-      url: JSON.parse(JSON.stringify(urlToSignIn)),
-    },
-  };
-};
+//   return {
+//     props: {
+//       url: JSON.parse(JSON.stringify(urlToSignIn)),
+//     },
+//   };
+// };
