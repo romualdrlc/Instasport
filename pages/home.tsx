@@ -8,12 +8,11 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
   ////// Affichage /////////
   //////////////////////////
   return (
-    <div>
+    <div className="bodyPost">
       <div className="BodyNews">
-        <div className="container">
           <div className="row">
             <div className="Nav">
-              <nav className="row">
+              <nav className="navbar row">
                 <div className="itemNavbar col-3">
                   <img className="logoNav" src="../logocarre.png" />
                 </div>
@@ -39,7 +38,6 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
               </nav>
             </div>
           </div>
-        </div>
         <div className="row">
           <div className="BodyNews col-3">
             <div className="container">
