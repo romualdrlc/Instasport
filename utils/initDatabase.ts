@@ -188,6 +188,51 @@ const getSportCategories = async () => {
   }
 };
 
+const getComment = async (data: any) => {
+  const d = new Date();
+  const date = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
+
+  try {
+    const result = (await getDatabase())
+      .db("instasportDB")
+      .collection("posts")
+      .insertOne({
+        text: data.text,
+        datePost: date,
+        likePost: []
+      }
+      );
+    return result;
+  } catch (e) {
+    console.log(e);
+  } 
+}
+
+const getLike = async (data: any) => {
+
+  try {
+    const result = (await getDatabase())
+      .db("instasportDB")
+      .collection("posts")
+      .updateOne(
+        {
+          likePost: data.like,
+          id: data.id
+        },
+        {
+          $set: {
+            userName: data.userName,
+            Groups: data.active,
+            Birthdate: data.birthdate,
+          },
+        }
+      );
+    return result;
+  } catch (e) {
+    console.log(e);
+  } 
+}
+
 ///////////////////////////
 //////// Export //////////
 //////////////////////////
@@ -197,6 +242,8 @@ export {
   isEmailFound,
   getUserByCookie,
   createNewUser,
+  getComment,
+  getLike,
   getDefaultUsers,
   getSportCategories,
 };

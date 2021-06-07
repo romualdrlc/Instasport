@@ -21,6 +21,7 @@ const Home: NextPage = () => {
   ////// Affichage /////////
   //////////////////////////
   return (
+
     <Layout>
       <div>
         <div className="BodyNews">
