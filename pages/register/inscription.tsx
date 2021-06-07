@@ -207,14 +207,17 @@ const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
 };
 export default Inscription;
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const c = cookies(context).fewlines;
-
-  const currentUsersEmail = await getEmailByCookie(c);
-
+  console.log("insciption", context.req.cookies.fewlines);
+  // const c = cookies(context).fewlines;
+  let currentUsersEmailFromDB = "";
+  const c = context.req.cookies.fewlines;
+  if (c) {
+    currentUsersEmailFromDB = (await getUserByCookie(c)).email;
+  }
+  const sportCategories = await getSportCategories();
   const categoriesImgArrayFromDB = await sportCategories.map((category) => {
     return category.Cover;
   });
-
   return {
     props: {
       categoriesImgArray: categoriesImgArrayFromDB,
