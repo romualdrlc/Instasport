@@ -1,16 +1,34 @@
 import { NextPage, GetServerSideProps } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { getDatabase } from "../../util/mongodb";
-import { getEmailByCookie } from "../../utils/initDatabase";
-import cookies from "next-cookies";
+import { getUserByCookie, getSportCategories } from "../../utils/initDatabase";
 
-const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
-  data,
-  user,
+import cookies from "next-cookies";
+import { useRouter } from "next/router";
+
+
+// const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
+//   categoriesImgArray,
+//   currentUsersEmail,
+// }) => {
+
+const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
+  categoriesImgArray,
   currentUsersEmail,
 }) => {
+  //useRouter
+  const router = useRouter();
+
+  ///////////////////////////
+  /////// useState /////////
+  //////////////////////////
+  const [userName, setUserName] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
+    useState(0);
+
   const [active, setActive] = useState([
     false,
     false,
@@ -23,13 +41,56 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
     false,
   ]);
 
+
+  ///////////////////////////
+  /////// useEffect ////////
+  //////////////////////////
+  useEffect(() => {
+    console.log(usersEmail);
+  }, [userName, birthdate, active, usersEmail]);
+
+  ///////////////////////////
+  ////// registerForm //////
+  //////////////////////////
+  const registerform = async () => {
+    const data = {
+      email: usersEmail,
+      userName: userName,
+      active: active,
+      birthdate: birthdate,
+    };
+    await fetch("/api/registerform", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.message === "ERROR") {
+          setErrorMessage(
+            "Erreur d'inscription, veuillez verifier votre adresse mail"
+          );
+        } else {
+          router.push("/home");
+        }
+      });
+  };
+
+  /////////////////////////
+  ////// Affichage ///////
+  ////////////////////////
+
   return (
     <div className="page-inscription">
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
       <p className="sous-titre-page-inscription text-center">
-        Welcome {user[0].UserName}, please fill in this informations.
+        Welcome {userName}, please fill in this informations.
       </p>
+      {errorMessage ? <p>{errorMessage}</p> : <></>}
       <div className="container">
         <div>
           <div className="row">
@@ -42,6 +103,10 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="UserName"
+                value={userName}
+                onChange={(event) => {
+                  setUserName(event.target.value);
+                }}
               />
               <label htmlFor="exampleInputUserName" className="form-label">
                 Email :
@@ -51,7 +116,10 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                 className="form-control"
                 id="exampleInputEmail"
                 placeholder="Email"
-                value={currentUsersEmail}
+                value={usersEmail}
+                onChange={(event) => {
+                  setUsersEmail(event.target.value);
+                }}
               />
               <label htmlFor="exampleInputBirthDate" className="form-label">
                 Birthdate
@@ -62,6 +130,10 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                 id="exampleInputBirthDate"
                 aria-describedby="emailHelp"
                 placeholder="BirthDate"
+                value={birthdate}
+                onChange={(event) => {
+                  setBirthdate(event.target.value);
+                }}
               />
             </div>
             <div className="col-6">
@@ -70,7 +142,7 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
               </h3>
               <div className="container">
                 <div className="row row-cols-3">
-                  {data.map((value, index) => {
+                  {categoriesImgArray.map((imageOfCategory, index) => {
                     return (
                       <div
                         className="imageInterest col text-center"
@@ -78,7 +150,7 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                       >
                         <img
                           className="imageCircle"
-                          src={value.Cover}
+                          src={imageOfCategory}
                           width="70"
                           height="70"
                           alt=""
@@ -87,6 +159,12 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                           id={index}
                           active={active}
                           setActive={setActive}
+                          counterOfSelectedCategories={
+                            counterOfSelectedCategories
+                          }
+                          setCounterOfSelectedCategories={
+                            setCounterOfSelectedCategories
+                          }
                         />
                       </div>
                     );
@@ -100,7 +178,18 @@ const Inscription: NextPage<{ data; user; currentUsersEmail }> = ({
                   return <div key={"tata" + index}>{value}</div>;
                 })}
               </div>
-              <button type="submit" className="Boutton btn " disabled>
+              <button
+                type="submit"
+                className="Boutton btn"
+                onClick={() => registerform()}
+                disabled={
+                  counterOfSelectedCategories < 3 ||
+                  userName === "" ||
+                  birthdate === "" ||
+                  usersEmail === ""
+                }
+                //disabled={true}
+              >
                 Create
               </button>
             </div>
@@ -122,24 +211,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const currentUsersEmail = await getEmailByCookie(c);
 
-  const mongodb = await getDatabase();
-  const categoSport = await mongodb.db().collection("group").find().toArray();
-  const UserData = await mongodb.db().collection("user").find().toArray();
-  const result = await categoSport.map((value) => {
-    return {
-      id: value.id,
-      userName: value.UserName,
-      Cover: value.Cover,
-    };
+  const categoriesImgArrayFromDB = await sportCategories.map((category) => {
+    return category.Cover;
   });
-  const result2 = await UserData.map((value) => value);
-  const fin = await JSON.parse(JSON.stringify(result));
-  const fin2 = await JSON.parse(JSON.stringify(result2));
+
   return {
     props: {
-      data: fin,
-      user: fin2,
-      currentUsersEmail: currentUsersEmail,
+      categoriesImgArray: categoriesImgArrayFromDB,
+      currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
     },
   };
 };

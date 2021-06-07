@@ -1,23 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const CheckBox: React.FC<any> = ({ id, active, setActive }) => {
-  // const changementBox = (id) => {
-  //   const result = active
-  //   result[id] = true
-  //   setActive(result);
-  //   console.table(active)
-  // };
+const CheckBox: React.FC<any> = ({
+  id,
+  active,
+  setActive,
+  counterOfSelectedCategories,
+  setCounterOfSelectedCategories
+}) => {
+  const [buttonSelected, setButtonSelected] = useState(active[id]);
 
+  useEffect(() => {
+  }, [buttonSelected]);
   return (
     <>
       <button
-        className="checkBox"
+        className={buttonSelected ? "checkBoxActive" : "checkBoxInactive"}
         onClick={() => {
           const result = active;
-          console.log(result[id]);
           result[id] = !result[id];
+          result[id]
+            ? setCounterOfSelectedCategories(counterOfSelectedCategories + 1)
+            : setCounterOfSelectedCategories(counterOfSelectedCategories - 1);
           setActive(result);
-          console.table(active);
+          setButtonSelected(!buttonSelected);
         }}
       >
         ok

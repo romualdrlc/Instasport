@@ -1,3 +1,4 @@
+
 import { NextPage, GetServerSideProps } from "next";
 import React from "react";
 import { getDatabase } from "../util/mongodb";
@@ -110,17 +111,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const UserProfile: React.FC = (props: any) => {
-  return (
-    <>
-      <h1> page perso du profil et modifiable</h1>
-      {props.url}
-      <p>
-        mettre un lien vers page principale avec name login et photo login et
-        fil d'actu
-      </p>
-    </>
-  );
-};
 
-export { UserProfile };
+
+export default UserProfile;
+
