@@ -11,8 +11,10 @@ import { useRouter } from "next/router";
 //   currentUsersEmail,
 // }) => {
 
-  const Inscription: NextPage = () => {
-
+const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
+  categoriesImgArray,
+  currentUsersEmail,
+}) => {
   //useRouter
   const router = useRouter();
 
@@ -137,7 +139,7 @@ import { useRouter } from "next/router";
                 Interests (minimum 3)
               </h3>
               <div className="container">
-                {/* <div className="row row-cols-3">
+                <div className="row row-cols-3">
                   {categoriesImgArray.map((imageOfCategory, index) => {
                     return (
                       <div
@@ -165,7 +167,7 @@ import { useRouter } from "next/router";
                       </div>
                     );
                   })}
-                </div> */}
+                </div>
               </div>
             </div>
             <div className="text-center">
@@ -207,11 +209,13 @@ export default Inscription;
 //// serverSideProps ////
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const c = cookies(context).fewlines;
-  let currentUsersEmailFromDB="";
-if (c) {
-  currentUsersEmailFromDB = await (await getUserByCookie(c)).emal;
-}
+  console.log("insciption", context.req.cookies.fewlines);
+  // const c = cookies(context).fewlines;
+  let currentUsersEmailFromDB = "";
+  const c = context.req.cookies.fewlines;
+  if (c) {
+    currentUsersEmailFromDB = (await getUserByCookie(c)).email;
+  }
 
   // const mongodb = await getDatabase();
   // const sportCategories = await mongodb.db().collection("group").find().toArray();
@@ -223,12 +227,14 @@ if (c) {
     return category.Cover;
   });
   //const result2 = await UserData.map((value) => value);
-  const categoriesImgArrayParsed = await JSON.parse(JSON.stringify(categoriesImgArrayFromDB));
+  const categoriesImgArrayParsed = await JSON.stringify(
+    categoriesImgArrayFromDB
+  );
   //const fin2 = await JSON.parse(JSON.stringify(result2));
   return {
     props: {
-      // categoriesImgArray: categoriesImgArrayParsed,
-      // currentUsersEmail: currentUsersEmailFromDB,
+      categoriesImgArray: categoriesImgArrayParsed,
+      currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
     },
   };
 };

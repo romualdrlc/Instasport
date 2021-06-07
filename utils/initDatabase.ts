@@ -160,13 +160,13 @@ const createNewUser = async (data: any) => {
     console.log(e);
   }
 };
-const getDafaultUsers = async () => {
+const getDefaultUsers = async () => {
   try {
     const result = (await getDatabase())
       .db("instasportDB")
       .collection("user")
-      .find({ id: { $exists: true } });
-    //.toArray();
+      .find({ id: { $exists: true } })
+      .toArray();
 
     return result;
   } catch (e) {
@@ -179,7 +179,8 @@ const getSportCategories = async () => {
     const result = (await getDatabase())
       .db("instasportDB")
       .collection("group")
-      .find();
+      .find()
+      .toArray();
 
     return result;
   } catch (e) {
@@ -196,6 +197,6 @@ export {
   isEmailFound,
   getUserByCookie,
   createNewUser,
-  getDafaultUsers,
+  getDefaultUsers,
   getSportCategories,
 };
