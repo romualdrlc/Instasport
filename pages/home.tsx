@@ -3,7 +3,6 @@ import React from "react";
 import { getDatabase } from "../util/mongodb";
 
 const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
-
   ///////////////////////////
   ////// Affichage /////////
   //////////////////////////
@@ -34,7 +33,7 @@ const newsletter: NextPage<{ data; user }> = ({ data, user }) => {
                     src={user[0].photo}
                     alt=""
                   />
-                  <a href="/">Logout</a>
+                  <a href="/api/oauth/logout">Logout</a>
                 </div>
               </nav>
             </div>
