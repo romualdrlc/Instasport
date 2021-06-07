@@ -193,7 +193,7 @@ const getComment = async (data: any) => {
   const date = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
 
   try {
-    const result = (await initDB())
+    const result = (await getDatabase())
       .db("instasportDB")
       .collection("posts")
       .insertOne({
@@ -211,7 +211,7 @@ const getComment = async (data: any) => {
 const getLike = async (data: any) => {
 
   try {
-    const result = (await initDB())
+    const result = (await getDatabase())
       .db("instasportDB")
       .collection("posts")
       .updateOne(
