@@ -30,7 +30,6 @@ import { getDafaultUsers } from "../utils/initDatabase";
         });
     };
 
-
   ///////////////////////////
   ////// Affichage /////////
   //////////////////////////
@@ -65,7 +64,7 @@ import { getDafaultUsers } from "../utils/initDatabase";
                     src={user[0].photo}
                     alt=""
                   />
-                  <a href="/">Logout</a>
+                  <a href="/api/oauth/logout">Logout</a>
                 </div>
               </nav>
             </div> */}
