@@ -67,6 +67,36 @@ const Home: NextPage = (props: any) => {
           </div>
         </nav>
       </div>
+          {/* <div className="Nav">
+    <nav className="row">
+      <div className="itemNavbar col-3">
+        <img className="logoNav" src="../logocarre.png" />
+      </div>
+      <div className="itemNavbar col-6">
+        <div className="SearchBar d-flex">
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+      </div>
+      <div className="itemNavbar col-3">
+        <div className="row">
+      <p>{props.currentUsersName ? props.currentUsersName: ""}</p>
+      </div><div className="row">
+        <img
+          className="photoNav"
+          key={props.currentUsersName ? props.currentUsersName : ""}
+          src={props.currentUsersCover ? props.currentUsersCover: "https://smashicons.com/uploads/media/icon_thumbnail/0007/26/thumb_625671_icon_thumbnail_small.png"}
+          //src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+          alt=""
+        /></div><div className="row">
+        {props.currentUsersName  ? <a href="/">Logout</a> : <a href="/">Login</a> }
+      </div></div>
+    </nav>
+    {/* <p>{props.currentCookie}</p> </div> */}
       <div>
         <div className="BodyNews">
           <div className="container">

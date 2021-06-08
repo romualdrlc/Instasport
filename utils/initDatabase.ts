@@ -247,6 +247,25 @@ const getSearch = async (data: any) => {
   }
 };
 
+const logoutUser = async (data: any) => {
+  const cookieToken = data.usersToken;
+  const currentDate = new Date();
+  let result;
+  try {
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("user")
+      .updateOne(
+        {
+          "cookie.token": cookieToken,
+        },
+        { $set: { cookie: { token: cookieToken, expdate: currentDate } } }
+      );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 ///////////////////////////
 //////// Export //////////
 //////////////////////////
@@ -261,4 +280,5 @@ export {
   getDefaultUsers,
   getSportCategories,
   getSearch,
+  logoutUser,
 };
