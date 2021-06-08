@@ -1,13 +1,41 @@
-import React from "react";
 import { NextPage, GetServerSideProps } from "next";
 import initClient from "../utils/initClient";
+import React, { useEffect, useState } from "react";
 //import { getUserByCookie } from "../utils/initDatabase";
 import cookies from "next-cookies";
+import { serialize } from "v8";
 //import { useRouter } from "next/router";
 
 //const Navar: React.FC = (props: any) => {
 const Navar: NextPage = (props: any) => {
-  console.log("tototototototo", props.context);
+  const [searchText, setSearchText] = useState("");
+
+  const searchInDB = async () => {
+    // const data = searchText;
+
+    // await fetch("/api/search").then((res) => {
+    //   console.log("recherche api route", res);
+    //   res.json();
+    // });
+    const data = {
+      UserName: searchText,
+    };
+    await fetch("/api/search", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  };
+
+  function handleChange(event) {
+    setSearchText(event.target.value);
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+  }
   // const isLogged: any = async (cookie: string) => {
   //   await fetch("/api/islogged").then((res) => res.json());
   // };
@@ -20,13 +48,21 @@ const Navar: NextPage = (props: any) => {
             <img className="logoNav" src="../logocarre.png" />
           </div>
           <div className="itemNavbar col-6">
-            <div className="SearchBar d-flex">
+            <div className="SearchBar d-flex" onSubmit={(e) => handleSubmit(e)}>
               <input
+                onChange={handleChange}
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
+              <button
+                className="btn btn-warning"
+                type="submit"
+                onClick={() => searchInDB()}
+              >
+                <i className="fa fa-search"></i>
+              </button>
             </div>
           </div>
           <div className="itemNavbar col-3">
