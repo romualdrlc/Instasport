@@ -1,9 +1,7 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
-//import { getDatabase } from "../../utils/mongodb";
 import { getUserByCookie, getSportCategories } from "../../utils/initDatabase";
-
 import { useRouter } from "next/router";
 
 // const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
