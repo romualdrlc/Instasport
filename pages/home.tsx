@@ -21,7 +21,7 @@ const Home: NextPage = (props: any) => {
   //////////////////////////
   return (
     <Layout>
-          <div className="Nav">
+          {/* <div className="Nav">
     <nav className="row">
       <div className="itemNavbar col-3">
         <img className="logoNav" src="../logocarre.png" />
@@ -50,8 +50,7 @@ const Home: NextPage = (props: any) => {
         {props.currentUsersName  ? <a href="/">Logout</a> : <a href="/">Login</a> }
       </div></div>
     </nav>
-    {/* <p>{props.currentCookie}</p> */}
-  </div>
+    {/* <p>{props.currentCookie}</p> </div> */}
       <div>
         <div className="BodyNews">
           <div className="container">

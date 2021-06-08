@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { getDatabase } from "../utils/mongodb";
-import commentPost from "../components/commentPost";
 import CommentPost from "../components/commentPost";
+import Layout from "../components/Layout";
 
 const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   currentUsersEmail,
@@ -118,9 +118,10 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   //// Affichage ////
   ///////////////////
   return (
+    <Layout>
     <div className="bodyPost">
       <div className="BodyNews">
-        <div className="row">
+        {/* <div className="row">
           <div className="Nav">
             <nav className="navbar row">
               <div className="itemNavbar col-3"></div>
@@ -139,7 +140,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
               </div>
             </nav>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="BodyNews col-3">
             <div className="container">
@@ -210,6 +211,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

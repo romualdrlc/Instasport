@@ -3,10 +3,12 @@ import initClient from "../utils/initClient";
 import React, { useEffect, useState } from "react";
 //import { getUserByCookie } from "../utils/initDatabase";
 import cookies from "next-cookies";
-import { serialize } from "v8";
 //import { useRouter } from "next/router";
 
 //const Navar: React.FC = (props: any) => {
+
+import cookie from "js-cookie";
+
 const Navar: NextPage = (props: any) => {
   const [searchText, setSearchText] = useState("");
 
@@ -20,6 +22,15 @@ const Navar: NextPage = (props: any) => {
   function handleSubmit(event) {
     event.preventDefault();
   }
+
+  const cookieFromSession = cookie.get("fewlines");
+  
+
+  const logoutUser= async () => {
+    cookie.remove("fewlines", { path: "/" });
+    await fetch("/api/logout?usersToken=" + cookieFromSession);
+  };
+
   // const isLogged: any = async (cookie: string) => {
   //   await fetch("/api/islogged").then((res) => res.json());
   // };
@@ -51,7 +62,7 @@ const Navar: NextPage = (props: any) => {
           </div>
           <div className="itemNavbar col-3">
             <div className="row">
-              {/* <p>{props.currentUsersName ? props.currentUsersName : ""}</p> */}
+              {/* <p>{cookieFromSession ? userName : ""}</p> */}
             </div>
             <div className="row">
               <img
@@ -66,16 +77,15 @@ const Navar: NextPage = (props: any) => {
                 alt=""
               />
             </div>
-            {/* <div className="row">
-              {props.currentUsersName ? (
-                <a href="/">Logout</a>
+            <div className="row">
+              {cookieFromSession ? (
+                <button onClick={() => logoutUser()}>Logout</button>
               ) : (
                 <a href="/">Login</a>
-              )} */}
-            {/* </div> */}
+              )}
+            </div>
           </div>
         </nav>
-        <p>{props.context}</p>
       </div>
     </>
   );
