@@ -20,7 +20,7 @@ const CommentPost: NextPage<{ data }> = ({ data }) => {
                 <br />
                 <span>{value.datePost}</span>
                 <br />
-                <p>{value.textPost}</p>
+                <p>{value.commentsPost}</p>
               </div>
               <button
                 className="btn btn-warning"

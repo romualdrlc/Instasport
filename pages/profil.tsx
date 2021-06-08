@@ -10,6 +10,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   data,
   user,
 }) => {
+
   /////////////////////
   ///// useState /////
   ////////////////////
@@ -36,7 +37,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   ////////////////////
   const postComment = async () => {
     const data = {
-      textPost: input,
+      commentsPost: input,
     };
     await fetch("/api/postcomment", {
       method: "POST",
@@ -56,6 +57,9 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
       });
   };
 
+  ////////////////////
+  //// postLike /////
+  ///////////////////
   const postLike = async () => {
     const data = {
       likePost: like,
@@ -78,6 +82,9 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
       });
   };
 
+  ////////////////////
+  /// commentPost ///
+  ///////////////////
   const commentPost = () => {
     return data.map((value, index) => {
       return (
@@ -165,10 +172,23 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
             </div>
           </div>
           <div className="BodyNews col-5">
-            <button onClick={() => setIsCommentVisible(!isCommentVisible)}>
-              comment
-            </button>
-            {console.log(isCommentVisible)}
+            {data.map((value, index) => {
+              return (
+                <div className="carte-post">
+                <div className="carte card">
+                  <img src={value.photosPost} />
+                  <br />
+                  <button
+                    className="bouton-comment"
+                    onClick={() => setIsCommentVisible(!isCommentVisible)}
+                  >
+                    comment
+                  </button>
+                </div>
+                <br />
+                </div>
+              );
+            })}
           </div>
           <div className="BodyNews col-4">
             <div className="container">
