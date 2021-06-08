@@ -197,4 +197,6 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
       </div>
     </div>
   );
+
 };
+

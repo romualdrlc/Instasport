@@ -20,7 +20,6 @@ const Home: NextPage = (props: any) => {
   ////// Affichage /////////
   //////////////////////////
   return (
-
     <Layout>
           <div className="Nav">
     <nav className="row">
@@ -162,7 +161,7 @@ const Home: NextPage = (props: any) => {
                     </div>
                   </div>
                 </div>
-                <form id="algin-form">
+                {/* <form id="algin-form">
                   <div className="form-group">
                     <h4>Leave a comment</h4>
                     <label htmlFor="message">Message</label>
@@ -180,7 +179,7 @@ const Home: NextPage = (props: any) => {
                       Post Comment
                     </button>
                   </div>
-                </form>
+                </form> */}
               </div>
             </div>
           </div>
