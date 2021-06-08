@@ -32,13 +32,9 @@ const Navar: NextPage = (props: any) => {
           <div className="itemNavbar col-3">
             <img
               className="photoNav"
-              //key={props.user.id ? props.user.id : ""}
-              //src={props.user.Cover ? props.user.Cover : "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"}
               src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
               alt=""
             />
-            {/* {(props.user && props.user.id) ? <a href="/">Logout</a> : <a href={props.url}>Login</a> }
-    <p>{(props.user && props.user.userName) ? props.user.userName : ""}</p> */}
           </div>
         </nav>
         <p>{props.context}</p>

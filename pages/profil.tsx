@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NextPage, GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { getDatabase } from "../utils/mongodb";
+import commentPost from "../components/commentPost"
+import CommentPost from "../components/commentPost";
 
 const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   currentUsersEmail,
@@ -33,7 +35,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   ////////////////////
   const postComment = async () => {
     const data = {
-      text: input,
+      textPost: input,
     };
     await fetch("/api/postcomment", {
       method: "POST",
@@ -68,7 +70,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
       .then((res) => res.json())
       .then((res) => {
         if (res.message === "ERROR") {
-          setErrorMessage("please enter a message");
+          setErrorMessage("please do it again");
         } else {
           router.push("/profil");
         }
@@ -112,7 +114,7 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
               {errorMessage ? <p>{errorMessage}</p> : <></>}
               {user.map((value, index) => {
                 return (
-                  <div className="DivSugg">
+                  <div className="DivSugg" key={index}>
                     <div>
                       <img
                         key={value.id}
@@ -129,39 +131,18 @@ const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
               })}
             </div>
           </div>
-          <div className="BodyNews col-5"></div>
+          <div className="BodyNews col-5">
+            <button onClick={(e) => e ? <CommentPost data /> : ""}>
+              comment
+            </button>
+          </div>
           <div className="BodyNews col-4">
             <div className="container">
               <div>
                 <div className="container">
                   <div className="row">
-                    <div className="">
-                      <div className="darker mt-4 text-justify">
-                        <img
-                          src="https://i.imgur.com/CFpa3nK.jpg"
-                          alt=""
-                          className="rounded-circle"
-                          width={40}
-                          height={40}
-                        />
-                        <div>
-                          <h4>{data[0].userId}</h4>
-                          <br />
-                          <span>{data[0].datePost}</span>
-                          <br />
-                          <p>{data[8].textPost}</p>
-                        </div>
-                        <button
-                          className="btn btn-warning"
-                          onClick={() => {
-                            like ? setLike(like - 1) : setLike(like + 1);
-                          }}
-                        >
-                          {data[8].likePost
-                            ? data[8].likePost + like
-                            : data[8].likePost + like}
-                        </button>
-                      </div>
+                    <div className="comment-card">
+                      comment
                     </div>
                   </div>
                 </div>

@@ -1,10 +1,7 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-//import { getDatabase } from "../utils/mongodb";
-import { getDefaultUsers } from "../utils/initDatabase";
 
-//const newsletter: NextPage<{ dafaultUsers }> = ({dafaultUsers}) => {
 const Home: NextPage = () => {
   const [listUsers, setListUsers] = useState([]);
 

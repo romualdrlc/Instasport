@@ -150,6 +150,7 @@ PARTIII Usernews
 .photoNav {
   border-radius: 4rem;
   margin-top: 1rem;
+  height: 10rem;
 }
 .checkBoxActive {
   background-color: #fbe23b;
@@ -163,6 +164,8 @@ PARTIII Usernews
   border-bottom: 1px solid white;
   position: fixed;
   background-color: #191b1e;
+  width: 100%;
+  z-index: 1;
 }
 
 .SearchBar {
@@ -432,4 +435,8 @@ a[target="_blank"] {
 
 .profilPhoto {
   text-align: center;
+}
+.card-comment {
+  max-width: 30rem;
+  width: 23rem;
 }
