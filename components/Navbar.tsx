@@ -11,23 +11,7 @@ const Navar: NextPage = (props: any) => {
   const [searchText, setSearchText] = useState("");
 
   const searchInDB = async () => {
-    // const data = searchText;
-
-    // await fetch("/api/search").then((res) => {
-    //   console.log("recherche api route", res);
-    //   res.json();
-    // });
-    const data = {
-      UserName: searchText,
-    };
-    await fetch("/api/search", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    await fetch("/api/search?searchValue=" + searchText);
   };
 
   function handleChange(event) {

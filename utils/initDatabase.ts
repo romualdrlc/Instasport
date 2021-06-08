@@ -232,15 +232,15 @@ const getLike = async (data: any) => {
 };
 
 const getSearch = async (data: any) => {
-  console.log("input serach bar", data);
-  let searchItem = "/" + data + "/";
-
+  const regex2 = new RegExp(data.searchValue, "i");
+  const arrayData = [regex2];
   try {
     const result = (await getDatabase())
       .db("instasportDB")
       .collection("user")
-      .find({ $UserName: { $search: searchItem } });
-    console.log("reponse db username", result);
+      .find({ userName: { $in: arrayData } })
+      .toArray();
+    console.log("result", await result);
     return result;
   } catch (e) {
     console.log(e);
