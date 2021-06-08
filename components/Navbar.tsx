@@ -50,15 +50,29 @@ const Navar: NextPage = (props: any) => {
             </div>
           </div>
           <div className="itemNavbar col-3">
-            <img
-              className="photoNav"
-              //key={props.user.id ? props.user.id : ""}
-              //src={props.user.Cover ? props.user.Cover : "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"}
-              src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
-              alt=""
-            />
-            {/* {(props.user && props.user.id) ? <a href="/">Logout</a> : <a href={props.url}>Login</a> }
-    <p>{(props.user && props.user.userName) ? props.user.userName : ""}</p> */}
+            <div className="row">
+              {/* <p>{props.currentUsersName ? props.currentUsersName : ""}</p> */}
+            </div>
+            <div className="row">
+              <img
+                className="photoNav"
+                // key={props.currentUsersName ? props.currentUsersName : ""}
+                // src={
+                //   props.currentUsersCover
+                //     ? props.currentUsersCover
+                //     : "https://smashicons.com/uploads/media/icon_thumbnail/0007/26/thumb_625671_icon_thumbnail_small.png"
+                // }
+                src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+                alt=""
+              />
+            </div>
+            {/* <div className="row">
+              {props.currentUsersName ? (
+                <a href="/">Logout</a>
+              ) : (
+                <a href="/">Login</a>
+              )} */}
+            {/* </div> */}
           </div>
         </nav>
         <p>{props.context}</p>
