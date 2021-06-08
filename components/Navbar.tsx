@@ -3,7 +3,7 @@ import initClient from "../utils/initClient";
 import React, { useEffect, useState } from "react";
 //import { getUserByCookie } from "../utils/initDatabase";
 import cookies from "next-cookies";
-//import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 //const Navar: React.FC = (props: any) => {
 
@@ -11,9 +11,18 @@ import cookie from "js-cookie";
 
 const Navar: NextPage = (props: any) => {
   const [searchText, setSearchText] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [infoUser, setinfoUser] = useState([]);
+  const router = useRouter();
 
   const searchInDB = async () => {
-    await fetch("/api/search?searchValue=" + searchText);
+    const user = await fetch("/api/search?searchValue=" + searchText);
+    console.log(user);
+    // if (res.message === "ERROR") {
+    //   setErrorMessage("please enter a message");
+    // } else {
+    //   router.push(`/profil/${searchText}`);
+    // }
   };
 
   function handleChange(event) {
@@ -24,9 +33,8 @@ const Navar: NextPage = (props: any) => {
   }
 
   const cookieFromSession = cookie.get("fewlines");
-  
 
-  const logoutUser= async () => {
+  const logoutUser = async () => {
     cookie.remove("fewlines", { path: "/" });
     await fetch("/api/logout?usersToken=" + cookieFromSession);
   };
