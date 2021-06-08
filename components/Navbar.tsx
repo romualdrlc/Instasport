@@ -79,7 +79,7 @@ const Navar: NextPage = (props: any) => {
             </div>
             <div className="row">
               {cookieFromSession ? (
-                <button onClick={() => logoutUser()}>Logout</button>
+                <button onClick={() => logoutUser()}><a href="/">Logout</a></button>
               ) : (
                 <a href="/">Login</a>
               )}
