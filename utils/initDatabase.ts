@@ -138,7 +138,7 @@ const getUserByCookie = async (cookie: any) => {
 ///////////////////////////
 ///// CreateNewUser //////
 //////////////////////////
-const createNewUser = async (data: any) => {
+const completeCreationNewUser = async (data: any) => {
   try {
     const result = (await getDatabase())
       .db("instasportDB")
@@ -255,7 +255,7 @@ export {
   updateToken,
   isEmailFound,
   getUserByCookie,
-  createNewUser,
+  completeCreationNewUser,
   getComment,
   getLike,
   getDefaultUsers,

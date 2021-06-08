@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createNewUser } from "../../utils/initDatabase";
+import { completeCreationNewUser } from "../../utils/initDatabase";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
-  const mongoResponse = await createNewUser(request.body);
+  const mongoResponse = await completeCreationNewUser(request.body);
   if (mongoResponse.modifiedCount === 1) {
     response.json({ message: "register OK" });
   } else {
