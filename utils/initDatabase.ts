@@ -197,7 +197,7 @@ const getComment = async (data: any) => {
       .db("instasportDB")
       .collection("posts")
       .insertOne({
-        textPost: data.textPost,
+        commentsPost: [data.commentsPost],
         datePost: date,
         likePost: [],
       });
