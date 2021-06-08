@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "../../components/checkBox";
 //import { getDatabase } from "../../utils/mongodb";
 import { getUserByCookie, getSportCategories } from "../../utils/initDatabase";
-import cookies from "next-cookies";
+
 import { useRouter } from "next/router";
 
 // const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
@@ -11,9 +11,11 @@ import { useRouter } from "next/router";
 //   currentUsersEmail,
 // }) => {
 
-const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
+const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUsersName, currentUserCover }> = ({
   categoriesImgArray,
   currentUsersEmail,
+  currentUsersName,
+  currentUserCover
 }) => {
   //useRouter
   const router = useRouter();
@@ -79,7 +81,38 @@ const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
   /////////////////////////
   ////// Affichage ///////
   ////////////////////////
-  return (
+  return (<>
+    <div className="Nav">
+    <nav className="row">
+      <div className="itemNavbar col-3">
+        <img className="logoNav" src="../logocarre.png" />
+      </div>
+      <div className="itemNavbar col-6">
+        <div className="SearchBar d-flex">
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+      </div>
+      <div className="itemNavbar col-3">
+        <div className="row">
+      <p>{currentUsersName ? currentUsersName: ""}</p>
+      </div><div className="row">
+        <img
+          className="photoNav img-thumbnail rounded"
+          key={currentUsersName ? currentUsersName : ""}
+          src={currentUserCover ? currentUserCover: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"}
+          //src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+          alt=""
+        /></div><div className="row">
+        {currentUsersName  ? <a href="/">Logout</a> : <a href="/">Login</a> }
+      </div></div>
+    </nav>
+    {/* <p>{props.currentCookie}</p> */}
+  </div>
     <div className="page-inscription">
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
@@ -198,7 +231,7 @@ const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
           }
         `}</style>
       </div>
-    </div>
+    </div></>
   );
 };
 export default Inscription;
@@ -207,12 +240,19 @@ export default Inscription;
 //// serverSideProps ////
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("insciption", context.req.cookies.fewlines);
-  // const c = cookies(context).fewlines;
+
+  //const c = cookies(context).fewlines;
+
   let currentUsersEmailFromDB = "";
+  let currentUsersName = "";
+  let currentUsersCover ="";
+
   const c = context.req.cookies.fewlines;
   if (c) {
-    currentUsersEmailFromDB = (await getUserByCookie(c)).email;
+    const currentUser = await getUserByCookie(c);
+    currentUsersEmailFromDB = currentUser.email;
+    currentUsersName = currentUser.userName;
+    currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
   }
 
   const sportCategories = await getSportCategories();
@@ -225,6 +265,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       categoriesImgArray: categoriesImgArrayFromDB,
       currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
+      currentUsersName: JSON.parse(JSON.stringify(currentUsersName)),
+      currentUserCover: currentUsersCover,
     },
   };
 };
