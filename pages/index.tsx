@@ -10,7 +10,7 @@ const SignInWithFewLines: React.FC = (props: any) => {
   return (
     <Layout>
       <>
-        <h1>HELLO</h1>
+        <h1>WELCOME</h1>
         <div className="CardFullLogin text-center">
           <div className="text-center">
             <img className="logo" src="logocarre.png" />

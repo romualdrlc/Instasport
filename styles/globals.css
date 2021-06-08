@@ -101,6 +101,7 @@ PARTIII REGISTER
 .page-inscription {
   background-color: #191b1e;
   font-family: "Kollektif";
+  padding-top: 300px;
 }
 .titre-page-inscription {
   color: white;
@@ -163,6 +164,7 @@ PARTIII Usernews
   border-bottom: 1px solid white;
   position: fixed;
   background-color: #191b1e;
+  top: 0;
 }
 
 .SearchBar {
