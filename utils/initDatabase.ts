@@ -266,6 +266,26 @@ const logoutUser = async (data: any) => {
   }
 };
 
+const getSearchUserById = async (id: any) => {
+  console.log("ididididididididididiid", id);
+  const ObjectId = require("mongodb").ObjectID;
+  const idForFilter = ObjectId(id);
+  let result;
+  try {
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("user")
+      .findOne({
+        _id: idForFilter,
+      });
+  } catch (e) {
+    console.log(e);
+  }
+  const foundUser = await result;
+  console.log("🟠", foundUser);
+  return foundUser ? foundUser : "";
+};
+
 ///////////////////////////
 //////// Export //////////
 //////////////////////////
@@ -281,4 +301,5 @@ export {
   getSportCategories,
   getSearch,
   logoutUser,
+  getSearchUserById,
 };

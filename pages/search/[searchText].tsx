@@ -23,7 +23,11 @@ const SearchText: NextPage = (props: any) => {
       <Layout />
       <div className="searchpage">
         {userList.map((value, index) => {
-          return <p key={index}>{value.userName}</p>;
+          return (
+            <p key={index}>
+              <a href={`/userprofil/${value._id}`}>{value.userName}</a>
+            </p>
+          );
         })}
       </div>
     </>
