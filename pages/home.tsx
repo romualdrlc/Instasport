@@ -1,8 +1,10 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import { getUserByCookie } from "../utils/initDatabase";
 
-const Home: NextPage = () => {
+//const newsletter: NextPage<{ dafaultUsers }> = ({dafaultUsers}) => {
+const Home: NextPage = (props: any) => {
   const [listUsers, setListUsers] = useState([]);
 
   useEffect(() => {
@@ -18,8 +20,38 @@ const Home: NextPage = () => {
   ////// Affichage /////////
   //////////////////////////
   return (
-
     <Layout>
+          <div className="Nav">
+    <nav className="row">
+      <div className="itemNavbar col-3">
+        <img className="logoNav" src="../logocarre.png" />
+      </div>
+      <div className="itemNavbar col-6">
+        <div className="SearchBar d-flex">
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </div>
+      </div>
+      <div className="itemNavbar col-3">
+        <div className="row">
+      <p>{props.currentUsersName ? props.currentUsersName: ""}</p>
+      </div><div className="row">
+        <img
+          className="photoNav"
+          key={props.currentUsersName ? props.currentUsersName : ""}
+          src={props.currentUsersCover ? props.currentUsersCover: "https://smashicons.com/uploads/media/icon_thumbnail/0007/26/thumb_625671_icon_thumbnail_small.png"}
+          //src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
+          alt=""
+        /></div><div className="row">
+        {props.currentUsersName  ? <a href="/">Logout</a> : <a href="/">Login</a> }
+      </div></div>
+    </nav>
+    {/* <p>{props.currentCookie}</p> */}
+  </div>
       <div>
         <div className="BodyNews">
           <div className="container">
@@ -129,7 +161,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                 </div>
-                <form id="algin-form">
+                {/* <form id="algin-form">
                   <div className="form-group">
                     <h4>Leave a comment</h4>
                     <label htmlFor="message">Message</label>
@@ -147,7 +179,7 @@ const Home: NextPage = () => {
                       Post Comment
                     </button>
                   </div>
-                </form>
+                </form> */}
               </div>
             </div>
           </div>
@@ -161,36 +193,21 @@ export default Home;
 /////////////////////////
 /// serverSideProps ////
 ////////////////////////
-export const getServerSideProps: GetServerSideProps = async () => {
-  // const mongodb = await getDatabase();
-  // //const categoSport = await mongodb.db().collection("posts").find().toArray();
-  // const UserData = await mongodb.db().collection("user").find().toArray();
-  // //const result = await categoSport.map((value) => {
-  // //   return {
-  // //     id: value.id,
-  // //     userId: value.userId,
-  // //     datePost: value.datePost,
-  // //     photosPost: value.photosPost,
-  // //     textPost: value.textPost,
-  // //     likePost: value.likePost,
-  // //     commentsPost: value.commentsPost,
-  // //   };
-  // // });
-  // const result2 = await UserData.map((value) => {
-  //   return {
-  //     id: value.Id,
-  //     UserName: value.UserName,
-  //     photo: value.Cover,
-  //   };
-  // });
-  // //const fin = await JSON.parse(JSON.stringify(result));
-  // const fin2 = await JSON.parse(JSON.stringify(result2));
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let currentUsersName = "";
+  let currentUsersCover ="";
 
-  //const dafaultUsers = await getDafaultUsers();
+  const c = context.req.cookies.fewlines;
+  if (c) {
+    const currentUser = await getUserByCookie(c);
+    currentUsersName = currentUser.userName;
+    currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
+  }
 
   return {
     props: {
-      //dafaultUsers: dafaultUsers
+      currentUsersName : currentUsersName ? JSON.parse(JSON.stringify(currentUsersName)) : "",
+      currentUsersCover : currentUsersCover,
     },
   };
 };

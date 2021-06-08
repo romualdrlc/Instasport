@@ -21,7 +21,7 @@ const Layout: React.FC = ({ children }) => {
           crossOrigin="anonymous"
         />
       </Head>
-      <Navbar />
+      <Navbar/>
       <main>{children}</main>
     </>
   );

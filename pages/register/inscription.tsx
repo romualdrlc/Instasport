@@ -9,9 +9,11 @@ import { useRouter } from "next/router";
 //   currentUsersEmail,
 // }) => {
 
-const Inscription: NextPage<{ categoriesImgArray; currentUsersEmail }> = ({
+const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUsersName, currentUserCover }> = ({
   categoriesImgArray,
   currentUsersEmail,
+  currentUsersName,
+  currentUserCover
 }) => {
   //useRouter
   const router = useRouter();
@@ -205,12 +207,19 @@ export default Inscription;
 //// serverSideProps ////
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("insciption", context.req.cookies.fewlines);
-  // const c = cookies(context).fewlines;
+
+  //const c = cookies(context).fewlines;
+
   let currentUsersEmailFromDB = "";
+  let currentUsersName = "";
+  let currentUsersCover ="";
+
   const c = context.req.cookies.fewlines;
   if (c) {
-    currentUsersEmailFromDB = (await getUserByCookie(c)).email;
+    const currentUser = await getUserByCookie(c);
+    currentUsersEmailFromDB = currentUser.email;
+    currentUsersName = currentUser.userName;
+    currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
   }
 
   const sportCategories = await getSportCategories();
@@ -223,6 +232,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       categoriesImgArray: categoriesImgArrayFromDB,
       currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
+      currentUsersName: JSON.parse(JSON.stringify(currentUsersName)),
+      currentUserCover: currentUsersCover,
     },
   };
 };

@@ -166,6 +166,7 @@ PARTIII Usernews
   background-color: #191b1e;
   width: 100%;
   z-index: 1;
+  top: 0;
 }
 
 .SearchBar {
