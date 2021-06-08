@@ -1,6 +1,5 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import Layout from "../components/Layout";
 import initClient from "../utils/initClient";
 
 const SignInWithFewLines: React.FC = (props: any) => {
@@ -8,7 +7,6 @@ const SignInWithFewLines: React.FC = (props: any) => {
   ////// Affichage /////////
   //////////////////////////
   return (
-    <Layout>
       <>
         <h1>WELCOME</h1>
         <div className="CardFullLogin text-center">
@@ -24,7 +22,6 @@ const SignInWithFewLines: React.FC = (props: any) => {
           </button>
         </div>
       </>
-    </Layout>
   );
 };
 
