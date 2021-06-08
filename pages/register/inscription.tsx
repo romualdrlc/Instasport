@@ -81,38 +81,7 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
   /////////////////////////
   ////// Affichage ///////
   ////////////////////////
-  return (<>
-    <div className="Nav">
-    <nav className="row">
-      <div className="itemNavbar col-3">
-        <img className="logoNav" src="../logocarre.png" />
-      </div>
-      <div className="itemNavbar col-6">
-        <div className="SearchBar d-flex">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-        </div>
-      </div>
-      <div className="itemNavbar col-3">
-        <div className="row">
-      <p>{currentUsersName ? currentUsersName: ""}</p>
-      </div><div className="row">
-        <img
-          className="photoNav img-thumbnail rounded"
-          key={currentUsersName ? currentUsersName : ""}
-          src={currentUserCover ? currentUserCover: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"}
-          //src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
-          alt=""
-        /></div><div className="row">
-        {currentUsersName  ? <a href="/">Logout</a> : <a href="/">Login</a> }
-      </div></div>
-    </nav>
-    {/* <p>{props.currentCookie}</p> */}
-  </div>
+  return (
     <div className="page-inscription">
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
@@ -231,7 +200,7 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
           }
         `}</style>
       </div>
-    </div></>
+    </div>
   );
 };
 export default Inscription;
