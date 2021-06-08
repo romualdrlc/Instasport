@@ -21,7 +21,6 @@ const Home: NextPage = () => {
   ////// Affichage /////////
   //////////////////////////
   return (
-
     <Layout>
       <div>
         <div className="BodyNews">
@@ -132,7 +131,7 @@ const Home: NextPage = () => {
                     </div>
                   </div>
                 </div>
-                <form id="algin-form">
+                {/* <form id="algin-form">
                   <div className="form-group">
                     <h4>Leave a comment</h4>
                     <label htmlFor="message">Message</label>
@@ -150,7 +149,7 @@ const Home: NextPage = () => {
                       Post Comment
                     </button>
                   </div>
-                </form>
+                </form> */}
               </div>
             </div>
           </div>

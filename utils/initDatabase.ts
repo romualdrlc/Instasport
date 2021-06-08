@@ -190,7 +190,7 @@ const getSportCategories = async () => {
 
 const getComment = async (data: any) => {
   const d = new Date();
-  const date = d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
+  const date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
 
   try {
     const result = (await getDatabase())
@@ -199,17 +199,15 @@ const getComment = async (data: any) => {
       .insertOne({
         text: data.text,
         datePost: date,
-        likePost: []
-      }
-      );
+        likePost: [],
+      });
     return result;
   } catch (e) {
     console.log(e);
-  } 
-}
+  }
+};
 
 const getLike = async (data: any) => {
-
   try {
     const result = (await getDatabase())
       .db("instasportDB")
@@ -217,7 +215,7 @@ const getLike = async (data: any) => {
       .updateOne(
         {
           likePost: data.like,
-          id: data.id
+          id: data.id,
         },
         {
           $set: {
@@ -230,8 +228,24 @@ const getLike = async (data: any) => {
     return result;
   } catch (e) {
     console.log(e);
-  } 
-}
+  }
+};
+
+const getSearch = async (data: any) => {
+  const regex2 = new RegExp(data.searchValue, "i");
+  const arrayData = [regex2];
+  try {
+    const result = (await getDatabase())
+      .db("instasportDB")
+      .collection("user")
+      .find({ userName: { $in: arrayData } })
+      .toArray();
+    console.log("result", await result);
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 ///////////////////////////
 //////// Export //////////
@@ -246,4 +260,5 @@ export {
   getLike,
   getDefaultUsers,
   getSportCategories,
+  getSearch,
 };
