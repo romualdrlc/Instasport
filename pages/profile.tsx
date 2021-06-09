@@ -10,13 +10,13 @@ import { useRouter } from "next/router";
 // }) => {
 
 const Inscription: NextPage<{
-  categoriesImgArray,
-  currentUsersEmail,
-  currentUsersName,
-  currentUserCover,
-  currentUsersBirthdate,
-  categoriesImgDescription,
-  currentUsersCategories
+  categoriesImgArray;
+  currentUsersEmail;
+  currentUsersName;
+  currentUserCover;
+  currentUsersBirthdate;
+  categoriesImgDescription;
+  currentUsersCategories;
 }> = ({
   categoriesImgArray,
   currentUsersEmail,
@@ -24,7 +24,7 @@ const Inscription: NextPage<{
   currentUserCover,
   currentUsersBirthdate,
   categoriesImgDescription,
-  currentUsersCategories
+  currentUsersCategories,
 }) => {
   //useRouter
   const router = useRouter();
@@ -44,8 +44,6 @@ const Inscription: NextPage<{
   /////// useEffect ////////
   //////////////////////////
   useEffect(() => {
-
-
     console.log(usersEmail);
   }, [userName, birthdate, active, usersEmail]);
 
@@ -80,6 +78,8 @@ const Inscription: NextPage<{
       });
   };
 
+
+
   /////////////////////////
   ////// Affichage ///////
   ////////////////////////
@@ -93,12 +93,26 @@ const Inscription: NextPage<{
       </p>
       {errorMessage ? <p>{errorMessage}</p> : <></>} */}
       <div className="container profilePhotoEdit">
-      <div className="row">
+        <div className="row">
+          <div className="col-5"></div>
+          <div className="col-2">
+            <div className="card" style={{ width: 280, height: 280 }}>
+              <img
+                src={
+                  currentUserCover
+                    ? currentUserCover
+                    : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
+                }
+              />
+              <div className="card-body">
+                {/* <a href="#" className="btn btn-warning">
+                  Edit
+                </a> */}
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="col-5"></div>
-        <div className="col-2">
-      <div className="card" style={{ width: 280, height: 280}}>
-      <img src={currentUserCover ? currentUserCover : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"}/></div></div>
-      </div><div className="col-5"></div>
       </div>
       <div className="container">
         <div>
@@ -150,7 +164,7 @@ const Inscription: NextPage<{
             </div>
             <div className="col">
               <h6 className="titre-interests text-center">
-                Please, select at least 3 sports :
+                My favorite sports :
               </h6>
               <div className="container">
                 <div className="row row-cols-3">
@@ -194,12 +208,12 @@ const Inscription: NextPage<{
                 type="submit"
                 className="Boutton btn"
                 onClick={() => registerform()}
-                disabled={
-                  counterOfSelectedCategories < 3 ||
-                  userName === "" ||
-                  birthdate === "" ||
-                  usersEmail === ""
-                }
+                // disabled={
+                //   counterOfSelectedCategories < 3 ||
+                //   userName === "" ||
+                //   birthdate === "" ||
+                //   usersEmail === ""
+                // }
               >
                 Update
               </button>
@@ -228,7 +242,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let currentUsersName = "";
   let currentUsersCover = "";
   let currentUsersBirthdate = "";
-  let currentUsersCategories=[];
+  let currentUsersCategories = [];
 
   const c = context.req.cookies.fewlines;
   if (c) {
@@ -236,14 +250,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     currentUsersEmailFromDB = currentUser.email;
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
-    currentUsersBirthdate =currentUser.Birthdate;
-    currentUsersCategories=currentUser.Groups;
+    currentUsersBirthdate = currentUser.Birthdate;
+    currentUsersCategories = currentUser.Groups;
   }
 
   const sportCategories = await getSportCategories();
-const categoriesImgDescription = await sportCategories.map((category) => {
-  return category.UserName;
-});
+  const categoriesImgDescription = await sportCategories.map((category) => {
+    return category.UserName;
+  });
 
   const categoriesImgArrayFromDB = await sportCategories.map((category) => {
     return category.Cover;
@@ -261,7 +275,9 @@ const categoriesImgDescription = await sportCategories.map((category) => {
         : "",
       currentUserCover: currentUsersCover,
       currentUsersBirthdate: currentUsersBirthdate,
-      currentUsersCategories: currentUsersCategories ? currentUsersCategories : [],
+      currentUsersCategories: currentUsersCategories
+        ? currentUsersCategories
+        : [],
     },
   };
 };
