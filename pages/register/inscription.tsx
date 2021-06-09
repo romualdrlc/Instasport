@@ -9,11 +9,18 @@ import { useRouter } from "next/router";
 //   currentUsersEmail,
 // }) => {
 
-const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUsersName, currentUserCover }> = ({
+const Inscription: NextPage<{
   categoriesImgArray,
   currentUsersEmail,
   currentUsersName,
-  currentUserCover
+  currentUserCover,
+  categoriesImgDescription
+}> = ({
+  categoriesImgArray,
+  currentUsersEmail,
+  currentUsersName,
+  currentUserCover,
+  categoriesImgDescription
 }) => {
   //useRouter
   const router = useRouter();
@@ -43,14 +50,11 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
   /////// useEffect ////////
   //////////////////////////
   useEffect(() => {
-    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿",currentUsersName, "✿✿✿✿✿✿✿✿✿✿✿✿✿");
-  if (currentUsersName!="") router.push("/home");
+    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿", currentUsersName, "✿✿✿✿✿✿✿✿✿✿✿✿✿");
+    if (currentUsersName != "") router.push("/home");
 
     console.log(usersEmail);
   }, [userName, birthdate, active, usersEmail]);
-
-
- 
 
   ///////////////////////////
   ////// registerForm //////
@@ -91,7 +95,8 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
       <p className="sous-titre-page-inscription text-center">
-        Welcome <span className="usersWelcomeName">{userName}</span>, please fill in this informations.
+        Welcome <span className="usersWelcomeName">{userName}</span>, please
+        fill in this informations.
       </p>
       {errorMessage ? <p>{errorMessage}</p> : <></>}
       <div className="container">
@@ -99,7 +104,7 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
           <div className="row">
             <div className="colIncription col-6">
               <label htmlFor="exampleInputUserName" className="form-label">
-                UserName :
+                UserName*
               </label>
               <input
                 type="text"
@@ -112,7 +117,7 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
                 }}
               />
               <label htmlFor="exampleInputUserName" className="form-label">
-                Email :
+                Email*
               </label>
               <input
                 type="text"
@@ -125,13 +130,13 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
                 }}
               />
               <label htmlFor="exampleInputBirthDate" className="form-label">
-                Birthdate
+                Birthdate*
               </label>
               <input
                 type="Date"
                 name="trip-start"
-                min="1921-01-01" max="2003-12-31"
-
+                min="1921-01-01"
+                max="2003-12-31"
                 className="form-control"
                 id="exampleInputBirthDate"
                 aria-describedby="emailHelp"
@@ -143,9 +148,9 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
               />
             </div>
             <div className="col-6">
-              <h3 className="titre-interests text-center">
-                Interests (minimum 3)
-              </h3>
+              <h6 className="titre-interests text-center">
+                Please, select at least 3 sports :
+              </h6>
               <div className="container">
                 <div className="row row-cols-3">
                   {categoriesImgArray.map((imageOfCategory, index) => {
@@ -159,7 +164,7 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
                           src={imageOfCategory}
                           width="70"
                           height="70"
-                          alt=""
+                          title={categoriesImgDescription[index]}
                         />
                         <Checkbox
                           id={index}
@@ -216,12 +221,11 @@ export default Inscription;
 //// serverSideProps ////
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
-
   //const c = cookies(context).fewlines;
 
   let currentUsersEmailFromDB = "";
   let currentUsersName = "";
-  let currentUsersCover ="";
+  let currentUsersCover = "";
 
   const c = context.req.cookies.fewlines;
   if (c) {
@@ -232,6 +236,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const sportCategories = await getSportCategories();
+const categoriesImgDescription = await sportCategories.map((category) => {
+  return category.UserName;
+});
 
   const categoriesImgArrayFromDB = await sportCategories.map((category) => {
     return category.Cover;
@@ -240,8 +247,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       categoriesImgArray: categoriesImgArrayFromDB,
-      currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
-      currentUsersName: currentUsersName ? JSON.parse(JSON.stringify(currentUsersName)): "",
+      categoriesImgDescription: categoriesImgDescription,
+      currentUsersEmail: currentUsersEmailFromDB
+        ? JSON.parse(JSON.stringify(currentUsersEmailFromDB))
+        : "",
+      currentUsersName: currentUsersName
+        ? JSON.parse(JSON.stringify(currentUsersName))
+        : "",
       currentUserCover: currentUsersCover,
     },
   };
