@@ -43,8 +43,14 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
   /////// useEffect ////////
   //////////////////////////
   useEffect(() => {
+    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿",currentUsersName, "✿✿✿✿✿✿✿✿✿✿✿✿✿");
+  if (currentUsersName!="") router.push("/home");
+
     console.log(usersEmail);
   }, [userName, birthdate, active, usersEmail]);
+
+
+ 
 
   ///////////////////////////
   ////// registerForm //////
@@ -232,7 +238,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       categoriesImgArray: categoriesImgArrayFromDB,
       currentUsersEmail: JSON.parse(JSON.stringify(currentUsersEmailFromDB)),
-      currentUsersName: JSON.parse(JSON.stringify(currentUsersName)),
+      currentUsersName: currentUsersName ? JSON.parse(JSON.stringify(currentUsersName)): "",
       currentUserCover: currentUsersCover,
     },
   };
