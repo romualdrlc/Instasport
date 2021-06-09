@@ -49,6 +49,7 @@ const Navar: NextPage = (props: any) => {
               {/* <p>{cookieFromSession ? userName : ""}</p> */}
             </div>
             <div className="row">
+              <a href="/profile">
               <img
                 className="photoNav"
                 // key={props.currentUsersName ? props.currentUsersName : ""}
@@ -59,7 +60,7 @@ const Navar: NextPage = (props: any) => {
                 // }
                 src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
                 alt=""
-              />
+              /></a>
             </div>
             <div className="row">
               {cookieFromSession ? (
