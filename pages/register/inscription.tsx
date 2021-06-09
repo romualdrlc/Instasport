@@ -101,8 +101,8 @@ const Inscription: NextPage<{
       {errorMessage ? <p>{errorMessage}</p> : <></>}
       <div className="container">
         <div>
-          <div className="row">
-            <div className="colIncription col-6">
+          <div className="row row-cols-1 row-cols-sm-2">
+            <div className="colIncription col">
               <label htmlFor="exampleInputUserName" className="form-label">
                 UserName*
               </label>
@@ -147,7 +147,7 @@ const Inscription: NextPage<{
                 }}
               />
             </div>
-            <div className="col-6">
+            <div className="col">
               <h6 className="titre-interests text-center">
                 Please, select at least 3 sports :
               </h6>
