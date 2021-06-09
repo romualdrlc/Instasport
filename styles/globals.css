@@ -151,7 +151,7 @@ PARTIII Usernews
   border-radius: 4rem;
   margin-top: 1rem;
   height: 5rem;
-  width:12rem;
+  width: 12rem;
 }
 .checkBoxActive {
   background-color: #fbe23b;
@@ -181,15 +181,12 @@ PARTIII Usernews
 }
 .BodyNews.col-3 {
   text-align: center;
-  border-right: 1px solid white;
   margin-top: 14.5rem;
 }
 .BodyNews.col-5 {
   text-align: center;
-  border-right: 1px solid white;
   margin-top: 14.5rem;
   z-index: 1;
-  background-color: black;
 }
 .BodyNews.col-4 {
   text-align: center;
