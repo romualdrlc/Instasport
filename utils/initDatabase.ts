@@ -306,13 +306,13 @@ const getAllPostsByGroups = async (id: any) => {
   try {
     result = (await getDatabase()).db("instasportDB").collection("posts").find({
       groupId: id,
-    });
+    }).toArray()
   } catch (e) {
     console.log(e);
   }
-  const foundUser = await result;
-  console.log("🟠", foundUser);
-  return foundUser ? foundUser : "";
+  const foundPosts = await result;
+  console.log("🟠🟠🟠🟠 Posts", foundPosts);
+  return foundPosts ? foundPosts : "";
 };
 ///////////////////////////
 //////// Export //////////
