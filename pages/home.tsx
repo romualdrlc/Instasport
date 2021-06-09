@@ -28,6 +28,8 @@ const Home: NextPage = (props: any) => {
   const [listMyGroups, setListMyGroups] = useState([]);
   const [listOtherGroups, setListOtherGroups] = useState([]);
   const [selectSport, setSelectSport] = useState("");
+  //const [resultGlobal, setResultGlobal] = useState([]);
+
 
   const tempPost: Post[] = [
     {
@@ -53,15 +55,24 @@ const Home: NextPage = (props: any) => {
   //     return index;
   //   }
   // });
-
-  const [sportsArray, setSportsArray] = useState([0]);
+  const arrayOfGroupIds = listMyGroups.map((group) => group.id)
+  const [sportsArray, setSportsArray] = useState([0,1,2,3,4,5,6,7,8]);
 
   const OnClickSport = (idOfSport: number) => {
     const oneElemeArray = [idOfSport];
     setSportsArray(oneElemeArray);
   };
+  
+  const OnClickMySports = () => {
+    console.log("--------------------",arrayOfGroupIds)
+    setSportsArray(arrayOfGroupIds);
+  };
+
 
   useEffect(() => {
+
+
+    
     setListOtherGroups(props.currentUserOtherGroupsArray);
     setListMyGroups(props.currentUserGroupsArray);
 
@@ -70,11 +81,19 @@ const Home: NextPage = (props: any) => {
         res.json().then((result) => setListUsers(result))
       );
     };
-    const searchPosts: any = async (groupId: number) => {
-      await fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) =>
+    const searchPosts: any = async (groupIds: number[]) => {
+      let resultGlobal=[];
+      groupIds.forEach((groupId) => {
+        fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) => {
         res.json().then((result) => {
-          console.log("result du fetch", result);
-          setPostFind(result);
+          console.log("result du fetch$$$$$$$$$$$$$$$$$$$$", result);
+
+for(let i=0;i<result.length;i++) {
+  resultGlobal.push(result[i]);
+}
+ console.log("🟣🟣🟣🟣🟣🟣🟣🟣🟣🟣🟣",resultGlobal);
+ setPostFind(resultGlobal);
+
           console.log(
             "result du fetch JSON",
             JSON.parse(JSON.stringify(result.length))
@@ -95,38 +114,15 @@ const Home: NextPage = (props: any) => {
           });
           console.log("*********************************", resultFinal);
           return resultFinal;
-        })
-      );
+        })}
+      );})
     };
+
     console.log("posts recupere **************", postFind);
     defaultUsers();
+    searchPosts(sportsArray);
 
-    const result = searchPosts(sportsArray[0]);
-    console.log("resuuuuuuuuuuuult", result);
-    result.then((res) => {
-      console.log("res-------------------------", res);
-      //setPostFind(res);
-    });
-    //setPostFind(result);
-
-    ///////////////Posts de plusieurs groupes
-    // console.log("$$$$$$$$$$$$$$", props.currentUserGroupsArray);
-    // const findPosts: any = async (groupId: any) => {
-    //   const posts = await searchPosts(groupId);
-    //   return posts;
-    // };
-    // sportsArray.forEach((idOfSport) => {
-    //   setPostFind(
-    //     JSON.parse(JSON.stringify(
-    //     postFind.concat(
-    //       findPosts(idOfSport)
-    //       ))
-    //     )
-    //   );
-    // });
   }, [sportsArray]);
-
-  // sportsArray.map((value) => setPostFind(value));
 
   ///////////////////////////
   ////// Affichage /////////
@@ -141,23 +137,20 @@ const Home: NextPage = (props: any) => {
           <div className="row">
             <div className="BodyNews col-3">
               <div className="container">
-                <h3>My sports</h3>
+                <h3 onClick={() => OnClickMySports()}>My sports</h3>
                 {listMyGroups.map((group, index) => {
                   return (
                     <div style={{ textAlign: "center" }}>
-                      <div className="card" style={{ width: 280, height: 250 }}>
+                      <div className="card" style={{ width: 280, height: 280 }}>
                         <img
                           key={"image" + index}
                           src={group.CoverSidebar}
                           className="ImageGroupSidebar"
                           alt=""
-                        />
-                        <button
                           onClick={() => OnClickSport(group.id)}
-                          key={"bouton" + index}
-                        >
-                          test
-                        </button>
+
+                        />
+          
                         <div className="card-body">
                           <div className="card-title" key={"title" + index}>
                             {group.UserName}
@@ -173,12 +166,13 @@ const Home: NextPage = (props: any) => {
                 {listOtherGroups.map((group, index) => {
                   return (
                     <div>
-                      <div className="card" style={{ width: 280, height: 250 }}>
+                      <div className="card" style={{ width: 280, height: 280 }}>
                         <img
                           key={"image2" + index}
                           src={group.CoverSidebar}
                           className="ImageGroupSidebar"
                           alt=""
+                          onClick={() => OnClickSport(group.id)}
                         />
                         <div className="card-body">
                           <div className="card-title" key={"title2" + index}>
