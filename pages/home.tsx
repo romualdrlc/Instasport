@@ -1,7 +1,11 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import { getUserByCookie, getAllGroups } from "../utils/initDatabase";
+import {
+  getUserByCookie,
+  getAllGroups,
+  getAllPostsByGroups,
+} from "../utils/initDatabase";
 import Link from "next/link";
 import { userInfo } from "os";
 
@@ -9,13 +13,24 @@ const Home: NextPage = (props: any) => {
   ////////////////////////////////////
   ////// useState, useEffect /////////
   ///////////////////////////////////
+
   const [listUsers, setListUsers] = useState([]);
   const [listMyGroups, setListMyGroups] = useState([]);
   const [listOtherGroups, setListOtherGroups] = useState([]);
+  const [selectSport, setSelectSport] = useState("");
+  const [postFind, setPostFind] = useState<any>([]);
+  const tabValueInitial = listMyGroups.filter((group, index) => {
+    if (group[index]) {
+      return index;
+    }
+  });
+
+  const [sportsArray, setSportsArray] = useState(tabValueInitial);
 
   useEffect(() => {
     setListOtherGroups(props.currentUserOtherGroupsArray);
     setListMyGroups(props.currentUserGroupsArray);
+
     const defaultUsers: any = async () => {
       await fetch("/api/defaultUsers").then((res) =>
         res.json().then((result) => setListUsers(result))
@@ -24,7 +39,27 @@ const Home: NextPage = (props: any) => {
 
     defaultUsers();
     console.log("$$$$$$$$$$$$$$", props.currentUserGroupsArray);
-  }, []);
+  }, [sportsArray]);
+
+  const searchPosts: any = async (groupId: number) => {
+    await fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) =>
+      res.json().then((result) => setSelectSport(result))
+    );
+  };
+
+  const findPosts: any = async (groupId: any) => {
+    const posts = await searchPosts(groupId);
+    const recup = postFind.concat(posts);
+
+    console.log("posts recupere", postFind);
+    return recup;
+  };
+
+  // sportsArray.map((value) => setPostFind(value));
+
+  const OnClickSport = (id: any) => {
+    setSportsArray([id]);
+  };
   ///////////////////////////
   ////// Affichage /////////
   //////////////////////////
@@ -49,6 +84,9 @@ const Home: NextPage = (props: any) => {
                           className="ImageGroupSidebar"
                           alt=""
                         />
+                        <button onClick={() => OnClickSport(group.id)}>
+                          test
+                        </button>
                         <div className="card-body" key={"sportName" + index}>
                           <p className="card-title">{group.UserName}</p>
                         </div>
@@ -78,7 +116,32 @@ const Home: NextPage = (props: any) => {
                 })}
               </div>
             </div>
-            <div className="BodyNews col-5"></div>
+            <div className="BodyNews col-5">
+              <div className="card mb-3" style={{ width: 600 }}>
+                <div className="row g-0">
+                  <div className="col-md-6">
+                    <img
+                      src="https://images.unsplash.com/photo-1552318965-6e6be7484ada?ixlib=rb-1.2.1&ixid=MnwxMjA3[…]G90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80"
+                      alt="..."
+                      style={{ width: 260, height: 360 }}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <div className="card-body" style={{ textAlign: "left" }}>
+                      <h5 className="card-title">Card title</h5>
+                      <p className="card-text">
+                        This is a wider card with supporting text below as a
+                        natural lead-in to additional content. This content is a
+                        little bit longer.
+                      </p>
+                      <p className="card-text">
+                        <small className="text-muted">Comments</small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="BodyNews col-4">
               <div className="container">
                 <div>
