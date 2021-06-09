@@ -8,6 +8,18 @@ import {
 } from "../utils/initDatabase";
 
 const Home: NextPage = (props: any) => {
+  type Post = {
+    id: number;
+    userId: number;
+    datePost: string;
+    photosPost: string;
+    textPost: string;
+    likePost: number[];
+    commentsPost: string[];
+    groupId: number;
+    postTitle: string;
+  };
+
   ////////////////////////////////////
   ////// useState, useEffect /////////
   ///////////////////////////////////
@@ -16,19 +28,38 @@ const Home: NextPage = (props: any) => {
   const [listMyGroups, setListMyGroups] = useState([]);
   const [listOtherGroups, setListOtherGroups] = useState([]);
   const [selectSport, setSelectSport] = useState("");
-  const [postFind, setPostFind] = useState<any>([]);
-  const tabValueInitial = listMyGroups.filter((group, index) => {
-    if (group[index]) {
-      return index;
-    }
-  });
 
-  const [sportsArray, setSportsArray] = useState(tabValueInitial);
+  const tempPost: Post[] = [
+    {
+      id: 1,
+      userId: 2,
+      datePost: "1 / 1 / 2001",
+      photosPost:
+        "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?ixid=MnwxMjA3fDB8MHxwaG90by1[…]fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80",
+      textPost:
+        "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.",
+      likePost: [1],
+      commentsPost: ["1"],
+      groupId: 0,
+      postTitle: "postTitle",
+    },
+  ];
+  //const [postFind, setPostFind] = useState<Post[]>(tempPost);
+  const [postFind, setPostFind] = useState<any>();
+
+  //Afficher les posts des groupes de l'utilisateur
+  // const tabValueInitial = listMyGroups.filter((group, index) => {
+  //   if (group[index]) {
+  //     return index;
+  //   }
+  // });
+
+  const [sportsArray, setSportsArray] = useState([0]);
 
   const OnClickSport = (idOfSport: number) => {
     const oneElemeArray = [idOfSport];
     setSportsArray(oneElemeArray);
-  } 
+  };
 
   useEffect(() => {
     setListOtherGroups(props.currentUserOtherGroupsArray);
@@ -41,27 +72,59 @@ const Home: NextPage = (props: any) => {
     };
     const searchPosts: any = async (groupId: number) => {
       await fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) =>
-        res.json().then((result) => setSelectSport(result))
+        res.json().then((result) => {
+          console.log("result du fetch", result);
+          setPostFind(result);
+          console.log(
+            "result du fetch JSON",
+            JSON.parse(JSON.stringify(result.length))
+          );
+          const resultFinal = result.map((post) => {
+            const postLighten = {
+              id: post.id,
+              userId: post.userId,
+              datePost: post.datePost,
+              photosPost: post.photosPost,
+              textPost: post.textPost,
+              likePost: post.likePost,
+              commentsPost: post.commentsPost,
+              groupId: post.groupId,
+              postTitle: post.postTitle,
+            };
+            return postLighten;
+          });
+          console.log("*********************************", resultFinal);
+          return resultFinal;
+        })
       );
     };
     console.log("posts recupere **************", postFind);
     defaultUsers();
-    console.log("$$$$$$$$$$$$$$", props.currentUserGroupsArray);
-    const findPosts: any = async (groupId: any) => {
-      const posts = await searchPosts(groupId);
-      // const recup = postFind.concat(posts);
-      // return recup;
-      return posts
-    };
-    sportsArray.forEach((idOfSport) => {
-      
-      // setPostFind(postFind.concat(findPosts(idOfSport)));
-      // setPostFind(postFind.concat(JSON.parse(
-      //   JSON.stringify(findPosts(idOfSport)))));
-      setPostFind(JSON.parse(
-        JSON.stringify(postFind.concat(findPosts(idOfSport)))));
-      
-  })}, [sportsArray]);
+
+    const result = searchPosts(sportsArray[0]);
+    console.log("resuuuuuuuuuuuult", result);
+    result.then((res) => {
+      console.log("res-------------------------", res);
+      //setPostFind(res);
+    });
+    //setPostFind(result);
+
+    ///////////////Posts de plusieurs groupes
+    // console.log("$$$$$$$$$$$$$$", props.currentUserGroupsArray);
+    // const findPosts: any = async (groupId: any) => {
+    //   const posts = await searchPosts(groupId);
+    //   return posts;
+    // };
+    // sportsArray.forEach((idOfSport) => {
+    //   setPostFind(
+    //     JSON.parse(JSON.stringify(
+    //     postFind.concat(
+    //       findPosts(idOfSport)
+    //       ))
+    //     )
+    //   );
+    // });
+  }, [sportsArray]);
 
   // sportsArray.map((value) => setPostFind(value));
 
@@ -129,7 +192,7 @@ const Home: NextPage = (props: any) => {
               </div>
             </div>
             <div className="BodyNews col-5">
-              <div className="card mb-3" style={{ width: 600 }}>
+              {/* <div className="card mb-3" style={{ width: 600 }}>
                 <div className="row g-0">
                   <div className="col-md-6">
                     <img
@@ -152,7 +215,41 @@ const Home: NextPage = (props: any) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+              {postFind
+                ? postFind.map((post, index) => {
+                    return (
+                      <div className="card mb-3" style={{ width: 600 }}>
+                        <div className="row g-0">
+                          <div className="col-md-6">
+                            <img
+                              src={post.photosPost}
+                              key={"postImage" + index}
+                              alt="..."
+                              style={{ width: 260, height: 360 }}
+                            />
+                          </div>
+                          <div className="col-md-6">
+                            <div
+                              className="card-body"
+                              style={{ textAlign: "left" }}
+                            >
+                              <h5 className="card-title">{post.postTitle}</h5>
+                              <p className="card-text">
+                                This is a wider card with supporting text below
+                                as a natural lead-in to additional content. This
+                                content is a little bit longer.
+                              </p>
+                              <p className="card-text">
+                                <small className="text-muted">Comments</small>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
             </div>
             <div className="BodyNews col-4">
               <div className="container">
