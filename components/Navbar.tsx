@@ -3,9 +3,13 @@ import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 
 import cookie from "js-cookie";
+import { resourceLimits } from "worker_threads";
 
 const Navar: NextPage = (props: any) => {
   const [searchText, setSearchText] = useState("");
+  const [userImage, setUserImage] = useState(
+    "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
+  );
 
   function handleChange(event) {
     setSearchText(event.target.value);
@@ -20,6 +24,19 @@ const Navar: NextPage = (props: any) => {
     cookie.remove("fewlines", { path: "/" });
     await fetch("/api/logout?usersToken=" + cookieFromSession);
   };
+
+  useEffect(() => {
+    const currentUserCover = async () => {
+      await fetch("/api/userPhoto?usersToken=" + cookieFromSession).then(
+        (res) =>
+          res.json().then((result) => {
+            setUserImage(result);
+            console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏", result);
+          })
+      );
+    };
+    currentUserCover();
+  }, [userImage]);
 
   return (
     <>
@@ -45,29 +62,32 @@ const Navar: NextPage = (props: any) => {
             </div>
           </div>
           <div className="itemNavbar col-3">
-            <div className="row">
-              {/* <p>{cookieFromSession ? userName : ""}</p> */}
-            </div>
-            <div className="row">
+            <div className="card" style={{ width: 200, height: 200, textAlign: "center"}}>
               <a href="/profile">
               <img
-                className="photoNav"
-                // key={props.currentUsersName ? props.currentUsersName : ""}
-                // src={
-                //   props.currentUsersCover
-                //     ? props.currentUsersCover
-                //     : "https://smashicons.com/uploads/media/icon_thumbnail/0007/26/thumb_625671_icon_thumbnail_small.png"
-                // }
-                src="https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png"
-                alt=""
-              /></a>
-            </div>
-            <div className="row">
-              {cookieFromSession ? (
-                <button onClick={() => logoutUser()}><a href="/">Logout</a></button>
-              ) : (
-                <a href="/">Login</a>
-              )}
+                style={{ width: 114, height: 114, textAlign: "center"}}
+                src={
+                  userImage
+                    ? userImage
+                    : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
+                }
+              />
+              </a>
+              <div className="card-body">
+                <div className="card-text">
+                  {cookieFromSession ? (
+                    // <button onClick={() => logoutUser()}>
+                    <p onClick={() => logoutUser()}>
+                      <a href="/" className="LogLink">
+                        Logout
+                      </a>
+                    </p>
+                  ) : (
+                    // </button>
+                    <a href="/">Login</a>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </nav>
