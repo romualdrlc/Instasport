@@ -11,7 +11,7 @@ import { userInfo } from "os";
 
 const Home: NextPage = (props: any) => {
   ////////////////////////////////////
-  ////// useState, useEffect /////////
+  ////// useState, useEffect ////////
   ///////////////////////////////////
 
   const [listUsers, setListUsers] = useState([]);
