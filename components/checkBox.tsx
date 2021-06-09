@@ -25,7 +25,7 @@ const CheckBox: React.FC<any> = ({
           setButtonSelected(!buttonSelected);
         }}
       >
-        ok
+        <div className="okTextCheckbox">ok</div>
       </button>
     </>
   );

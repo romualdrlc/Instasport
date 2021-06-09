@@ -114,6 +114,7 @@ PARTIII REGISTER
 }
 .imageCircle {
   border-radius: 0rem;
+  margin-right: 0.5rem;
 }
 button.Boutton {
   width: 10rem;
@@ -452,4 +453,12 @@ a[target="_blank"] {
 }
 .CardFullLogin {
   padding-top: 200px;
+}
+.okTextCheckbox {
+  color: rgba(0, 0, 0, 0);
+  padding-left: 0.5rem;
+}
+.usersWelcomeName {
+  color: #fbe23b;
+  font-weight: bold;
 }

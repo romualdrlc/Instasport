@@ -91,7 +91,7 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
       <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
       <p className="sous-titre-page-inscription text-center">
-        Welcome {userName}, please fill in this informations.
+        Welcome <span className="usersWelcomeName">{userName}</span>, please fill in this informations.
       </p>
       {errorMessage ? <p>{errorMessage}</p> : <></>}
       <div className="container">
@@ -129,6 +129,9 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
               </label>
               <input
                 type="Date"
+                name="trip-start"
+                min="1921-01-01" max="2003-12-31"
+
                 className="form-control"
                 id="exampleInputBirthDate"
                 aria-describedby="emailHelp"
