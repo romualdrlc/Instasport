@@ -6,8 +6,6 @@ import {
   getAllGroups,
   getAllPostsByGroups,
 } from "../utils/initDatabase";
-import Link from "next/link";
-import { userInfo } from "os";
 
 const Home: NextPage = (props: any) => {
   ////////////////////////////////////
@@ -27,6 +25,11 @@ const Home: NextPage = (props: any) => {
 
   const [sportsArray, setSportsArray] = useState(tabValueInitial);
 
+  const OnClickSport = (idOfSport: number) => {
+    const oneElemeArray = [idOfSport];
+    setSportsArray(oneElemeArray);
+  } 
+
   useEffect(() => {
     setListOtherGroups(props.currentUserOtherGroupsArray);
     setListMyGroups(props.currentUserGroupsArray);
@@ -36,30 +39,32 @@ const Home: NextPage = (props: any) => {
         res.json().then((result) => setListUsers(result))
       );
     };
-
+    const searchPosts: any = async (groupId: number) => {
+      await fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) =>
+        res.json().then((result) => setSelectSport(result))
+      );
+    };
+    console.log("posts recupere **************", postFind);
     defaultUsers();
     console.log("$$$$$$$$$$$$$$", props.currentUserGroupsArray);
-  }, [sportsArray]);
-
-  const searchPosts: any = async (groupId: number) => {
-    await fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) =>
-      res.json().then((result) => setSelectSport(result))
-    );
-  };
-
-  const findPosts: any = async (groupId: any) => {
-    const posts = await searchPosts(groupId);
-    const recup = postFind.concat(posts);
-
-    console.log("posts recupere", postFind);
-    return recup;
-  };
+    const findPosts: any = async (groupId: any) => {
+      const posts = await searchPosts(groupId);
+      // const recup = postFind.concat(posts);
+      // return recup;
+      return posts
+    };
+    sportsArray.forEach((idOfSport) => {
+      
+      // setPostFind(postFind.concat(findPosts(idOfSport)));
+      // setPostFind(postFind.concat(JSON.parse(
+      //   JSON.stringify(findPosts(idOfSport)))));
+      setPostFind(JSON.parse(
+        JSON.stringify(postFind.concat(findPosts(idOfSport)))));
+      
+  })}, [sportsArray]);
 
   // sportsArray.map((value) => setPostFind(value));
 
-  const OnClickSport = (id: any) => {
-    setSportsArray([id]);
-  };
   ///////////////////////////
   ////// Affichage /////////
   //////////////////////////
@@ -84,11 +89,16 @@ const Home: NextPage = (props: any) => {
                           className="ImageGroupSidebar"
                           alt=""
                         />
-                        <button onClick={() => OnClickSport(group.id)}>
+                        <button
+                          onClick={() => OnClickSport(group.id)}
+                          key={"bouton" + index}
+                        >
                           test
                         </button>
-                        <div className="card-body" key={"sportName" + index}>
-                          <p className="card-title">{group.UserName}</p>
+                        <div className="card-body">
+                          <div className="card-title" key={"title" + index}>
+                            {group.UserName}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -102,13 +112,15 @@ const Home: NextPage = (props: any) => {
                     <div>
                       <div className="card" style={{ width: 280, height: 250 }}>
                         <img
-                          key={"image" + index}
+                          key={"image2" + index}
                           src={group.CoverSidebar}
                           className="ImageGroupSidebar"
                           alt=""
                         />
-                        <div className="card-body" key={"sportName" + index}>
-                          <p className="card-title">{group.UserName}</p>
+                        <div className="card-body">
+                          <div className="card-title" key={"title2" + index}>
+                            {group.UserName}
+                          </div>
                         </div>
                       </div>
                     </div>
