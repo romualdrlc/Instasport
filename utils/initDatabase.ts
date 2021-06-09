@@ -266,6 +266,21 @@ const logoutUser = async (data: any) => {
   }
 };
 
+const getAllGroups= async () => {
+  let result;
+  try {
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("group")
+      .find().toArray();
+  } catch (e) {
+    console.log(e);
+  }
+  const foundGroups = await result;
+  return foundGroups ? foundGroups : "";
+};
+
+
 const getSearchUserById = async (id: any) => {
   console.log("ididididididididididiid", id);
   const ObjectId = require("mongodb").ObjectID;
@@ -302,4 +317,5 @@ export {
   getSearch,
   logoutUser,
   getSearchUserById,
+  getAllGroups,
 };

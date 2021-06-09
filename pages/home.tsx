@@ -1,7 +1,7 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import { getUserByCookie } from "../utils/initDatabase";
+import { getUserByCookie, getAllGroups } from "../utils/initDatabase";
 import Link from "next/link";
 
 const Home: NextPage = (props: any) => {
@@ -9,16 +9,19 @@ const Home: NextPage = (props: any) => {
   ////// useState, useEffect /////////
   ///////////////////////////////////
   const [listUsers, setListUsers] = useState([]);
+  const [listMyGroups, setListMyGroups] = useState([]);
 
   useEffect(() => {
+    setListMyGroups(props.currentUserGroupsArray);
     const defaultUsers: any = async () => {
       await fetch("/api/defaultUsers").then((res) =>
         res.json().then((result) => setListUsers(result))
       );
     };
-    defaultUsers();
-  }, []);
 
+    defaultUsers();
+    console.log("$$$$$$$$$$$$$$", props.currentUserGroupsArray);
+  }, []);
   ///////////////////////////
   ////// Affichage /////////
   //////////////////////////
@@ -32,7 +35,26 @@ const Home: NextPage = (props: any) => {
           <div className="row">
             <div className="BodyNews col-3">
               <div className="container">
-                {listUsers.map((user, index) => {
+                <h3>My sports</h3>
+                {listMyGroups.map((group, index) => {
+                  return (
+                    <div>
+                      <div className="card" style={{ width: 200 }}>
+                        <img
+                          key={"image" + index}
+                          src={group.CoverSidebar}
+                          className="ImageGroupSidebar"
+                          alt=""
+                        />
+                        <div className="card-body" key={"sportName" + index}>
+                          <p className="card-text">{group.UserName}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+                <h3>Other sports</h3>
+                {/* {listUsers.map((user, index) => {
                   return (
                     <div className="DivSugg" key={index}>
                       <div>
@@ -47,7 +69,7 @@ const Home: NextPage = (props: any) => {
                       </button>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             </div>
             <div className="BodyNews col-5"></div>
@@ -145,12 +167,24 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let currentUsersName = "";
   let currentUsersCover = "";
+  let currentUserGroups = "";
+  let currentUserGroupsArray = [];
+  let currentUserOtherGroupsArray = [];
+  let allGroups = [];
 
   const c = context.req.cookies.fewlines;
   if (c) {
     const currentUser = await getUserByCookie(c);
+    allGroups = await getAllGroups();
+    console.log("ICIIIIIIIIII !!!!!!", allGroups);
+    currentUserGroups = currentUser.Groups;
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
+    // currentUserGroupsArray = allGroups.filter((group, index) => {
+    //   if (currentUserGroups[index]) return group;
+    // });
+    // currentUserOtherGroupsArray = allGroups.filter((group, index) => {
+    //   if (!currentUserGroups[index]) return group;
   }
 
   return {
@@ -159,6 +193,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ? JSON.parse(JSON.stringify(currentUsersName))
         : "",
       currentUsersCover: currentUsersCover,
+      //currentUserGroupsArray: allGroups,
+      currentUserGroupsArray: JSON.parse(JSON.stringify(allGroups)),
+      // currentUserGroups: currentUserGroups,
+      // currentUserGroupsArray: currentUserGroupsArray,
+
+      // currentUserOtherGroupsArray: currentUserOtherGroupsArray,
     },
   };
 };
