@@ -266,20 +266,20 @@ const logoutUser = async (data: any) => {
   }
 };
 
-const getAllGroups= async () => {
+const getAllGroups = async () => {
   let result;
   try {
     result = (await getDatabase())
       .db("instasportDB")
       .collection("group")
-      .find().toArray();
+      .find()
+      .toArray();
   } catch (e) {
     console.log(e);
   }
   const foundGroups = await result;
   return foundGroups ? foundGroups : "";
 };
-
 
 const getSearchUserById = async (id: any) => {
   console.log("ididididididididididiid", id);
@@ -301,6 +301,19 @@ const getSearchUserById = async (id: any) => {
   return foundUser ? foundUser : "";
 };
 
+const getAllPostsByGroups = async (id: any) => {
+  let result;
+  try {
+    result = (await getDatabase()).db("instasportDB").collection("posts").find({
+      groupId: id,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  const foundUser = await result;
+  console.log("🟠", foundUser);
+  return foundUser ? foundUser : "";
+};
 ///////////////////////////
 //////// Export //////////
 //////////////////////////
@@ -318,4 +331,5 @@ export {
   logoutUser,
   getSearchUserById,
   getAllGroups,
+  getAllPostsByGroups,
 };
