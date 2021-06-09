@@ -10,8 +10,10 @@ const Home: NextPage = (props: any) => {
   ///////////////////////////////////
   const [listUsers, setListUsers] = useState([]);
   const [listMyGroups, setListMyGroups] = useState([]);
+  const [listOtherGroups, setListOtherGroups] = useState([]);
 
   useEffect(() => {
+    setListOtherGroups(props.currentUserOtherGroupsArray);
     setListMyGroups(props.currentUserGroupsArray);
     const defaultUsers: any = async () => {
       await fetch("/api/defaultUsers").then((res) =>
@@ -38,8 +40,8 @@ const Home: NextPage = (props: any) => {
                 <h3>My sports</h3>
                 {listMyGroups.map((group, index) => {
                   return (
-                    <div>
-                      <div className="card" style={{ width: 200 }}>
+                    <div style={{ textAlign: "center" }}>
+                      <div className="card" style={{ width: 280, height: 250 }}>
                         <img
                           key={"image" + index}
                           src={group.CoverSidebar}
@@ -47,29 +49,32 @@ const Home: NextPage = (props: any) => {
                           alt=""
                         />
                         <div className="card-body" key={"sportName" + index}>
-                          <p className="card-text">{group.UserName}</p>
+                          <p className="card-title">{group.UserName}</p>
                         </div>
                       </div>
                     </div>
                   );
                 })}
+                <br></br>
                 <h3>Other sports</h3>
-                {/* {listUsers.map((user, index) => {
+                <br></br>
+                {listOtherGroups.map((group, index) => {
                   return (
-                    <div className="DivSugg" key={index}>
-                      <div>
+                    <div>
+                      <div className="card" style={{ width: 280, height: 250 }}>
                         <img
-                          className="SuggestionProfil"
-                          src={user.Cover}
+                          key={"image" + index}
+                          src={group.CoverSidebar}
+                          className="ImageGroupSidebar"
                           alt=""
                         />
+                        <div className="card-body" key={"sportName" + index}>
+                          <p className="card-title">{group.UserName}</p>
+                        </div>
                       </div>
-                      <button className="btn btn-secondary">
-                        Add {user.UserName}
-                      </button>
                     </div>
                   );
-                })} */}
+                })}
               </div>
             </div>
             <div className="BodyNews col-5"></div>
@@ -180,11 +185,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     currentUserGroups = currentUser.Groups;
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
-    // currentUserGroupsArray = allGroups.filter((group, index) => {
-    //   if (currentUserGroups[index]) return group;
-    // });
-    // currentUserOtherGroupsArray = allGroups.filter((group, index) => {
-    //   if (!currentUserGroups[index]) return group;
+    currentUserGroupsArray = allGroups.filter((group, index) => {
+      if (currentUserGroups[index]) return group;
+    });
+    currentUserOtherGroupsArray = allGroups.filter((group, index) => {
+      if (!currentUserGroups[index]) return group;
+    });
   }
 
   return {
@@ -194,11 +200,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         : "",
       currentUsersCover: currentUsersCover,
       //currentUserGroupsArray: allGroups,
-      currentUserGroupsArray: JSON.parse(JSON.stringify(allGroups)),
+      // currentUserGroupsArray: JSON.parse(JSON.stringify(allGroups)),
       // currentUserGroups: currentUserGroups,
-      // currentUserGroupsArray: currentUserGroupsArray,
+      currentUserGroupsArray: JSON.parse(
+        JSON.stringify(currentUserGroupsArray)
+      ),
 
-      // currentUserOtherGroupsArray: currentUserOtherGroupsArray,
+      currentUserOtherGroupsArray: JSON.parse(
+        JSON.stringify(currentUserOtherGroupsArray)
+      ),
     },
   };
 };
