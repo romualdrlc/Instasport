@@ -304,9 +304,13 @@ const getSearchUserById = async (id: any) => {
 const getAllPostsByGroups = async (id: any) => {
   let result;
   try {
-    result = (await getDatabase()).db("instasportDB").collection("posts").find({
-      groupId: id,
-    }).toArray()
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("posts")
+      .find({
+        groupId: parseInt(id),
+      })
+      .toArray();
   } catch (e) {
     console.log(e);
   }
