@@ -57,7 +57,8 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
   //////////////////////////
   const registerform = async () => {
     const data = {
-      email: usersEmail,
+      email1: currentUsersEmail,
+      email2: usersEmail,
       userName: userName,
       active: active,
       birthdate: birthdate,
@@ -190,7 +191,6 @@ const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail, currentUser
                   birthdate === "" ||
                   usersEmail === ""
                 }
-                //disabled={true}
               >
                 Create
               </button>

@@ -145,10 +145,11 @@ const completeCreationNewUser = async (data: any) => {
       .collection("user")
       .updateOne(
         {
-          email: data.email,
+          email: data.email1,
         },
         {
           $set: {
+            email: data.email2,
             userName: data.userName,
             Groups: data.active,
             Birthdate: data.birthdate,
