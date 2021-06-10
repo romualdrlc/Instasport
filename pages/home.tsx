@@ -30,6 +30,7 @@ const Home: NextPage = (props: any) => {
   const [selectSport, setSelectSport] = useState("");
   const [comments, setComments] = useState([]);
   const [textComment, setTextComment] = useState(null);
+  const [postId, setPostId] = useState(null);
 
   //const [resultGlobal, setResultGlobal] = useState([]);
 
@@ -77,8 +78,9 @@ const Home: NextPage = (props: any) => {
         setComments(res);
       });
   };
-  const comment = async () => {
+  const comment = async (postId) => {
     const data = {
+      postId: postId,
       userId: props.currentUserId,
       DateComment: Date(),
       text: textComment,
@@ -209,7 +211,11 @@ const Home: NextPage = (props: any) => {
               {postFind
                 ? postFind.map((post, index) => {
                     return (
-                      <div className="card mb-3" style={{ width: 600 }}>
+                      <div
+                        className="card mb-3"
+                        style={{ width: 600 }}
+                        onClick={() => setPostId(post._id)}
+                      >
                         <div className="row g-0">
                           <div className="col-md-6">
                             <img
@@ -294,7 +300,7 @@ const Home: NextPage = (props: any) => {
                           <button
                             type="submit"
                             className="Boutton btn"
-                            onClick={() => comment()}
+                            onClick={() => comment(postId)}
                           >
                             Comment
                           </button>
