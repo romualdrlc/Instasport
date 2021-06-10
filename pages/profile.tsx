@@ -44,7 +44,7 @@ const Inscription: NextPage<{
 
   const [photosPost, setphotosPost] = useState(null);
   const [textPost, settextPost] = useState(null);
-  const [groupId, setgroupId] = useState();
+  const [groupId, setgroupId] = useState(null);
   const [postTitle, setpostTitle] = useState(null);
 
   ///////////////////////////
