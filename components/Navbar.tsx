@@ -24,26 +24,42 @@ const Navar: NextPage = (props: any) => {
     cookie.remove("fewlines", { path: "/" });
     await fetch("/api/logout?usersToken=" + cookieFromSession);
   };
+  const currentUserCover = async () => {
+    //   await fetch("/api/defaultUsers").then((res) =>
+    //   res.json().then((result) => setListUsers(result))
+    // );
 
-  useEffect(() => {
-    const currentUserCover = async () => {
-      await fetch("/api/userPhoto?usersToken=" + cookieFromSession).then(
-        (res) =>
-          res.json().then((result) => {
-            setUserImage(result);
-            console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏", result);
-          })
-      );
-    };
-    currentUserCover();
-  }, [userImage]);
+    await fetch("/api/userPhoto?usersToken=" + cookieFromSession, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((result) => result.json())
+      .then((resu) => {
+        setUserImage(resu);
+        console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏", resu);
+      });
+
+    // }).then((res) =>
+    //   res.json().then(
+    //     (result) => setUserImage(result)
+    //     //console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏", result);
+    //   )
+    // );
+  };
+
+  // useEffect(() => {
+  //  // currentUserCover();
+  //   console.log(userImage);
+  // }, [userImage]);
 
   return (
     <>
       <div className="Nav">
         <nav className="row">
           <div className="itemNavbar col-3">
-            <img className="logoNav" src="../logocarre.png" />
+            <a href="/home"><img className="logoNav" src="../logocarre.png" /></a>
           </div>
           <div className="itemNavbar col-6">
             <div className="SearchBar d-flex" onSubmit={(e) => handleSubmit(e)}>
@@ -62,16 +78,19 @@ const Navar: NextPage = (props: any) => {
             </div>
           </div>
           <div className="itemNavbar col-3">
-            <div className="card" style={{ width: 200, height: 200, textAlign: "center"}}>
+            <div
+              
+              style={{ width: 200, height: 200, textAlign: "center" }}
+            >
               <a href="/profile">
-              <img
-                style={{ width: 114, height: 114, textAlign: "center"}}
-                src={
-                  userImage
-                    ? userImage
-                    : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
-                }
-              />
+                <img
+                  style={{ width: 114, height: 114, textAlign: "center", paddingTop:20 }}
+                  src={
+                    userImage
+                      ? userImage
+                      : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
+                  }
+                />
               </a>
               <div className="card-body">
                 <div className="card-text">

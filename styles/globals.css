@@ -494,8 +494,9 @@ a:visited {
   text-align: center;
 }
 .container-post {
-  margin-left:6rem;
+  margin-left: 6rem;
 }
-.image-profil {
-  
+.classComment {
+  margin-left: 0.8rem;
+  margin-bottom: 1rem;
 }

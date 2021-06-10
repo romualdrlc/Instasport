@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Checkbox from "../components/checkBox";
 import { getUserByCookie, getSportCategories } from "../utils/initDatabase";
 import { useRouter } from "next/router";
+import Layout from "../components/Layout";
 
 // const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
 //   categoriesImgArray,
@@ -130,7 +131,8 @@ const Inscription: NextPage<{
   ////// Affichage ///////
   ////////////////////////
   return (
-    <div className="container">
+    <Layout>
+    <div className="container " style={{paddingTop: 200}}>
       <div className="page-inscription">
         <div className="container profilePhotoEdit">
           <div className="row">
@@ -338,6 +340,7 @@ const Inscription: NextPage<{
         {/* <div className="col-3 d-sm-none d-md-block"></div> */}
       </div>
     </div>
+    </Layout>
   );
 };
 export default Inscription;

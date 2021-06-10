@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUsersPhotoByToken } from "../../utils/initDatabase";
+import { getUserNameOnComment } from "../../utils/initDatabase";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   console.log("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️", request.query);
-  const mongoResponse = await getUsersPhotoByToken(request.query.usersToken);
+  const mongoResponse = await getUserNameOnComment(request.query.idUser);
 
   console.log("reponse appel db", mongoResponse);
 
