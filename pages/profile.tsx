@@ -130,36 +130,26 @@ const Inscription: NextPage<{
   ////// Affichage ///////
   ////////////////////////
   return (
-    <div>
+    <div className="container">
       <div className="page-inscription">
-        {/* <br />
-      <h1 className="titre-page-inscription text-center">Register</h1>
-      <p className="sous-titre-page-inscription text-center">
-        Welcome <span className="usersWelcomeName">{userName}</span>, please
-        fill in this informations.
-      </p>
-      {errorMessage ? <p>{errorMessage}</p> : <></>} */}
         <div className="container profilePhotoEdit">
           <div className="row">
             <div className="col-5"></div>
             <div className="col-2">
-              <div className="card" style={{ width: 280, height: 280 }}>
+              <div className="card" style={{ width: 200, height: 200 }}>
                 <img
+                  className="image-profil"
                   src={
                     currentUserCover
                       ? currentUserCover
                       : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
                   }
                 />
-                <div className="card-body">
-                  {/* <a href="#" className="btn btn-warning">
-                  Edit
-                </a> */}
-                </div>
               </div>
             </div>
           </div>
           <div className="col-5"></div>
+        </div>
         </div>
         <div className="container">
           <div>
@@ -253,7 +243,7 @@ const Inscription: NextPage<{
                 </div>
                 <button
                   type="submit"
-                  className="Boutton btn"
+                  className="Boutton btn bouton-update-profil"
                   onClick={() => registerform()}
                   // disabled={
                   //   counterOfSelectedCategories < 3 ||
@@ -274,16 +264,15 @@ const Inscription: NextPage<{
             }
           `}</style>
         </div>
-      </div>
-      <div className="container profilePhotoEdit">
-        <div className="row">
-          <div className="col-3"></div>
-          <div className="col-6">
-            <div className="card" style={{ width: 600, height: 600 }}>
-              <div className="card-title"> Create a post</div>
+      <div className="container d-flex justify-content-center">
+        <div className="row justify-content-center">
+          {/* <div className="col-3 d-sm-none d-md-block"></div> */}
+          <div className="col-12">
+            <div className="darker container-post" style={{ width: 450, height: 600 }}>
+              <div className="card-title text-center"><br></br><h4>Create a post</h4></div>
               <div className="card-body">
                 <label htmlFor="exampleInputBirthDate" className="form-label">
-                  Photo
+                  Photo*
                 </label>
                 <input
                   type="text"
@@ -292,7 +281,7 @@ const Inscription: NextPage<{
                     setphotosPost(event.target.value);
                   }}
                 />
-                <label className="form-label">Title</label>
+                <label className="form-label">Title*</label>
                 <input
                   type="text"
                   onChange={(event) => {
@@ -300,7 +289,7 @@ const Inscription: NextPage<{
                   }}
                 />
                 <label htmlFor="exampleInputBirthDate" className="form-label">
-                  Message
+                  Message*
                 </label>
                 <textarea
                   className="form-control"
@@ -311,7 +300,7 @@ const Inscription: NextPage<{
                 />
 
                 <label className="form-label">
-                  Choose the corresponding sport &nbsp; &nbsp;
+                  Choose the corresponding sport* &nbsp; &nbsp;
                 </label>
                 <select
                   value={groupId}
@@ -329,18 +318,24 @@ const Inscription: NextPage<{
                   <option value="7">Badminton</option>
                   <option value="8">Baseball</option>
                 </select>
-              </div>
-              <button
+                <br />
+                <br />
+                <div className="text-center">
+                <button
                 type="submit"
-                className="Boutton btn"
+                className="Boutton btn bouton-create-post"
                 onClick={() => createPost()}
               >
                 Create post
               </button>
+              <br />
+              <br />
+              </div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="col-3"></div>
+        {/* <div className="col-3 d-sm-none d-md-block"></div> */}
       </div>
     </div>
   );
