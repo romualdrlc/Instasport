@@ -337,6 +337,32 @@ const getUsersPhotoByToken = async (data: any) => {
   return user.Cover;
 };
 
+const createPost = async (data: any) => {
+  try {
+    const result = (await getDatabase())
+      .db("instasportDB")
+      .collection("posts")
+      .insertOne(
+        {
+
+        id:data.id,
+      userId: data.userId,
+      datePost: data.datePost,
+      photosPost: data.photosPost,
+      textPost: data.textPost,
+      likePost: data.likePost,
+      commentsPost: data.commentsPost,
+      groupId: data.groupId,
+      postTitle: data.postTitle,
+          },
+
+      );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 ///////////////////////////
 //////// Export //////////
 //////////////////////////
@@ -356,4 +382,5 @@ export {
   getAllGroups,
   getAllPostsByGroups,
   getUsersPhotoByToken,
+  createPost
 };
