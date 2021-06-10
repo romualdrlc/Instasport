@@ -43,9 +43,9 @@ const Inscription: NextPage<{
   const [active, setActive] = useState(currentUsersCategories);
 
   const [photosPost, setphotosPost] = useState(null);
-  const [textPost, settextPost] = useState();
+  const [textPost, settextPost] = useState(null);
   const [groupId, setgroupId] = useState();
-  const [postTitle, setpostTitle] = useState();
+  const [postTitle, setpostTitle] = useState(null);
 
   ///////////////////////////
   /////// useEffect ////////
