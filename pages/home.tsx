@@ -6,6 +6,7 @@ import {
   getAllGroups,
   getAllPostsByGroups,
 } from "../utils/initDatabase";
+import { useRouter } from "next/router";
 
 const Home: NextPage = (props: any) => {
   type Post = {
@@ -19,7 +20,7 @@ const Home: NextPage = (props: any) => {
     groupId: number;
     postTitle: string;
   };
-
+  const router = useRouter();
   ////////////////////////////////////
   ////// useState, useEffect /////////
   ///////////////////////////////////
@@ -60,6 +61,7 @@ const Home: NextPage = (props: any) => {
   // });
   const arrayOfGroupIds = listMyGroups.map((group) => group.id);
   const [sportsArray, setSportsArray] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  const [UserNameForComment, setUserNameForComment] = useState("");
 
   const OnClickSport = (idOfSport: number) => {
     const oneElemeArray = [idOfSport];
@@ -70,21 +72,35 @@ const Home: NextPage = (props: any) => {
     console.log("--------------------", arrayOfGroupIds);
     setSportsArray(arrayOfGroupIds);
   };
+  const getUserNameOnComment: any = async (idUser: any) => {
+    fetch("/api/getusernameoncomment?idUser=" + idUser)
+      .then((result) => result.json())
+      .then((res) => {
+        console.log("recherche comments ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️ ", res);
+        setUserNameForComment(res);
+
+      });
+  };
+  
   const displayComments: any = async (postId: number) => {
     fetch("/api/displaycomments?postId=" + postId)
       .then((result) => result.json())
       .then((res) => {
         console.log("recherche comments by id ", res);
+       
         setComments(res);
       });
   };
   const comment = async (postId) => {
+    const d = new Date();
+    const date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear()+" " + d.getHours()+":" + d.getMinutes();
     const data = {
       postId: postId,
       userId: props.currentUserId,
-      DateComment: Date(),
+      DateComment: date,
       text: textComment,
     };
+    setTextComment("");
     await fetch("/api/createcomment", {
       method: "POST",
       headers: {
@@ -93,6 +109,8 @@ const Home: NextPage = (props: any) => {
       },
       body: JSON.stringify(data),
     }).then((res) => res.json());
+    //router.push("/home");
+    
   };
   useEffect(() => {
     setListOtherGroups(props.currentUserOtherGroupsArray);
@@ -103,6 +121,7 @@ const Home: NextPage = (props: any) => {
         res.json().then((result) => setListUsers(result))
       );
     };
+
     const searchPosts: any = async (groupIds: number[]) => {
       let resultGlobal = [];
       groupIds.forEach((groupId) => {
@@ -145,7 +164,7 @@ const Home: NextPage = (props: any) => {
     defaultUsers();
     searchPosts(sportsArray);
     // displayComments(postId);
-  }, [sportsArray]);
+  }, [sportsArray,comments,UserNameForComment]);
 
   ///////////////////////////
   ////// Affichage /////////
@@ -164,7 +183,7 @@ const Home: NextPage = (props: any) => {
                 {listMyGroups.map((group, index) => {
                   return (
                     <div style={{ textAlign: "center" }}>
-                      <div className="card" style={{ width: 280, height: 280 }}>
+                      <div className="card bg-dark" style={{ width: 280, height: 280}}>
                         <img
                           key={"image" + index}
                           src={group.CoverSidebar}
@@ -188,7 +207,7 @@ const Home: NextPage = (props: any) => {
                 {listOtherGroups.map((group, index) => {
                   return (
                     <div>
-                      <div className="card" style={{ width: 280, height: 280 }}>
+                      <div className="card bg-dark" style={{ width: 280, height: 280 }}>
                         <img
                           key={"image2" + index}
                           src={group.CoverSidebar}
@@ -208,11 +227,12 @@ const Home: NextPage = (props: any) => {
               </div>
             </div>
             <div className="BodyNews col-5">
+            <div><h3>Posts</h3></div>
               {postFind
                 ? postFind.map((post, index) => {
                     return (
                       <div
-                        className="card mb-3"
+                        className="card bg-dark mb-3"
                         style={{ width: 600 }}
                         onClick={() => setPostId(post._id)}
                       >
@@ -231,10 +251,8 @@ const Home: NextPage = (props: any) => {
                               style={{ textAlign: "left" }}
                             >
                               <h5 className="card-title">{post.postTitle}</h5>
-                              <p className="card-text">
-                                This is a wider card with supporting text below
-                                as a natural lead-in to additional content. This
-                                content is a little bit longer.
+                              <p className="card-text ">
+                                {post.textPost}
                               </p>
                               <div
                                 className="ImageGroupSidebar"
@@ -258,30 +276,30 @@ const Home: NextPage = (props: any) => {
             </div>
             <div className="BodyNews col-4">
               <div className="container">
+                <h3>Comments</h3>
                 <div>
                   <div className="container">
                     <div className="row">
-                      <div className="">
-                        {comments.map((comment, index) => {
+                        {comments ? comments.map((comment, index) => {
                           return (
-                            <div className="comment mt-4 text-justify float-left">
+                            <div className="card bg-dark classComment" style={{ width: 390, height: 170 }}>
                               <img
-                                src="https://i.imgur.com/yTFUilP.jpg"
+                                src="https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
                                 alt=""
                                 className="rounded-circle"
                                 width={40}
                                 height={40}
                                 key="img1"
                               />
-                              <h4>Jhon Doe</h4> <span>- 20 October, 2018</span>
+                              <h4>{UserNameForComment}</h4> <span>{comment.DateComment}</span>
                               <br />
                               <p>{comment.text}</p>
                             </div>
                           );
-                        })}
+                        }):null}
                       </div>
-                      <div className="card" style={{ width: 600, height: 600 }}>
-                        <div className="card-title"> Add comment</div>
+                      {(postId != null) ? 
+                      <div className="card bg-dark" style={{ width: 390, height: 250 }}>
                         <div className="card-body">
                           <label
                             htmlFor="exampleInputBirthDate"
@@ -305,11 +323,12 @@ const Home: NextPage = (props: any) => {
                             Comment
                           </button>
                         </div>
-                      </div>
+                      </div> : null
+}
                     </div>
                   </div>
                 </div>
-              </div>
+            
             </div>
           </div>
         </div>

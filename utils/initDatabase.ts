@@ -414,6 +414,23 @@ const createComment = async (data: any) => {
     console.log(e);
   }
 };
+const getUserNameOnComment = async (data: any) => {
+  let result;
+  const ObjectId = require("mongodb").ObjectID;
+  const idForFilter = ObjectId(data.idUser);
+  try {
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("user")
+      .findOne({
+        _id: idForFilter,
+      });
+  } catch (e) {
+    console.log(e);
+  }
+  const user = await result;
+  return user.userName;
+};
 
 ///////////////////////////
 //////// Export //////////
@@ -437,4 +454,5 @@ export {
   createPost,
   getCommentsByPost,
   createComment,
+  getUserNameOnComment,
 };
