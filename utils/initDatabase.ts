@@ -337,7 +337,7 @@ const getAllPostsByGroups = async (id: any) => {
     console.log(e);
   }
   const foundPosts = await result;
-  console.log("🟠🟠🟠🟠 Posts", foundPosts);
+  console.log(" Posts", foundPosts);
   return foundPosts ? foundPosts : "";
 };
 
@@ -381,16 +381,35 @@ const createPost = async (data: any) => {
 };
 
 const createComment = async (data: any) => {
+  const ObjectId = require("mongodb").ObjectID;
+  const idForFilter = ObjectId(data.postId);
+  const idForFilterUser = ObjectId(data.userId);
+
   try {
     const result = (await getDatabase())
       .db("instasportDB")
       .collection("comment")
       .insertOne({
-        idUser: data.userId,
+        idUser: idForFilterUser,
         DateComment: data.DateComment,
         text: data.text,
+        postId: idForFilter,
       });
-    return result;
+
+    const result3 = await result;
+    console.log("result33333333333", ObjectId(result3.insertedId));
+
+    const result2 = (await getDatabase())
+      .db("instasportDB")
+      .collection("posts")
+      .updateOne(
+        {
+          _id: idForFilter,
+        },
+        { $push: { commentsPost: { $each: ["1"] } } }
+      );
+
+    console.log("🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠", await result2);
   } catch (e) {
     console.log(e);
   }
