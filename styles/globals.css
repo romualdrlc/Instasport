@@ -486,3 +486,16 @@ a:visited {
   text-decoration: none;
   display: inline-block; */
 }
+.bouton-create-post {
+  margin: 0 auto;
+}
+
+.bouton-update-profil {
+  text-align: center;
+}
+.container-post {
+  margin-left:6rem;
+}
+.image-profil {
+  
+}
