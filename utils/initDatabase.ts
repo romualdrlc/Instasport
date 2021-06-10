@@ -282,6 +282,27 @@ const getAllGroups = async () => {
   return foundGroups ? foundGroups : "";
 };
 
+const getCommentsByPost = async (id: any) => {
+  console.log("ididididididididididiid", id);
+  const ObjectId = require("mongodb").ObjectID;
+  const idForFilter = ObjectId(id);
+  let result;
+  try {
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("comment")
+      .find({
+        postId: idForFilter,
+      })
+      .toArray();
+  } catch (e) {
+    console.log(e);
+  }
+  const foundComments = await result;
+  console.log("🟠", foundComments);
+  return foundComments ? foundComments : "";
+};
+
 const getSearchUserById = async (id: any) => {
   console.log("ididididididididididiid", id);
   const ObjectId = require("mongodb").ObjectID;
@@ -342,21 +363,33 @@ const createPost = async (data: any) => {
     const result = (await getDatabase())
       .db("instasportDB")
       .collection("posts")
-      .insertOne(
-        {
+      .insertOne({
+        id: data.id,
+        userId: data.userId,
+        datePost: data.datePost,
+        photosPost: data.photosPost,
+        textPost: data.textPost,
+        likePost: data.likePost,
+        commentsPost: data.commentsPost,
+        groupId: data.groupId,
+        postTitle: data.postTitle,
+      });
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
-        id:data.id,
-      userId: data.userId,
-      datePost: data.datePost,
-      photosPost: data.photosPost,
-      textPost: data.textPost,
-      likePost: data.likePost,
-      commentsPost: data.commentsPost,
-      groupId: data.groupId,
-      postTitle: data.postTitle,
-          },
-
-      );
+const createComment = async (data: any) => {
+  try {
+    const result = (await getDatabase())
+      .db("instasportDB")
+      .collection("comment")
+      .insertOne({
+        idUser: data.userId,
+        DateComment: data.DateComment,
+        text: data.text,
+      });
     return result;
   } catch (e) {
     console.log(e);
@@ -382,5 +415,7 @@ export {
   getAllGroups,
   getAllPostsByGroups,
   getUsersPhotoByToken,
-  createPost
+  createPost,
+  getCommentsByPost,
+  createComment,
 };
