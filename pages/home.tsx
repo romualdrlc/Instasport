@@ -359,7 +359,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
     currentUserGroupsArray = allGroups.filter((group, index) => {
-      if (currentUserGroups && [index]) return group;
+      //if (currentUserGroups && [index] return group;
+      // console.log("group ✨✨✨✨✨✨✨✨✨", group)
+      // console.log("index ✨✨✨✨✨✨✨✨✨", index)
+      // console.log("group de index ✨✨✨✨✨✨✨✨✨", [index])
+      // console.log("group de index 🍎🍎🍎🍎🍎🍎🍎🍎🍎", currentUserGroups)
+      
+      if (currentUserGroups[index]) return group;
     });
     currentUserOtherGroupsArray = allGroups.filter((group, index) => {
       if (currentUserGroups && !currentUserGroups[index]) return group;
