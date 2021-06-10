@@ -42,7 +42,7 @@ const Inscription: NextPage<{
     useState(0);
   const [active, setActive] = useState(currentUsersCategories);
 
-  const [photosPost, setphotosPost] = useState();
+  const [photosPost, setphotosPost] = useState(null);
   const [textPost, settextPost] = useState();
   const [groupId, setgroupId] = useState();
   const [postTitle, setpostTitle] = useState();
