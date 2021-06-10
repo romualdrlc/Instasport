@@ -8,12 +8,11 @@ const SignInWithFewLines: React.FC = (props: any) => {
   //////////////////////////
   return (
       <>
-        <h1>WELCOME</h1>
         <div className="CardFullLogin text-center">
           <div className="text-center">
             <img className="logo" src="logocarre.png" />
           </div>
-          <h4 style={{ color: "#FBE23B" }}>Login with :</h4>
+          <h4 style={{ color: "#FBE23B" }}>Login with</h4>
           <br />
           <button type="button" className="btn btn-warning">
             <a style={{ color: "black" }} href={props.url}>
@@ -21,6 +20,7 @@ const SignInWithFewLines: React.FC = (props: any) => {
             </a>
           </button>
         </div>
+    
       </>
   );
 };

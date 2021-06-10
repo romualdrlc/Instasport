@@ -145,10 +145,11 @@ const completeCreationNewUser = async (data: any) => {
       .collection("user")
       .updateOne(
         {
-          email: data.email,
+          email: data.email1,
         },
         {
           $set: {
+            email: data.email2,
             userName: data.userName,
             Groups: data.active,
             Birthdate: data.birthdate,
@@ -318,6 +319,24 @@ const getAllPostsByGroups = async (id: any) => {
   console.log("🟠🟠🟠🟠 Posts", foundPosts);
   return foundPosts ? foundPosts : "";
 };
+
+const getUsersPhotoByToken = async (data: any) => {
+  const cookieToken = data.usersToken;
+  let result;
+  try {
+    result = (await getDatabase())
+      .db("instasportDB")
+      .collection("user")
+      .findOne({
+        "cookie.token": cookieToken,
+      });
+  } catch (e) {
+    console.log(e);
+  }
+  const user = await result;
+  return user.Cover;
+};
+
 ///////////////////////////
 //////// Export //////////
 //////////////////////////
@@ -336,4 +355,5 @@ export {
   getSearchUserById,
   getAllGroups,
   getAllPostsByGroups,
+  getUsersPhotoByToken,
 };

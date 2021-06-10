@@ -1,7 +1,7 @@
 import { NextPage, GetServerSideProps } from "next";
 import React, { useEffect, useState } from "react";
-import Checkbox from "../../components/checkBox";
-import { getUserByCookie, getSportCategories } from "../../utils/initDatabase";
+import Checkbox from "../components/checkBox";
+import { getUserByCookie, getSportCategories } from "../utils/initDatabase";
 import { useRouter } from "next/router";
 
 // const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
@@ -10,17 +10,21 @@ import { useRouter } from "next/router";
 // }) => {
 
 const Inscription: NextPage<{
-  categoriesImgArray,
-  currentUsersEmail,
-  currentUsersName,
-  currentUserCover,
-  categoriesImgDescription
+  categoriesImgArray;
+  currentUsersEmail;
+  currentUsersName;
+  currentUserCover;
+  currentUsersBirthdate;
+  categoriesImgDescription;
+  currentUsersCategories;
 }> = ({
   categoriesImgArray,
   currentUsersEmail,
   currentUsersName,
   currentUserCover,
-  categoriesImgDescription
+  currentUsersBirthdate,
+  categoriesImgDescription,
+  currentUsersCategories,
 }) => {
   //useRouter
   const router = useRouter();
@@ -28,31 +32,18 @@ const Inscription: NextPage<{
   ///////////////////////////
   /////// useState /////////
   //////////////////////////
-  const [userName, setUserName] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [userName, setUserName] = useState(currentUsersName);
+  const [birthdate, setBirthdate] = useState(currentUsersBirthdate);
   const [usersEmail, setUsersEmail] = useState(currentUsersEmail);
   const [errorMessage, setErrorMessage] = useState(null);
   const [counterOfSelectedCategories, setCounterOfSelectedCategories] =
     useState(0);
-  const [active, setActive] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  const [active, setActive] = useState(currentUsersCategories);
 
   ///////////////////////////
   /////// useEffect ////////
   //////////////////////////
   useEffect(() => {
-    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿", currentUsersName, "✿✿✿✿✿✿✿✿✿✿✿✿✿");
-    if (currentUsersName != "") router.push("/home");
-
     console.log(usersEmail);
   }, [userName, birthdate, active, usersEmail]);
 
@@ -87,24 +78,48 @@ const Inscription: NextPage<{
       });
   };
 
+
+
   /////////////////////////
   ////// Affichage ///////
   ////////////////////////
   return (
     <div className="page-inscription">
-      <br />
+      {/* <br />
       <h1 className="titre-page-inscription text-center">Register</h1>
       <p className="sous-titre-page-inscription text-center">
         Welcome <span className="usersWelcomeName">{userName}</span>, please
         fill in this informations.
       </p>
-      {errorMessage ? <p>{errorMessage}</p> : <></>}
+      {errorMessage ? <p>{errorMessage}</p> : <></>} */}
+      <div className="container profilePhotoEdit">
+        <div className="row">
+          <div className="col-5"></div>
+          <div className="col-2">
+            <div className="card" style={{ width: 280, height: 280 }}>
+              <img
+                src={
+                  currentUserCover
+                    ? currentUserCover
+                    : "https://images.vexels.com/media/users/3/136558/isolated/lists/43cc80b4c098e43a988c535eaba42c53-person-user-icon.png"
+                }
+              />
+              <div className="card-body">
+                {/* <a href="#" className="btn btn-warning">
+                  Edit
+                </a> */}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-5"></div>
+      </div>
       <div className="container">
         <div>
           <div className="row row-cols-1 row-cols-sm-2">
             <div className="colIncription col">
               <label htmlFor="exampleInputUserName" className="form-label">
-                UserName*
+                UserName
               </label>
               <input
                 type="text"
@@ -117,7 +132,7 @@ const Inscription: NextPage<{
                 }}
               />
               <label htmlFor="exampleInputUserName" className="form-label">
-                Email*
+                Email
               </label>
               <input
                 type="text"
@@ -130,7 +145,7 @@ const Inscription: NextPage<{
                 }}
               />
               <label htmlFor="exampleInputBirthDate" className="form-label">
-                Birthdate*
+                Birthdate
               </label>
               <input
                 type="Date"
@@ -149,7 +164,7 @@ const Inscription: NextPage<{
             </div>
             <div className="col">
               <h6 className="titre-interests text-center">
-                Please, select at least 3 sports :
+                My favorite sports :
               </h6>
               <div className="container">
                 <div className="row row-cols-3">
@@ -193,14 +208,14 @@ const Inscription: NextPage<{
                 type="submit"
                 className="Boutton btn"
                 onClick={() => registerform()}
-                disabled={
-                  counterOfSelectedCategories < 3 ||
-                  userName === "" ||
-                  birthdate === "" ||
-                  usersEmail === ""
-                }
+                // disabled={
+                //   counterOfSelectedCategories < 3 ||
+                //   userName === "" ||
+                //   birthdate === "" ||
+                //   usersEmail === ""
+                // }
               >
-                Create
+                Update
               </button>
             </div>
           </div>
@@ -226,6 +241,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let currentUsersEmailFromDB = "";
   let currentUsersName = "";
   let currentUsersCover = "";
+  let currentUsersBirthdate = "";
+  let currentUsersCategories = [];
 
   const c = context.req.cookies.fewlines;
   if (c) {
@@ -233,12 +250,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     currentUsersEmailFromDB = currentUser.email;
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
+    currentUsersBirthdate = currentUser.Birthdate;
+    currentUsersCategories = currentUser.Groups;
   }
 
   const sportCategories = await getSportCategories();
-const categoriesImgDescription = await sportCategories.map((category) => {
-  return category.UserName;
-});
+  const categoriesImgDescription = await sportCategories.map((category) => {
+    return category.UserName;
+  });
 
   const categoriesImgArrayFromDB = await sportCategories.map((category) => {
     return category.Cover;
@@ -255,6 +274,10 @@ const categoriesImgDescription = await sportCategories.map((category) => {
         ? JSON.parse(JSON.stringify(currentUsersName))
         : "",
       currentUserCover: currentUsersCover,
+      currentUsersBirthdate: currentUsersBirthdate,
+      currentUsersCategories: currentUsersCategories
+        ? currentUsersCategories
+        : [],
     },
   };
 };

@@ -186,30 +186,6 @@ for(let i=0;i<result.length;i++) {
               </div>
             </div>
             <div className="BodyNews col-5">
-              {/* <div className="card mb-3" style={{ width: 600 }}>
-                <div className="row g-0">
-                  <div className="col-md-6">
-                    <img
-                      src="https://images.unsplash.com/photo-1552318965-6e6be7484ada?ixlib=rb-1.2.1&ixid=MnwxMjA3[…]G90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80"
-                      alt="..."
-                      style={{ width: 260, height: 360 }}
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <div className="card-body" style={{ textAlign: "left" }}>
-                      <h5 className="card-title">Card title</h5>
-                      <p className="card-text">
-                        This is a wider card with supporting text below as a
-                        natural lead-in to additional content. This content is a
-                        little bit longer.
-                      </p>
-                      <p className="card-text">
-                        <small className="text-muted">Comments</small>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               {postFind
                 ? postFind.map((post, index) => {
                     return (
@@ -357,10 +333,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
     currentUserGroupsArray = allGroups.filter((group, index) => {
-      if (currentUserGroups[index]) return group;
+      if (currentUserGroups && [index]) return group;
     });
     currentUserOtherGroupsArray = allGroups.filter((group, index) => {
-      if (!currentUserGroups[index]) return group;
+      if (currentUserGroups && !currentUserGroups[index]) return group;
     });
   }
 
