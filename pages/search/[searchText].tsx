@@ -22,13 +22,26 @@ const SearchText: NextPage = (props: any) => {
     <>
       <Layout />
       <div className="searchpage">
-        {userList.map((value, index) => {
-          return (
-            <p key={index}>
-              <a href={`/userprofil/${value._id}`}>{value.userName}</a>
-            </p>
-          );
-        })}
+        <h4 className="text-center">
+          Found Users List
+          <br />
+          <br />
+        </h4>
+        <br />
+        <br />
+        <ul style={{ marginLeft: 700 }}>
+          {userList.map((value, index) => {
+            return (
+              <li key={index}>
+                <a href={`/userprofil/${value._id}`}>
+                  {value.userName}
+                  <br />
+                </a>
+                <br />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </>
   );
