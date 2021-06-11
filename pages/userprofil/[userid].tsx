@@ -90,6 +90,7 @@ const UserProfil: NextPage = (props: any) => {
                   name="trip-start"
                   min="1921-01-01"
                   max="2003-12-31"
+                  disabled
                   className="form-control"
                   id="exampleInputBirthDate"
                   aria-describedby="emailHelp"
