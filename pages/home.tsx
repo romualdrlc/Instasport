@@ -4,7 +4,6 @@ import Layout from "../components/Layout";
 import {
   getUserByCookie,
   getAllGroups,
-  getAllPostsByGroups,
 } from "../utils/initDatabase";
 import { useRouter } from "next/router";
 
@@ -69,14 +68,12 @@ const Home: NextPage = (props: any) => {
   };
 
   const OnClickMySports = () => {
-    console.log("--------------------", arrayOfGroupIds);
     setSportsArray(arrayOfGroupIds);
   };
   const getUserNameOnComment: any = async (idUser: any) => {
     fetch("/api/getusernameoncomment?idUser=" + idUser)
       .then((result) => result.json())
       .then((res) => {
-        console.log("recherche comments ⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️ ", res);
         setUserNameForComment(res);
 
       });
@@ -86,7 +83,6 @@ const Home: NextPage = (props: any) => {
     fetch("/api/displaycomments?postId=" + postId)
       .then((result) => result.json())
       .then((res) => {
-        console.log("recherche comments by id ", res);
        
         setComments(res);
       });
@@ -127,18 +123,12 @@ const Home: NextPage = (props: any) => {
       groupIds.forEach((groupId) => {
         fetch("/api/findpostsbygroup?groupId=" + groupId).then((res) => {
           res.json().then((result) => {
-            console.log("result du fetch$$$$$$$$$$$$$$$$$$$$", result);
 
             for (let i = 0; i < result.length; i++) {
               resultGlobal.push(result[i]);
             }
-            console.log("🟣🟣🟣🟣🟣🟣🟣🟣🟣🟣🟣", resultGlobal);
             setPostFind(resultGlobal);
 
-            console.log(
-              "result du fetch JSON",
-              JSON.parse(JSON.stringify(result.length))
-            );
             const resultFinal = result.map((post) => {
               const postLighten = {
                 id: post.id,
@@ -153,14 +143,12 @@ const Home: NextPage = (props: any) => {
               };
               return postLighten;
             });
-            console.log("*********************************", resultFinal);
             return resultFinal;
           });
         });
       });
     };
 
-    console.log("posts recupere **************", postFind);
     defaultUsers();
     searchPosts(sportsArray);
     // displayComments(postId);
@@ -354,16 +342,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (c) {
     const currentUser = await getUserByCookie(c);
     allGroups = await getAllGroups();
-    console.log("ICIIIIIIIIII !!!!!!", allGroups);
     currentUserGroups = currentUser.Groups;
     currentUsersName = currentUser.userName;
     currentUsersCover = currentUser.Cover ? currentUser.Cover : "";
     currentUserGroupsArray = allGroups.filter((group, index) => {
-      //if (currentUserGroups && [index] return group;
-      // console.log("group ✨✨✨✨✨✨✨✨✨", group)
-      // console.log("index ✨✨✨✨✨✨✨✨✨", index)
-      // console.log("group de index ✨✨✨✨✨✨✨✨✨", [index])
-      // console.log("group de index 🍎🍎🍎🍎🍎🍎🍎🍎🍎", currentUserGroups)
       
       if (currentUserGroups[index]) return group;
     });

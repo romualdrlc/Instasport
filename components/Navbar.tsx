@@ -1,9 +1,6 @@
 import { NextPage, GetServerSideProps } from "next";
-
 import React, { useEffect, useState } from "react";
-
 import cookie from "js-cookie";
-import { resourceLimits } from "worker_threads";
 
 const Navar: NextPage = (props: any) => {
   const [searchText, setSearchText] = useState("");
@@ -25,10 +22,6 @@ const Navar: NextPage = (props: any) => {
     await fetch("/api/logout?usersToken=" + cookieFromSession);
   };
   const currentUserCover = async () => {
-    //   await fetch("/api/defaultUsers").then((res) =>
-    //   res.json().then((result) => setListUsers(result))
-    // );
-
     await fetch("/api/userPhoto?usersToken=" + cookieFromSession, {
       headers: {
         "Content-Type": "application/json",
@@ -38,21 +31,8 @@ const Navar: NextPage = (props: any) => {
       .then((result) => result.json())
       .then((resu) => {
         setUserImage(resu);
-        console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏", resu);
       });
-
-    // }).then((res) =>
-    //   res.json().then(
-    //     (result) => setUserImage(result)
-    //     //console.log("🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏🍏", result);
-    //   )
-    // );
   };
-
-  // useEffect(() => {
-  //  // currentUserCover();
-  //   console.log(userImage);
-  // }, [userImage]);
 
   return (
     <>
@@ -95,14 +75,12 @@ const Navar: NextPage = (props: any) => {
               <div className="card-body">
                 <div className="card-text">
                   {cookieFromSession ? (
-                    // <button onClick={() => logoutUser()}>
                     <p onClick={() => logoutUser()}>
                       <a href="/" className="LogLink">
                         Logout
                       </a>
                     </p>
                   ) : (
-                    // </button>
                     <a href="/">Login</a>
                   )}
                 </div>

@@ -4,11 +4,6 @@ import Checkbox from "../../components/checkBox";
 import { getUserByCookie, getSportCategories } from "../../utils/initDatabase";
 import { useRouter } from "next/router";
 
-// const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
-//   categoriesImgArray,
-//   currentUsersEmail,
-// }) => {
-
 const Inscription: NextPage<{
   categoriesImgArray,
   currentUsersEmail,
@@ -22,7 +17,7 @@ const Inscription: NextPage<{
   currentUserCover,
   categoriesImgDescription
 }) => {
-  //useRouter
+  
   const router = useRouter();
 
   ///////////////////////////
@@ -50,10 +45,7 @@ const Inscription: NextPage<{
   /////// useEffect ////////
   //////////////////////////
   useEffect(() => {
-    console.log("✿✿✿✿✿✿✿✿✿✿✿✿✿", currentUsersName, "✿✿✿✿✿✿✿✿✿✿✿✿✿");
     if (currentUsersName != "") router.push("/home");
-
-    console.log(usersEmail);
   }, [userName, birthdate, active, usersEmail]);
 
   ///////////////////////////
@@ -221,8 +213,6 @@ export default Inscription;
 //// serverSideProps ////
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  //const c = cookies(context).fewlines;
-
   let currentUsersEmailFromDB = "";
   let currentUsersName = "";
   let currentUsersCover = "";

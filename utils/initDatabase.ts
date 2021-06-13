@@ -1,29 +1,8 @@
-//import { MongoClient } from "mongodb";
-// const getDatabase = async () => {
-//   const databaseUrl = process.env.MONGODB_URI;
-//   const options = { useNewUrlParser: true, useUnifiedTopology: true };
-//   const mongoDataBase = await MongoClient.connect(databaseUrl, options);
-//   return mongoDataBase;
-// };
 import { getDatabase } from "./mongodb";
 
 ///////////////////////////
 /////// insertUser ///////
 //////////////////////////
-
-// const insertUser = async (token: string, date: Date, email: any) => {
-//   try {
-//     (await getDatabase())
-//       .db("instasportDB")
-//       .collection("user")
-//       .insertOne({
-//         email: email,
-//         cookie: { token: token, expdate: date },
-//       });
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
 const insertUser = async (token: string, date: Date, email: any) => {
   try {
     (await getDatabase())
@@ -45,36 +24,6 @@ const insertUser = async (token: string, date: Date, email: any) => {
     console.log(e);
   }
 };
-
-// const insertUser = async (token: string, date: Date, email: any) => {
-//   let searchResult;
-//   try {
-//     searchResult = (await getDatabase())
-//       .db("instasportDB")
-//       .collection("user")
-//       .findOne({
-//         email: email,
-//       });
-//   } catch (e) {
-//     console.log(e);
-//   }
-
-//   if (await searchResult) {
-//     updateToken(token, date, email);
-//   } else {
-//     try {
-//       (await getDatabase())
-//         .db("instasportDB")
-//         .collection("user")
-//         .insertOne({
-//           cookie: { token: token, expdate: date },
-//           email: email,
-//         });
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   }
-// };
 
 ///////////////////////////
 ////// updateToken ///////
@@ -161,6 +110,10 @@ const completeCreationNewUser = async (data: any) => {
     console.log(e);
   }
 };
+
+///////////////////////////
+//// getDefaultUsers /////
+//////////////////////////
 const getDefaultUsers = async () => {
   try {
     const result = (await getDatabase())
@@ -175,6 +128,9 @@ const getDefaultUsers = async () => {
   }
 };
 
+///////////////////////////
+/// getSportCategories ///
+//////////////////////////
 const getSportCategories = async () => {
   try {
     const result = (await getDatabase())
@@ -189,6 +145,9 @@ const getSportCategories = async () => {
   }
 };
 
+///////////////////////////
+////// getComment ////////
+//////////////////////////
 const getComment = async (data: any) => {
   const d = new Date();
   const date = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
@@ -208,8 +167,11 @@ const getComment = async (data: any) => {
   }
 };
 
+///////////////////////////
+/////// getLike //////////
+//////////////////////////
 const getLike = async (data: any) => {
-  try {
+try {
     const result = (await getDatabase())
       .db("instasportDB")
       .collection("posts")
@@ -232,6 +194,9 @@ const getLike = async (data: any) => {
   }
 };
 
+///////////////////////////
+/////// getSearch ////////
+//////////////////////////
 const getSearch = async (data: any) => {
   const regex2 = new RegExp(data.searchValue, "i");
   const arrayData = [regex2];
@@ -248,6 +213,9 @@ const getSearch = async (data: any) => {
   }
 };
 
+///////////////////////////
+////// logoutUser ////////
+//////////////////////////
 const logoutUser = async (data: any) => {
   const cookieToken = data.usersToken;
   const currentDate = new Date();
@@ -267,6 +235,9 @@ const logoutUser = async (data: any) => {
   }
 };
 
+///////////////////////////
+///// getAllGroups ///////
+//////////////////////////
 const getAllGroups = async () => {
   let result;
   try {
@@ -282,6 +253,9 @@ const getAllGroups = async () => {
   return foundGroups ? foundGroups : "";
 };
 
+////////////////////////////
+//// getCommentsByPost ////
+///////////////////////////
 const getCommentsByPost = async (id: any) => {
   console.log("ididididididididididiid", id);
   const ObjectId = require("mongodb").ObjectID;
@@ -303,6 +277,9 @@ const getCommentsByPost = async (id: any) => {
   return foundComments ? foundComments : "";
 };
 
+////////////////////////////
+//// getSearchUserById ////
+///////////////////////////
 const getSearchUserById = async (id: any) => {
   console.log("ididididididididididiid", id);
   const ObjectId = require("mongodb").ObjectID;
@@ -323,6 +300,9 @@ const getSearchUserById = async (id: any) => {
   return foundUser ? foundUser : "";
 };
 
+////////////////////////////
+/// getAllPostsByGroups ///
+///////////////////////////
 const getAllPostsByGroups = async (id: any) => {
   let result;
   try {
@@ -341,6 +321,9 @@ const getAllPostsByGroups = async (id: any) => {
   return foundPosts ? foundPosts : "";
 };
 
+/////////////////////////////
+/// getUsersPhotoByToken ///
+////////////////////////////
 const getUsersPhotoByToken = async (data: any) => {
   const cookieToken = data.usersToken;
   let result;
@@ -358,6 +341,9 @@ const getUsersPhotoByToken = async (data: any) => {
   return user.Cover;
 };
 
+/////////////////////////////
+/////// createPost /////////
+////////////////////////////
 const createPost = async (data: any) => {
   try {
     const result = (await getDatabase())
@@ -380,6 +366,9 @@ const createPost = async (data: any) => {
   }
 };
 
+////////////////////////////
+///// createComment ///////
+///////////////////////////
 const createComment = async (data: any) => {
   const ObjectId = require("mongodb").ObjectID;
   const idForFilter = ObjectId(data.postId);
@@ -414,6 +403,10 @@ const createComment = async (data: any) => {
     console.log(e);
   }
 };
+
+/////////////////////////////
+/// getUserNameOnComment ///
+////////////////////////////
 const getUserNameOnComment = async (data: any) => {
   let result;
   const ObjectId = require("mongodb").ObjectID;

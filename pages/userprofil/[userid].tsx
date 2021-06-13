@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NextPage, GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
-import Checkbox from "../../components/checkBox";
 
 const UserProfil: NextPage = (props: any) => {
   const [userInfo, setUserInfo] = useState(null);
@@ -31,7 +29,6 @@ const UserProfil: NextPage = (props: any) => {
     const user = fetch("/api/searchbyid?searchId=" + props.userId)
       .then((res) => res.json())
       .then((user) => {
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$", user);
         setUserInfo(user);
       });
   };
@@ -120,48 +117,12 @@ const UserProfil: NextPage = (props: any) => {
                                 );
                               }
                             })
-                          : null
-
-                        //   return (
-                        //     <div
-                        //       className="imageInterest col text-center"
-                        //       key={index}
-                        //     >
-                        //       <img
-                        //         className="imageCircle"
-                        //         src={imageOfCategory}
-                        //         width="70"
-                        //         height="70"
-                        //         // title={categoriesImgDescription[index]}
-                        //       />
-                        //       <Checkbox id={index} active={userInfo.Groups} />
-                        //     </div>
-                        //   );
-                      }
+                          : null }
                     </ul>
                   </div>
                 </div>
               </div>
-              {/* <div className="text-center">
-                <div>
-                  {active.map((value, index) => {
-                    return <div key={"tata" + index}>{value}</div>;
-                  })}
-                </div>
-                <button
-                  type="submit"
-                  className="Boutton btn bouton-update-profil"
-                  onClick={() => registerform()}
-                  // disabled={
-                  //   counterOfSelectedCategories < 3 ||
-                  //   userName === "" ||
-                  //   birthdate === "" ||
-                  //   usersEmail === ""
-                  // }
-                >
-                  Update
-                </button>
-              </div> */}
+              
             </div>
           </div>
           <style jsx>{`
@@ -179,8 +140,6 @@ const UserProfil: NextPage = (props: any) => {
 export default UserProfil;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("juste context", context.query);
-
   return {
     props: {
       userId: context.query.userid,

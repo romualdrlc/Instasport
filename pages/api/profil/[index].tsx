@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { NextPage, GetServerSideProps } from "next";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { getDatabase } from "../../../utils/mongodb";
 
 const Profil: NextPage<{ currentUsersEmail; data; user }> = ({
   currentUsersEmail,
