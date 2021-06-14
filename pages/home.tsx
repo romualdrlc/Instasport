@@ -49,15 +49,8 @@ const Home: NextPage = (props: any) => {
       postTitle: "postTitle",
     },
   ];
-  //const [postFind, setPostFind] = useState<Post[]>(tempPost);
-  const [postFind, setPostFind] = useState<any>();
 
-  //Afficher les posts des groupes de l'utilisateur
-  // const tabValueInitial = listMyGroups.filter((group, index) => {
-  //   if (group[index]) {
-  //     return index;
-  //   }
-  // });
+  const [postFind, setPostFind] = useState<any>();
   const arrayOfGroupIds = listMyGroups.map((group) => group.id);
   const [sportsArray, setSportsArray] = useState([0, 1, 2, 3, 4, 5, 6, 7, 8]);
   const [UserNameForComment, setUserNameForComment] = useState("");
@@ -151,7 +144,6 @@ const Home: NextPage = (props: any) => {
 
     defaultUsers();
     searchPosts(sportsArray);
-    // displayComments(postId);
   }, [sportsArray,comments,UserNameForComment]);
 
   ///////////////////////////
@@ -361,9 +353,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ? JSON.parse(JSON.stringify(currentUsersName))
         : "",
       currentUsersCover: currentUsersCover,
-      //currentUserGroupsArray: allGroups,
-      // currentUserGroupsArray: JSON.parse(JSON.stringify(allGroups)),
-      // currentUserGroups: currentUserGroups,
       currentUserGroupsArray: JSON.parse(
         JSON.stringify(currentUserGroupsArray)
       ),

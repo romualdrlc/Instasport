@@ -5,11 +5,6 @@ import { getUserByCookie, getSportCategories } from "../utils/initDatabase";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
 
-// const Inscription: NextPage<{ categoriesImgArray, currentUsersEmail }> = ({
-//   categoriesImgArray,
-//   currentUsersEmail,
-// }) => {
-
 const Inscription: NextPage<{
   categoriesImgArray;
   currentUsersEmail;
@@ -247,12 +242,6 @@ const Inscription: NextPage<{
                   type="submit"
                   className="Boutton btn bouton-update-profil"
                   onClick={() => registerform()}
-                  // disabled={
-                  //   counterOfSelectedCategories < 3 ||
-                  //   userName === "" ||
-                  //   birthdate === "" ||
-                  //   usersEmail === ""
-                  // }
                 >
                   Update
                 </button>
@@ -337,7 +326,6 @@ const Inscription: NextPage<{
             </div>
           </div>
         </div>
-        {/* <div className="col-3 d-sm-none d-md-block"></div> */}
       </div>
     </div>
     </Layout>
@@ -349,8 +337,6 @@ export default Inscription;
 //// serverSideProps ////
 /////////////////////////
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  //const c = cookies(context).fewlines;
-
   let currentUsersEmailFromDB = "";
   let currentUsersName = "";
   let currentUsersCover = "";

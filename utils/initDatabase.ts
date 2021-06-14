@@ -206,7 +206,6 @@ const getSearch = async (data: any) => {
       .collection("user")
       .find({ userName: { $in: arrayData } })
       .toArray();
-    console.log("result", await result);
     return result;
   } catch (e) {
     console.log(e);
@@ -257,7 +256,6 @@ const getAllGroups = async () => {
 //// getCommentsByPost ////
 ///////////////////////////
 const getCommentsByPost = async (id: any) => {
-  console.log("ididididididididididiid", id);
   const ObjectId = require("mongodb").ObjectID;
   const idForFilter = ObjectId(id);
   let result;
@@ -273,7 +271,6 @@ const getCommentsByPost = async (id: any) => {
     console.log(e);
   }
   const foundComments = await result;
-  console.log("🟠", foundComments);
   return foundComments ? foundComments : "";
 };
 
@@ -281,7 +278,6 @@ const getCommentsByPost = async (id: any) => {
 //// getSearchUserById ////
 ///////////////////////////
 const getSearchUserById = async (id: any) => {
-  console.log("ididididididididididiid", id);
   const ObjectId = require("mongodb").ObjectID;
   const idForFilter = ObjectId(id);
   let result;
@@ -296,7 +292,6 @@ const getSearchUserById = async (id: any) => {
     console.log(e);
   }
   const foundUser = await result;
-  console.log("🟠", foundUser);
   return foundUser ? foundUser : "";
 };
 
@@ -317,7 +312,6 @@ const getAllPostsByGroups = async (id: any) => {
     console.log(e);
   }
   const foundPosts = await result;
-  console.log(" Posts", foundPosts);
   return foundPosts ? foundPosts : "";
 };
 
@@ -386,7 +380,6 @@ const createComment = async (data: any) => {
       });
 
     const result3 = await result;
-    console.log("result33333333333", ObjectId(result3.insertedId));
 
     const result2 = (await getDatabase())
       .db("instasportDB")
@@ -398,7 +391,6 @@ const createComment = async (data: any) => {
         { $push: { commentsPost: { $each: ["1"] } } }
       );
 
-    console.log("🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠🟠", await result2);
   } catch (e) {
     console.log(e);
   }

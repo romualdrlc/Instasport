@@ -3,6 +3,5 @@ import { getAllPostsByGroups } from "../../utils/initDatabase";
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
   const mongoResponse = await getAllPostsByGroups(request.query.groupId);
-  console.log("request ********", request.query.groupId)
   response.json(mongoResponse);
 };
